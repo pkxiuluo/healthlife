@@ -17,7 +17,7 @@ public class MyApplicationInfo {
 	}
 	public static MyApplicationInfo getInstance() {
 		if(mSingleInstance==null){
-			synchronized (mSingleInstance) {
+			synchronized (MyApplicationInfo.class) {
 				mSingleInstance =	new MyApplicationInfo();
 			}
 		}

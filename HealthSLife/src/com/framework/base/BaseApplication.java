@@ -2,6 +2,9 @@ package com.framework.base;
 
 import android.app.Application;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+
 public class BaseApplication extends Application {
 	private static BaseApplication mInstance;
 	private MyApplicationManager manager;
@@ -9,7 +12,10 @@ public class BaseApplication extends Application {
 	@Override
 	public void onCreate() {
 		mInstance = this;
-		manager= new MyApplicationManager(this);
+		manager = new MyApplicationManager(this);
+		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext())
+				.build();
+		ImageLoader.getInstance().init(config);
 		super.onCreate();
 	}
 

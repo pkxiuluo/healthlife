@@ -8,8 +8,6 @@ public class MyApplicationManager {
 	private Context mContext;
 	private static boolean isInitCrash =false;
 
-	private MyApplicationManager() {
-	}
 
 	public MyApplicationManager(Context context) {
 		mContext = context;
