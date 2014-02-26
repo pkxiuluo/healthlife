@@ -8,15 +8,16 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
 
-    <ImageView
+    <Button
+        android:id="@+id/btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/image"/>
+        android:text="点我！" />
 
-    <TextView
-        android:layout_toRightOf="@id/image"
+    <ImageView
+        android:id="@+id/img"
+        android:layout_below="@id/btn"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:layout_height="wrap_content" />
 
 </RelativeLayout>
