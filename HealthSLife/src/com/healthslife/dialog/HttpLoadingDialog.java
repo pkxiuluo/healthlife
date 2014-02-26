@@ -7,7 +7,7 @@ import com.healthslife.R;
 
 public class HttpLoadingDialog extends Dialog {
 	public HttpLoadingDialog(Context context) {
-		this(context, 0);
+		this(context, R.style.fullScreenDialog);
 
 	}
 
