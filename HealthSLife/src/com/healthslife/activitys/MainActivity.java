@@ -30,6 +30,7 @@ public class MainActivity extends BaseFragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		init();
+		
 		handler = new MyAsyncHttpResponseHandler(this, mClient) {
 			public void onSuccess(int arg0, org.apache.http.Header[] arg1, byte[] arg2) {
 				Bitmap bitmap = BitmapFactory.decodeByteArray(arg2, 0,
