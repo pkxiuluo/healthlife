@@ -22,6 +22,7 @@ import com.loopj.android.http.AsyncHttpClient;
 public class MainActivity extends BaseFragmentActivity {
 	public Button btn;
 	private ImageView img;
+	
 	public AsyncHttpClient mClient;
 	
 	public MyAsyncHttpResponseHandler handler;
