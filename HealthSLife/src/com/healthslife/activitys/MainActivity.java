@@ -38,7 +38,6 @@ public class MainActivity extends BaseFragmentActivity {
 				img.setImageBitmap(bitmap);
 				
 				super.onSuccess(arg0, arg1, arg2);
-
 			};
 		};
 	}
