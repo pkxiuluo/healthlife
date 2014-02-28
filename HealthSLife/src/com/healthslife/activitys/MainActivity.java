@@ -36,6 +36,7 @@ public class MainActivity extends BaseFragmentActivity {
 				Bitmap bitmap = BitmapFactory.decodeByteArray(arg2, 0,
 						arg2.length);
 				img.setImageBitmap(bitmap);
+				
 				super.onSuccess(arg0, arg1, arg2);
 
 			};
