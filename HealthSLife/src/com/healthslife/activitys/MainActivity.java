@@ -22,7 +22,9 @@ import com.loopj.android.http.AsyncHttpClient;
 public class MainActivity extends BaseFragmentActivity {
 	public Button btn;
 	private ImageView img;
+	
 	public AsyncHttpClient mClient;
+	
 	public MyAsyncHttpResponseHandler handler;
 
 	@Override
@@ -36,6 +38,7 @@ public class MainActivity extends BaseFragmentActivity {
 				Bitmap bitmap = BitmapFactory.decodeByteArray(arg2, 0,
 						arg2.length);
 				img.setImageBitmap(bitmap);
+				
 				super.onSuccess(arg0, arg1, arg2);
 			};
 		};
