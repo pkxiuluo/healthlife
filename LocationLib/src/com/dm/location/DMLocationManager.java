@@ -1,4 +1,4 @@
-package com.example.locationlib;
+package com.dm.location;
 
 import java.util.ArrayList;
 
