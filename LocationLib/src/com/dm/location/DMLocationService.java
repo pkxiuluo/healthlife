@@ -1,4 +1,4 @@
-package com.example.locationlib;
+package com.dm.location;
 
 import android.app.Service;
 import android.content.Intent;

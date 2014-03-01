@@ -2,6 +2,10 @@ package com.example.locationlib;
 
 import java.util.Date;
 
+import com.dm.location.DMLoation;
+import com.dm.location.DMLocationManager;
+import com.dm.location.DMLocationObserver;
+
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
@@ -19,6 +23,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	private Button start;
 	private Button shut;
 	private Button change;
+	private Button map;
 	private TextView locationTextView;
 	private MyLocationObserver observer;
 	private boolean isGPS = false;
@@ -31,6 +36,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		start = (Button) findViewById(R.id.start);
 		shut = (Button) findViewById(R.id.shut);
 		change = (Button) findViewById(R.id.change);
+		map = (Button) findViewById(R.id.start_map);
 		Intent intent = new Intent();
 		// bindService(service, conn, flags)
 		setChangeBtnText();
@@ -40,6 +46,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		change.setOnClickListener(this);
 		start.setOnClickListener(this);
 		shut.setOnClickListener(this);
+		map.setOnClickListener(this);
 	}
 
 	private void setChangeBtnText() {
@@ -49,19 +56,19 @@ public class MainActivity extends Activity implements OnClickListener {
 			change.setText("NetWork");
 		}
 	}
-	
-	private class MyServiceConnection implements ServiceConnection{
+
+	private class MyServiceConnection implements ServiceConnection {
 
 		@Override
 		public void onServiceConnected(ComponentName name, IBinder service) {
-			
+
 		}
 
 		@Override
 		public void onServiceDisconnected(ComponentName name) {
-			
+
 		}
-		
+
 	}
 
 	private class MyLocationObserver extends DMLocationObserver {
@@ -108,6 +115,10 @@ public class MainActivity extends Activity implements OnClickListener {
 		if (v == shut) {
 			manager.removeLocatoinObserver(observer);
 			locationTextView.setText("stoped");
+		}
+		if (v == map) {
+			Intent intent = new Intent(this, MapActivity.class);
+			startActivity(intent);
 		}
 	}
 
