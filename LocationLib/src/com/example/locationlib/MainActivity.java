@@ -29,7 +29,7 @@ public class MainActivity extends Activity {
 		setChangeBtnText();
 		locationTextView = (TextView) findViewById(R.id.location);
 		manager = new DMLocationManager(this);
-		observer = new MyLocationObserver(LocationManager.NETWORK_PROVIDER, 2000);
+		observer = new MyLocationObserver(LocationManager.NETWORK_PROVIDER, 1000);
 		change.setOnClickListener(new OnClickListener() {
 
 			@Override
