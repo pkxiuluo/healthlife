@@ -18,7 +18,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity  implements OnClickListener {
 	private DMLocationManager manager;
 	private Button start;
 	private Button shut;
