@@ -18,7 +18,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class MainActivity extends Activity implements OnClickListener {
+public class MainActivity extends Activity {
 	private DMLocationManager manager;
 	private Button start;
 	private Button shut;
@@ -42,7 +42,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		setChangeBtnText();
 		locationTextView = (TextView) findViewById(R.id.location);
 		manager = new DMLocationManager(this);
-		observer = new MyLocationObserver(LocationManager.NETWORK_PROVIDER, 2000);
+		observer = new MyLocationObserver(LocationManager.NETWORK_PROVIDER, 1000);
 		change.setOnClickListener(this);
 		start.setOnClickListener(this);
 		shut.setOnClickListener(this);
