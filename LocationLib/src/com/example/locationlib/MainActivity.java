@@ -2,7 +2,7 @@ package com.example.locationlib;
 
 import java.util.Date;
 
-import com.dm.location.DMLoation;
+import com.dm.location.DMLocation;
 import com.dm.location.DMLocationManager;
 import com.dm.location.DMLocationObserver;
 
@@ -78,7 +78,7 @@ public class MainActivity extends Activity  implements OnClickListener {
 		}
 
 		@Override
-		public void callBack(DMLoation loation) {
+		public void callBack(DMLocation loation) {
 			String old = locationTextView.getText().toString();
 			StringBuffer sb = new StringBuffer(old);
 			sb.append("time:");

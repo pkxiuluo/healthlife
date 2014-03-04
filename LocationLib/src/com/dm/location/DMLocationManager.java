@@ -30,6 +30,11 @@ public class DMLocationManager {
 		mGpsListener = new GPSListener();
 		mNetWorkListener = new NetWorkListener();
 	}
+	
+	public DMLocation getLastKonwnLocation(String provider){
+		Location location =mLocationManager.getLastKnownLocation(provider);
+		return new DMLocation(location);
+	}
 
 	public void notifiObserverChanged() {
 		if (isConfigChanged(LocationManager.GPS_PROVIDER)) {
@@ -38,6 +43,12 @@ public class DMLocationManager {
 		if (isConfigChanged(LocationManager.NETWORK_PROVIDER)) {
 			reset(LocationManager.NETWORK_PROVIDER);
 		}
+	}
+
+	@Override
+	protected void finalize() throws Throwable {
+		clearLocationObserver();
+		super.finalize();
 	}
 
 	public void addLocatoinObserver(DMLocationObserver observer) {
@@ -74,7 +85,6 @@ public class DMLocationManager {
 			} else {
 				isGPSListened = false;
 			}
-
 		} else if (provider.equals(LocationManager.NETWORK_PROVIDER)) {
 			mLocationManager.removeUpdates(mNetWorkListener);
 			if (isContainProvider(provider)) {
@@ -136,13 +146,14 @@ public class DMLocationManager {
 		}
 		return max;
 	}
+
 	private class GPSListener implements LocationListener {
 
 		@Override
 		public void onLocationChanged(Location location) {
 			for (DMLocationObserver observer : observerList) {
 				if (observer.getProvider().equals(LocationManager.GPS_PROVIDER)) {
-					observer.observe(new DMLoation(location));
+					observer.observe(new DMLocation(location));
 				}
 
 			}
@@ -167,7 +178,7 @@ public class DMLocationManager {
 		public void onLocationChanged(Location location) {
 			for (DMLocationObserver observer : observerList) {
 				if (observer.getProvider().equals(LocationManager.NETWORK_PROVIDER)) {
-					observer.observe(new DMLoation(location));
+					observer.observe(new DMLocation(location));
 				}
 			}
 		}

@@ -26,7 +26,7 @@ public abstract class DMLocationObserver {
 		this.interval = interval;
 	}
 
-	final void observe(DMLoation loation) {
+	final void observe(DMLocation loation) {
 		long currentTime = System.currentTimeMillis();
 		// lastTIme==0，第一次请求 调用callback
 		// currentTime - lastTime >= interval最小间隔满足也调用callback
@@ -36,7 +36,7 @@ public abstract class DMLocationObserver {
 		}
 	};
 
-	public abstract void callBack(DMLoation loation);
+	public abstract void callBack(DMLocation loation);
 
 	public String getProvider() {
 		return provider;

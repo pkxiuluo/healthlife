@@ -4,10 +4,11 @@ import java.util.Date;
 
 import android.location.Location;
 
-public class DMLoation {
+public class DMLocation {
 
 	double latitude;
 	double longitude;
+
 	public double getLatitude() {
 		return latitude;
 	}
@@ -26,15 +27,34 @@ public class DMLoation {
 
 	double altitude;
 	long time;
+	String provider;
+	float accuracy;
 
-	public DMLoation() {
+	public String getProvider() {
+		return provider;
 	}
 
-	public DMLoation(Location location) {
+	public float getAccuracy() {
+		return accuracy;
+	}
+
+	public float getSpeed() {
+		return speed;
+	}
+
+	float speed;
+
+	public DMLocation() {
+	}
+
+	public DMLocation(Location location) {
 		latitude = location.getLatitude();
 		longitude = location.getLongitude();
 		altitude = location.getAltitude();
 		time = location.getTime();
+		provider = location.getProvider();
+		accuracy = location.getAccuracy();
+		speed = location.getSpeed();
 	}
 
 	@Override
