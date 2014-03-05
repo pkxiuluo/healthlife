@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 import android.content.ComponentName;
@@ -11,6 +12,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.location.LocationManager;
+import android.os.Handler;
 import android.os.IBinder;
 
 public class DMLocationClient {
@@ -23,11 +25,18 @@ public class DMLocationClient {
 	private DMLocationClientOption mOption;
 	private List<DMLocationObserver> observerList = new ArrayList<DMLocationObserver>();
 	private static ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
-	private boolean isStarted = false;
+	private Handler handler = new Handler();
+	private boolean isStartd =false;
+	
+	private ScheduledFuture<?> future;
 
 	public DMLocationClient(Context context) {
 		mContext = context;
 		mConn = new MyServiceConnection();
+	}
+
+	public void setOption(DMLocationClientOption option) {
+		mOption = option;
 	}
 
 	public void setLocationListener(OnLocationChangeListener listener) {
@@ -35,21 +44,21 @@ public class DMLocationClient {
 	}
 
 	public void start() {
-		if (!isStarted) {
-			if (!hasBindService || mLocationManager == null) {
-				Intent intent = new Intent(mContext, DMLocationService.class);
-				mContext.bindService(intent, mConn, Context.BIND_AUTO_CREATE);
-			}
+		if (!hasBindService) {
+			System.out.println("start");
+			Intent intent = new Intent(mContext, DMLocationService.class);
+			mContext.bindService(intent, mConn, Context.BIND_AUTO_CREATE);
+		}else{
 			if (mOption == null) {
 				mOption = DMLocationClientOption.getDefaultOption();
 			}
 			startRequest(mOption);
+			isStartd =true;
 		}
-		isStarted = true;
 	}
 
 	private void startRequest(DMLocationClientOption option) {
-		executor.scheduleAtFixedRate(new LocationResponse(), option.getInterval(), option.getInterval(),
+		future =	executor.scheduleAtFixedRate(new LocationResponse(), option.getInterval(), option.getInterval(),
 				TimeUnit.MILLISECONDS);
 		observerList.clear();
 		observerList.addAll(genObserverList(option));
@@ -99,43 +108,61 @@ public class DMLocationClient {
 	}
 
 	public void stop() {
-		if (isStarted) {
-			executor.shutdown();
+		if(isStartd){
+			future.cancel(true);
 			if (mLocationManager != null) {
 				for (DMLocationObserver observer : observerList) {
 					mLocationManager.removeLocatoinObserver(observer);
 				}
 			}
-			mContext.unbindService(mConn);
+			isStartd =false;
 		}
-		isStarted = false;
 	}
 
 	private class MyServiceConnection implements ServiceConnection {
 
 		@Override
 		public void onServiceConnected(ComponentName name, IBinder service) {
+			System.out.println("bind");
 			if (service != null) {
 				DMLocationService.LocationBinder binder = (DMLocationService.LocationBinder) service;
 				mLocationManager = binder.getLocationManager();
 				hasBindService = true;
+				if (mOption == null) {
+					mOption = DMLocationClientOption.getDefaultOption();
+				}
+				startRequest(mOption);
+				isStartd =true;
 			}
 		}
 
 		@Override
 		public void onServiceDisconnected(ComponentName name) {
+			System.out.println("unBind");
+			executor.shutdown();
+			if (mLocationManager != null) {
+				for (DMLocationObserver observer : observerList) {
+					mLocationManager.removeLocatoinObserver(observer);
+				}
+			}
 			hasBindService = false;
-			mLocationManager.clearLocationObserver();
 			mLocationManager = null;
+			isStartd =false;
 		}
 	}
 
 	private class LocationResponse implements Runnable {
 		@Override
 		public void run() {
-			if (oldLocation != null && mListener != null) {
-				mListener.onLocationChanged(oldLocation);
-			}
+			handler.post(new Runnable() {
+				@Override
+				public void run() {
+					if (oldLocation != null && mListener != null) {
+						mListener.onLocationChanged(oldLocation);
+					}
+
+				}
+			});
 		}
 	}
 
@@ -150,7 +177,6 @@ public class DMLocationClient {
 				oldLocation = loation;
 			}
 		}
-
 	}
 
 	public static interface OnLocationChangeListener {

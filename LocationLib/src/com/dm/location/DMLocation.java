@@ -69,7 +69,8 @@ public class DMLocation {
 		sb.append(longitude);
 		sb.append("altitude:");
 		sb.append(altitude);
-
+		sb.append("provider:");
+		sb.append(provider);
 		return sb.toString();
 	}
 }
