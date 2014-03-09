@@ -1,29 +1,142 @@
 package com.healthslife.activitys;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.content.res.Configuration;
+import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.DrawerLayout.DrawerListener;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 
 import com.healthslife.BaseFragmentActivity;
 import com.healthslife.R;
 import com.healthslife.adapters.NavigationAdapter;
+import com.healthslife.adapters.NavigationAdapter.DataHolder;
+import com.healthslife.fragments.RunFragment;
 
 public class MainActivity extends BaseFragmentActivity {
 	private DrawerLayout drawerLayout;
 	private ListView navi;
-	private String[] title = { "1", "2", "3" };
+	private List<DataHolder> naviList = new ArrayList<DataHolder>();
+	private BaseAdapter naviAdapter;
+	private FrameLayout contentLayout;
+	private CharSequence mDrawerTitle;
+	private CharSequence mNoDrawertitle;
+	private MyDrawerToggle mDrawerToggle;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		init();
+		initData();
+		initView();
+		if (savedInstanceState == null) {
+			selectItem(0);
+		}
 	}
 
-	private void init() {
+	private void initData() {
+		TypedArray titleArray = getResources().obtainTypedArray(R.array.navigation_title);
+		TypedArray iconArray = getResources().obtainTypedArray(R.array.navigation_icon);
+		int count = titleArray.length();
+		for (int i = 0; i < count; i++) {
+			DataHolder data = new DataHolder();
+			data.icon = iconArray.getDrawable(i);
+			data.title = titleArray.getString(i);
+			naviList.add(data);
+		}
+		titleArray.recycle();
+		iconArray.recycle();
+	}
+
+	private void initView() {
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		mDrawerTitle = mNoDrawertitle = getTitle();
 		drawerLayout = (DrawerLayout) findViewById(R.id.main_drawer_layout);
+		contentLayout = (FrameLayout) findViewById(R.id.main_content_layout);
 		navi = (ListView) findViewById(R.id.main_left_navi_list);
-		navi.setAdapter(new NavigationAdapter(this));
+		naviAdapter = new NavigationAdapter(this, naviList);
+		navi.setAdapter(naviAdapter);
+		navi.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+				selectItem(arg2);
+			}
+		});
+		mDrawerToggle = new MyDrawerToggle();
+		drawerLayout.setDrawerListener(mDrawerToggle);
+	}
+
+	private void selectItem(int position) {
+		DataHolder data = (DataHolder) naviAdapter.getItem(position);
+		Fragment fragment = new RunFragment();
+		FragmentManager manager = getFragmentManager();
+		manager.beginTransaction().replace(R.id.main_content_layout, fragment).commit();
+		navi.setItemChecked(position, true);
+		setTitle(data.title);
+		drawerLayout.closeDrawer(navi);
+	}
+
+	@Override
+	public void setTitle(CharSequence title) {
+		mNoDrawertitle = title;
+		getActionBar().setTitle(title);
+	}
+
+	/**
+	 * When using the ActionBarDrawerToggle, you must call it during
+	 * onPostCreate() and onConfigurationChanged()...
+	 */
+
+	@Override
+	protected void onPostCreate(Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
+		// Sync the toggle state after onRestoreInstanceState has occurred.
+		mDrawerToggle.syncState();
+	}
+
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		// Pass any configuration change to the drawer toggls
+		mDrawerToggle.onConfigurationChanged(newConfig);
+	}
+
+	private class MyDrawerToggle extends ActionBarDrawerToggle {
+
+		public MyDrawerToggle() {
+			super(MainActivity.this, drawerLayout, R.drawable.ic_drawer, R.string.drawer_open,
+					R.string.drawer_close);
+		}
+
+		@Override
+		public void onDrawerOpened(View drawerView) {
+			// super.onDrawerOpened(drawerView);
+			getActionBar().setTitle(mDrawerTitle);
+			invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+		}
+
+		@Override
+		public void onDrawerClosed(View drawerView) {
+			// super.onDrawerClosed(drawerView);
+			getActionBar().setTitle(mNoDrawertitle);
+			invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+
+		}
+
 	}
 
 }

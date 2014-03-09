@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="navigation_title">
+        <item>@string/navi_run</item>
+        <item>@string/navi_health_test</item>
+        <item>@string/navi_invite</item>
+        <item>@string/navi_setting</item>
+    </array>
+    <array name="navigation_icon">
+        <item>@drawable/ic_launcher</item>
+        <item>@drawable/ic_launcher</item>
+        <item>@drawable/ic_launcher</item>
+        <item>@drawable/ic_launcher</item>
+    </array>
+
+</resources>
