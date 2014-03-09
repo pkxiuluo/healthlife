@@ -38,7 +38,7 @@ public class NavigationAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder;
 		if (convertView == null) {
-			convertView = LayoutInflater.from(mContext).inflate(R.layout.activity_main, null);
+			convertView = LayoutInflater.from(mContext).inflate(R.layout.item_navigation, null);
 			holder = new ViewHolder();
 			holder.img = (ImageView) convertView.findViewById(R.id.navi_icon_img);
 			holder.txt = (TextView) convertView.findViewById(R.id.navi_title_txt);
