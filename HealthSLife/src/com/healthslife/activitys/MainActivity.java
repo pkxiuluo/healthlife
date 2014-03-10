@@ -3,7 +3,6 @@ package com.healthslife.activitys;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.res.Configuration;
@@ -11,7 +10,6 @@ import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.DrawerLayout.DrawerListener;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -26,6 +24,7 @@ import com.healthslife.BaseFragmentActivity;
 import com.healthslife.R;
 import com.healthslife.adapters.NavigationAdapter;
 import com.healthslife.adapters.NavigationAdapter.DataHolder;
+import com.healthslife.fragments.HealthTestFragment;
 import com.healthslife.fragments.RunFragment;
 
 public class MainActivity extends BaseFragmentActivity {
@@ -83,11 +82,23 @@ public class MainActivity extends BaseFragmentActivity {
 
 	private void selectItem(int position) {
 		DataHolder data = (DataHolder) naviAdapter.getItem(position);
-		Fragment fragment = new RunFragment();
-		FragmentManager manager = getFragmentManager();
-		manager.beginTransaction().replace(R.id.main_content_layout, fragment).commit();
 		navi.setItemChecked(position, true);
 		setTitle(data.title);
+
+		Fragment fragment = null;
+		switch (position) {
+		case 0:
+			fragment = new RunFragment();
+			break;
+		case 1:
+			fragment = new HealthTestFragment();
+			break;
+		default:
+			fragment = new RunFragment();
+			break;
+		}
+		FragmentManager manager = getFragmentManager();
+		manager.beginTransaction().replace(R.id.main_content_layout, fragment).commit();
 		drawerLayout.closeDrawer(navi);
 	}
 
@@ -95,6 +106,23 @@ public class MainActivity extends BaseFragmentActivity {
 	public void setTitle(CharSequence title) {
 		mNoDrawertitle = title;
 		getActionBar().setTitle(title);
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.main, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	/* Called whenever we call invalidateOptionsMenu() */
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		int selectedPosition = navi.getCheckedItemPosition();
+		boolean isVisible = (selectedPosition == 0 || selectedPosition == 1) ? true : false;
+		// menu.findItem(R.id.action_music).setVisible(isVisible);
+		menu.findItem(R.id.action_history).setVisible(isVisible);
+		return super.onPrepareOptionsMenu(menu);
 	}
 
 	@Override

@@ -23,7 +23,7 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:logo="@drawable/navi_run_"
+        android:logo="@drawable/logo_empty"
         android:theme="@style/AppThemeTitleBar" >
         <meta-data
             android:name="com.amap.api.v2.apikey"

@@ -3,11 +3,20 @@
 
     <string name="app_name">健康S生活</string>
     <string name="action_settings">设置</string>
+    <!-- MainActivity START -->
     <string name="navi_run">跑步</string>
     <string name="navi_health_test">健康指数测试</string>
     <string name="navi_invite">约跑</string>
     <string name="navi_setting">设置</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
-
+    <!-- MainActivity END -->
+    <!-- menu START -->
+    <string name="music">音乐</string>
+    <string name="history">历史记录</string>
+    <!-- menu END -->
+    <!--RunFragment START  -->
+    <string name="run_normal">自由跑</string>
+     <string name="run_destination">地点跑</string>
+        <!--RunFragment END  -->
 </resources>
