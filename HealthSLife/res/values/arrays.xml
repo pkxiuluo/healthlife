@@ -8,10 +8,10 @@
         <item>@string/navi_setting</item>
     </array>
     <array name="navigation_icon">
-        <item>@drawable/ic_launcher</item>
-        <item>@drawable/ic_launcher</item>
-        <item>@drawable/ic_launcher</item>
-        <item>@drawable/ic_launcher</item>
+        <item>@drawable/navi_run_selector</item>
+        <item>@drawable/navi_heart_selector</item>
+        <item>@drawable/navi_invite_selector</item>
+        <item>@drawable/navi_setting_selector</item>
     </array>
 
 </resources>

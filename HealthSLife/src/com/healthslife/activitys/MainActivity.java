@@ -129,7 +129,7 @@ public class MainActivity extends BaseFragmentActivity {
 	private class MyDrawerToggle extends ActionBarDrawerToggle {
 
 		public MyDrawerToggle() {
-			super(MainActivity.this, drawerLayout, R.drawable.ic_drawer, R.string.drawer_open,
+			super(MainActivity.this, drawerLayout, R.drawable.ic_drawer_navi, R.string.drawer_open,
 					R.string.drawer_close);
 		}
 

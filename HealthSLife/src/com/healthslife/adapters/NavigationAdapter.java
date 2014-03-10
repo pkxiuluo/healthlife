@@ -17,9 +17,9 @@ public class NavigationAdapter extends BaseAdapter {
 	private Context mContext;
 	private List<DataHolder> mDataList;
 
-	public NavigationAdapter(Context context , List<DataHolder> dataList) {
+	public NavigationAdapter(Context context, List<DataHolder> dataList) {
 		mContext = context;
-		mDataList= dataList;
+		mDataList = dataList;
 	}
 
 	@Override
@@ -58,9 +58,10 @@ public class NavigationAdapter extends BaseAdapter {
 		ImageView img;
 		TextView txt;
 	}
-	public static class DataHolder{
-	 public	Drawable icon;
-	 public String title;
+
+	public static class DataHolder {
+		public Drawable icon;
+		public String title;
 	}
 
 }
