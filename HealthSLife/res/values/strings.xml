@@ -15,8 +15,16 @@
     <string name="music">音乐</string>
     <string name="history">历史记录</string>
     <!-- menu END -->
-    <!--RunFragment START  -->
+    <!-- RunFragment START -->
     <string name="run_normal">自由跑</string>
-     <string name="run_destination">地点跑</string>
-        <!--RunFragment END  -->
+    <string name="run_destination">地点跑</string>
+    <string name="run_distance">距离跑</string>
+    <!-- RunFragment END -->
+
+    <string name="run_duration">跑步时长</string>
+    <string name="run_running_distance">以跑路程</string>
+    <string name="run_calorie_used">卡路里消耗</string>
+    <string name="run_real_time_speed">实时速度</string>
+    <string name="run_duration_empty">00:00:00</string>
+
 </resources>

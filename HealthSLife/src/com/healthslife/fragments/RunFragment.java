@@ -33,31 +33,21 @@ public class RunFragment extends Fragment {
 	}
 
 	private class MyPagerAdapter extends FragmentStatePagerAdapter {
-
+		String[] titleStrings;
 		public MyPagerAdapter(FragmentManager fm) {
 			super(fm);
+			 titleStrings=	getResources().getStringArray(R.array.run_tab_title);
 		}
 
 		@Override
 		public CharSequence getPageTitle(int position) {
-			CharSequence title = null;
-			switch (position) {
-			case 0:
-				title = getResources().getString(R.string.run_normal);
-				break;
-			case 1:
-				title = getResources().getString(R.string.run_destination);
-				break;
-			default:
-				title = "";
-				break;
-			}
+			CharSequence title = titleStrings[position];
 			return title;
 		}
 
 		@Override
 		public int getCount() {
-			return 2;
+			return titleStrings.length;
 		}
 
 		@Override
@@ -68,6 +58,9 @@ public class RunFragment extends Fragment {
 				fragment = new NormalRunFragment();
 				break;
 			case 1:
+				fragment = new DistanceRunFragment();
+				break;
+			case 2:
 				fragment = new DestinationRunFragment();
 				break;
 			default:

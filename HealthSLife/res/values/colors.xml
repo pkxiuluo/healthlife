@@ -5,6 +5,9 @@
     <color name="red">#f03129</color>
     <color name="navi_title_white">#ffffff</color>
     <color name="tab_bg">#313131</color>
+
     <item name="navi_title_red" format="color" type="color">@color/red</item>
+
+    <color name="gray_bg">#7f000000</color>
 
 </resources>
