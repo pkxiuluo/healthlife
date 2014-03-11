@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="divider">#1b1b1b</color>
-    <color name="navi_title_red">#f03129</color>
-       <color name="navi_title_white">#ffffff</color>
+    <color name="red">#f03129</color>
+    <color name="navi_title_white">#ffffff</color>
+    <color name="tab_bg">#313131</color>
+    <item name="navi_title_red" format="color" type="color">@color/red</item>
+
 </resources>

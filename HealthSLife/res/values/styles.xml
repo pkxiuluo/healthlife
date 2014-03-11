@@ -21,6 +21,7 @@
     <style name="WhiteTitleStyle" parent="@android:style/TextAppearance">
         <item name="android:textColor">#ffffff</item>
         <item name="android:textSize">20dp</item>
+        <item name="android:textStyle">normal</item>
     </style>
 
 </resources>

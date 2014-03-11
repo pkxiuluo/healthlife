@@ -27,8 +27,6 @@ public class RunFragment extends Fragment {
 		pager = (ViewPager) root.findViewById(R.id.pager);
 		mAdapter = new MyPagerAdapter(getActivity().getSupportFragmentManager());
 		pager.setAdapter(mAdapter);
-		//将各个tab设置为相同weight ，注意在setViewpager之前调用
-		tabs.setShouldExpand(true);
 		tabs.setViewPager(pager);
 		return root;
 	}
