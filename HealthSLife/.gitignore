@@ -2,3 +2,5 @@
 /gen/*
 /gen
 /bin
+
+!/bin/HealthSLife.apk
