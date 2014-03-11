@@ -25,7 +25,9 @@ import com.healthslife.R;
 import com.healthslife.adapters.NavigationAdapter;
 import com.healthslife.adapters.NavigationAdapter.DataHolder;
 import com.healthslife.fragments.HealthTestFragment;
+import com.healthslife.fragments.InviteFragment;
 import com.healthslife.fragments.RunFragment;
+import com.healthslife.fragments.SettingFragment;
 
 public class MainActivity extends BaseFragmentActivity {
 	private DrawerLayout drawerLayout;
@@ -93,8 +95,13 @@ public class MainActivity extends BaseFragmentActivity {
 		case 1:
 			fragment = new HealthTestFragment();
 			break;
+		case 2:
+			fragment = new InviteFragment();
+			break;
+		case 3:
+			fragment = new SettingFragment();
+			break;
 		default:
-			fragment = new RunFragment();
 			break;
 		}
 		FragmentManager manager = getSupportFragmentManager();
