@@ -10,6 +10,7 @@
 
     <style name="AppThemeTitleBar" parent="@android:style/Theme.Holo.Light">
         <item name="android:actionBarStyle">@style/BlackActionBar</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_navi_back</item>
     </style>
 
     <style name="BlackActionBar" parent="android:Widget.ActionBar">
