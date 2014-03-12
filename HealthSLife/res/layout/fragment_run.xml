@@ -36,6 +36,7 @@
             android:src="@drawable/run_gray_bg" />
 
         <ImageView
+            android:id="@+id/run_begin_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

@@ -26,8 +26,8 @@ import com.healthslife.adapters.NavigationAdapter;
 import com.healthslife.adapters.NavigationAdapter.DataHolder;
 import com.healthslife.fragments.HealthTestFragment;
 import com.healthslife.fragments.InviteFragment;
-import com.healthslife.fragments.RunFragment;
 import com.healthslife.fragments.SettingFragment;
+import com.healthslife.run.fragments.RunFragment;
 
 public class MainActivity extends BaseFragmentActivity {
 	private DrawerLayout drawerLayout;

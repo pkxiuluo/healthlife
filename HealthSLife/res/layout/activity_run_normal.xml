@@ -13,34 +13,114 @@
         android:src="@drawable/background" />
 
     <RelativeLayout
-        android:id="@+id/run_duration_layout"
+        android:id="@+id/run_top_layout"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="100dp"
         android:background="@color/gray_bg" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/run_duration"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/text_size_small_l" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/run_duration_empty"
+            android:textColor="@color/red"
+            android:textSize="@dimen/text_size_big_ss"
+            android:textStyle="bold" />
     </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/run_middle_layout"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:layout_below="@+id/run_duration_layout"
-        android:layout_marginTop="4dp"
+        android:layout_below="@+id/run_top_layout"
+        android:layout_marginTop="2dp"
         android:orientation="horizontal" >
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginRight="2dp"
+            android:layout_marginRight="1dp"
             android:layout_weight="1"
             android:background="@color/gray_bg" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/run_calorie_used"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_small_l" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="0cal"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_size_big_s"
+                android:textStyle="bold" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="2dp"
+            android:layout_marginLeft="1dp"
             android:layout_weight="1"
             android:background="@color/gray_bg" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/run_real_time_speed"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_small_l" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="0m/s"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_size_big_s"
+                android:textStyle="bold" />
         </RelativeLayout>
     </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@+id/run_middle_layout"
+        android:layout_marginTop="2dp"
+        android:background="@color/gray_bg" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/run_running_distance"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/text_size_small_l" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="0m"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/text_size_big_s"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <include
+        layout="@layout/run_stop_layout" />
 
 </RelativeLayout>
