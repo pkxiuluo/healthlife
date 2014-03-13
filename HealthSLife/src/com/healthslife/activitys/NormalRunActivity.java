@@ -8,9 +8,12 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.dm.location.DMLocation;
+import com.dm.location.DMLocationClient.OnLocationChangeListener;
 import com.healthslife.BaseFragmentActivity;
 import com.healthslife.R;
 import com.healthslife.dialog.CountDownDialog;
+import com.healthslife.run.RunClient;
 
 public class NormalRunActivity extends BaseFragmentActivity {
 	public static final String RUN_SETTING = "runSetting";
@@ -19,6 +22,8 @@ public class NormalRunActivity extends BaseFragmentActivity {
 	private View root;
 	private View panelLayout;
 	private View btnLayout;
+	
+	private RunClient mClient;
 
 	@Override
 	protected void onCreate(Bundle arg0) {
@@ -29,6 +34,16 @@ public class NormalRunActivity extends BaseFragmentActivity {
 		setContentView(root);
 		setActionBar();
 		initDialog();
+		
+		mClient =new RunClient(this);
+		mClient.init();
+		mClient.setOnLocationChangeListener(new OnLocationChangeListener() {
+			
+			@Override
+			public void onLocationChanged(DMLocation loation) {
+				System.out.println(loation.getLatitude());
+			}
+		});
 		super.onCreate(arg0);
 	}
 
@@ -39,6 +54,7 @@ public class NormalRunActivity extends BaseFragmentActivity {
 			@Override
 			public void onDismiss(DialogInterface dialog) {
 				setViewVisibility(View.VISIBLE);
+				mClient.start();
 			}
 		});
 	}
@@ -53,6 +69,7 @@ public class NormalRunActivity extends BaseFragmentActivity {
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		// actionBar.setLogo(R.drawable.navi_run_);
 	}
+	
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
