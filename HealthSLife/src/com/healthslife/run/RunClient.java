@@ -12,5 +12,6 @@ public class RunClient {
 	}
 
 	public interface OnStatusChangedListener{
+
 	}
 }
