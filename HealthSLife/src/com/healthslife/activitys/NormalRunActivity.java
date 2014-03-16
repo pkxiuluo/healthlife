@@ -1,5 +1,7 @@
 package com.healthslife.activitys;
 
+import javax.xml.datatype.Duration;
+
 import android.app.ActionBar;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
@@ -36,23 +38,23 @@ public class NormalRunActivity extends BaseFragmentActivity implements OnClickLi
 		root = LayoutInflater.from(this).inflate(R.layout.activity_run_normal, null);
 		panelLayout = root.findViewById(R.id.run_normal_panel);
 		btnLayout = root.findViewById(R.id.run_normal_btn_layout);
-		stopBtn= (ImageView) root.findViewById(R.id.run_stop_btn);
-		speedTxt= (TextView) root.findViewById(R.id.run_speed_txt);
+		stopBtn = (ImageView) root.findViewById(R.id.run_stop_btn);
+		speedTxt = (TextView) root.findViewById(R.id.run_speed_txt);
 		stopBtn.setOnClickListener(this);
-		
+
 		setViewVisibility(View.INVISIBLE);
 		setContentView(root);
 		setActionBar();
 		initDialog();
-		
-		mClient =new RunClient(this);
+
+		mClient = new RunClient(this);
 		mClient.init();
 		mClient.setOnLocationChangeListener(new OnLocationChangeListener() {
-			
+
 			@Override
 			public void onLocationChanged(DMLocation loation) {
-//				System.out.println(loation.getLatitude());			
-				speedTxt.setText(loation.getSpeed()+"m/s");
+				// System.out.println(loation.getLatitude());
+				speedTxt.setText(loation.getSpeed() + "m/s");
 			}
 		});
 		super.onCreate(arg0);
