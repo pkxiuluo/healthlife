@@ -13,10 +13,11 @@ public class RunSettingUtil {
 		case RunSetting.NORMAL:
 			intent = new Intent(context, NormalRunActivity.class);
 			intent.putExtra(NormalRunActivity.RUN_SETTING, setting);
+			context.startActivity(intent);
 			break;
 		default:
 			break;
 		}
-		context.startActivity(intent);
+	
 	}
 }

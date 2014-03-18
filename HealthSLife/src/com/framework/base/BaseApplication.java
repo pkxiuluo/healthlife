@@ -1,6 +1,7 @@
 package com.framework.base;
 
 import android.app.Application;
+import android.database.sqlite.SQLiteOpenHelper;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;

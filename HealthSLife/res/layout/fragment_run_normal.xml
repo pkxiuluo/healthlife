@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
 
     <RelativeLayout
         android:id="@+id/run_top_layout"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:background="@color/gray_bg" >
 
         <TextView
@@ -30,9 +32,9 @@
     <LinearLayout
         android:id="@+id/run_middle_layout"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_below="@+id/run_top_layout"
+        android:layout_height="0dp"
         android:layout_marginTop="2dp"
+        android:layout_weight="1"
         android:orientation="horizontal" >
 
         <RelativeLayout
@@ -88,9 +90,9 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_below="@+id/run_middle_layout"
+        android:layout_height="0dp"
         android:layout_marginTop="2dp"
+        android:layout_weight="1"
         android:background="@color/gray_bg" >
 
         <TextView
@@ -111,5 +113,4 @@
             android:textStyle="bold" />
     </RelativeLayout>
 
-
-</RelativeLayout>
+</LinearLayout>

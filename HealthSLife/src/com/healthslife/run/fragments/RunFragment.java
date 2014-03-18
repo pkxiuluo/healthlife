@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,11 +30,11 @@ public class RunFragment extends Fragment {
 		View root = inflater.inflate(R.layout.fragment_run, container, false);
 		tabs = (PagerSlidingTabStrip) root.findViewById(R.id.tabs);
 		pager = (ViewPager) root.findViewById(R.id.pager);
+		pager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.page_horizontal_margin));
 		beginBtn = root.findViewById(R.id.run_begin_btn);
 		mAdapter = new MyPagerAdapter(getActivity().getSupportFragmentManager());
 		pager.setAdapter(mAdapter);
 		tabs.setViewPager(pager);
-
 		beginBtn.setOnClickListener(new BeginClick());
 		return root;
 	}
@@ -42,7 +43,8 @@ public class RunFragment extends Fragment {
 
 		@Override
 		public void onClick(View v) {
-			RunSettingGetable getable = (RunSettingGetable) mAdapter.getItem(pager.getCurrentItem());
+			RunSettingGetable getable = (RunSettingGetable) mAdapter
+					.getItem(pager.getCurrentItem());
 			RunSetting setting = getable.getRunSetting();
 			RunSettingUtil.startActivity(getActivity(), setting);
 		}

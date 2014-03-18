@@ -18,16 +18,18 @@
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
+        android:layout_above="@+id/run_tab_bottom"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@+id/tabs" />
 
     <FrameLayout
+        android:id="@+id/run_tab_bottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp" >
+        android:layout_margin="20dp" >
 
         <ImageView
             android:layout_width="wrap_content"

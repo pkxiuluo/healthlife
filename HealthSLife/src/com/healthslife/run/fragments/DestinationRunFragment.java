@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class DestinationRunFragment extends Fragment  implements RunSettingGetable {
+public class DestinationRunFragment extends Fragment implements RunSettingGetable {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -20,7 +20,7 @@ public class DestinationRunFragment extends Fragment  implements RunSettingGetab
 
 	@Override
 	public RunSetting getRunSetting() {
-		return new RunSetting();
+		return new RunSetting(RunSetting.DESTINATION);
 	}
 
 }
