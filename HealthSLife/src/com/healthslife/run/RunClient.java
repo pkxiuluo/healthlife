@@ -45,7 +45,7 @@ public class RunClient {
 		}
 		float[] results = new float[1];
 		Location.distanceBetween(startLocation.getLatitude(), startLocation.getLongitude(),
-				currentLocation.getAltitude(), currentLocation.getLongitude(), results);
+				currentLocation.getLatitude(), currentLocation.getLongitude(), results);
 		return results[0];
 	}
 

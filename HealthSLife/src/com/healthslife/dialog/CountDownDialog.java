@@ -27,11 +27,12 @@ public class CountDownDialog extends Dialog {
 	private ImageView img;
 	private TextView txt;
 	private TextSwitcher switcher;
+	private static final int DEFAULT_DURATION=5;
 
+	private int duration=DEFAULT_DURATION;
 	public CountDownDialog(Context context) {
 		this(context, R.style.fullScreenDialog);
 	}
-
 	private CountDownDialog(Context context, int theme) {
 		super(context, theme);
 		init();
@@ -44,18 +45,26 @@ public class CountDownDialog extends Dialog {
 		switcher.setFactory(mViewFactory);
 		switcher.setOutAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.count_down_expand));
 		switcher.setInAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.count_down_expand_in));
-		switcher.setCurrentText("5");
 		setCanceledOnTouchOutside(false);
 		setOnShowListener(new MyShowListener());
 		setCancelable(false);
+	}
+	public void setDuratoin(int duration){
+		if(duration<=0){
+			this.duration = DEFAULT_DURATION;
+			return;
+		}
+		this.duration =duration;
 	}
 
 	private class MyShowListener implements OnShowListener {
 		@Override
 		public void onShow(DialogInterface dialog) {
+			switcher.setCurrentText(String.valueOf(duration));
 			Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.count_down_rotate);
+			animation.setRepeatCount(CountDownDialog.this.duration-1);
 			animation.setAnimationListener(new AnimationListener() {
-				int num = 4;
+				int num = duration-1;
 
 				@Override
 				public void onAnimationStart(Animation animation) {
@@ -72,26 +81,8 @@ public class CountDownDialog extends Dialog {
 					CountDownDialog.this.dismiss();
 				}
 			});
-			AnimationSet animation2 = (AnimationSet) AnimationUtils.loadAnimation(getContext(),
-					R.anim.count_down_expand);
-			animation2.getAnimations().get(0).setAnimationListener(new AnimationListener() {
-				@Override
-				public void onAnimationStart(Animation animation) {
-				}
-
-				@Override
-				public void onAnimationRepeat(Animation animation) {
-					System.out.println(animation.getRepeatCount());
-				}
-
-				@Override
-				public void onAnimationEnd(Animation animation) {
-				}
-			});
 			img.setAnimation(animation);
-			// txt.setAnimation(animation2);
 			animation.start();
-			// animation2.start();
 
 		}
 	}
