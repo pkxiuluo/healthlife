@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 
 import android.content.Context;
 import android.text.format.DateUtils;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

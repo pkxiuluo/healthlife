@@ -30,6 +30,8 @@
 
     <!-- RunResultActivity START -->
     <string name="run_result_title">成就</string>
+    <string name="run_result_target_header_title">本次跑步目标</string>
+    <string name="run_result_data_header_title">本次跑步战况</string>
     <!-- RunResultActivity END -->
 
 </resources>

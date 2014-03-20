@@ -2,7 +2,9 @@ package com.healthslife.activitys;
 
 import android.app.ActionBar;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 
 import com.healthslife.BaseFragmentActivity;
@@ -27,6 +29,8 @@ public class RunResultActivity extends BaseFragmentActivity {
 		setContentView(R.layout.activity_run_result);
 		setActionBar();
 		dataListView = (ListView) findViewById(R.id.run_result_data_list);
+		View v = LayoutInflater.from(this).inflate(R.layout.list_header_run_data, null);
+		dataListView.addHeaderView(v);
 		dataListView.setAdapter(new RunDataAdapter(this, mRunResult));
 
 	}
