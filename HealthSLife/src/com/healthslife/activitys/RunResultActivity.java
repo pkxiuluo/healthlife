@@ -5,18 +5,26 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.healthslife.BaseFragmentActivity;
 import com.healthslife.R;
 import com.healthslife.adapters.RunDataAdapter;
 import com.healthslife.run.dao.RunResult;
+import com.healthslife.run.dao.RunSetting;
 
 public class RunResultActivity extends BaseFragmentActivity {
 	public static final String EXTRA_RUN_RESULT = "runResult";
 	private RunResult mRunResult;
 	private ListView dataListView;
 	private ActionBar actionBar;
+	private View targetLayout;
+	private ImageView targetImg;
+	private TextView targetTitleTxt;
+	private TextView targetContentTxt;
 
 	@Override
 	protected void onCreate(Bundle arg0) {
@@ -28,11 +36,40 @@ public class RunResultActivity extends BaseFragmentActivity {
 		}
 		setContentView(R.layout.activity_run_result);
 		setActionBar();
+		initTargetView();
 		dataListView = (ListView) findViewById(R.id.run_result_data_list);
 		View v = LayoutInflater.from(this).inflate(R.layout.list_header_run_data, null);
 		dataListView.addHeaderView(v);
 		dataListView.setAdapter(new RunDataAdapter(this, mRunResult));
+	}
 
+	private void initTargetView() {
+		targetLayout = findViewById(R.id.run_result_target_layout);
+		targetImg = (ImageView) findViewById(R.id.run_result_target_icon);
+		targetTitleTxt = (TextView) findViewById(R.id.run_result_target_title_txt);
+		targetContentTxt = (TextView) findViewById(R.id.run_result_target_content_txt);
+		RunSetting setting = mRunResult.getRunSetting();
+		if (setting == null || setting.getKind() == RunSetting.NORMAL) {
+			targetLayout.setVisibility(View.GONE);
+			return;
+		} else {
+			targetLayout.setVisibility(View.VISIBLE);
+		}
+		if (mRunResult.getCompleteness() >= 1) {
+			targetImg.setImageResource(R.drawable.ic_correct);
+		} else {
+			targetImg.setImageResource(R.drawable.ic_wrong);
+		}
+		switch (setting.getKind()) {
+		case RunSetting.DISTANCE:
+			// targetTitleTxt.setText(text)
+			break;
+		case RunSetting.DESTINATION:
+			// targetTitleTxt.setText(text)
+			break;
+		default:
+			break;
+		}
 	}
 
 	private void setActionBar() {

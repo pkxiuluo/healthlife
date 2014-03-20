@@ -12,13 +12,76 @@
         android:layout_marginRight="10dp"
         android:src="@drawable/background" />
 
-    <ListView
-        android:id="@+id/run_result_data_list"
+    <LinearLayout
+        android:id="@+id/run_result_target_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="20dp"
+        android:background="@drawable/listview_bg_shadow"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/medal"
+                android:drawablePadding="3dp"
+                android:text="@string/run_result_target_header_title"
+                android:textColor="@color/red"
+                android:textSize="@dimen/text_size_small" />
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="2dp"
+                android:src="@color/red" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="7dp"
+            android:paddingTop="7dp" >
+
+            <ImageView
+                android:id="@+id/run_result_target_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_correct" />
+
+            <TextView
+                android:id="@+id/run_result_target_title_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_toRightOf="@+id/run_data_icon"
+                android:textSize="@dimen/text_size_normal" />
+
+            <TextView
+                android:id="@+id/run_result_target_content_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:textSize="@dimen/text_size_normal" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/run_result_data_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignWithParentIfMissing="true"
+        android:layout_below="@+id/run_result_target_layout"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/listview_bg_shadow" >
     </ListView>
 
