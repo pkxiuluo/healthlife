@@ -31,7 +31,8 @@ public class RunSetting implements Serializable {
 
 	public void setKind(int kind) {
 		if (kind != NORMAL && kind != DISTANCE && kind != DESTINATION) {
-			throw new IllegalArgumentException("参数必须为RunSetting.NORMAL或RunSetting.DISTANCE或RunSetting.DESTINATION");
+			throw new IllegalArgumentException(
+					"参数必须为RunSetting.NORMAL或RunSetting.DISTANCE或RunSetting.DESTINATION");
 		}
 		this.kind = kind;
 	}
@@ -51,5 +52,4 @@ public class RunSetting implements Serializable {
 	public void setDistance(int distance) {
 		this.distance = distance;
 	}
-
 }

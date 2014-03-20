@@ -1,6 +1,7 @@
 package com.dm.location;
 
 import android.content.Context;
+import android.location.Location;
 import android.location.LocationManager;
 
 public class DMLocationUtils {
@@ -9,14 +10,14 @@ public class DMLocationUtils {
 
 	// Gps是否可用
 	private boolean isGpsProviderEnable(Context context) {
-		LocationManager locationManager =
-				((LocationManager) context.getSystemService(Context.LOCATION_SERVICE));
+		LocationManager locationManager = ((LocationManager) context
+				.getSystemService(Context.LOCATION_SERVICE));
 		return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
 	}
 
 	private boolean isNetWorkProviderEnable(Context context) {
-		LocationManager locationManager =
-				((LocationManager) context.getSystemService(Context.LOCATION_SERVICE));
+		LocationManager locationManager = ((LocationManager) context
+				.getSystemService(Context.LOCATION_SERVICE));
 		return locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 	}
 
@@ -46,8 +47,7 @@ public class DMLocationUtils {
 		boolean isSignificantlyLessAccurate = accuracyDelta > 200;
 
 		// Check if the old and new location are from the same provider
-		boolean isFromSameProvider = isSameProvider(location.getProvider(),
-				location2.getProvider());
+		boolean isFromSameProvider = isSameProvider(location.getProvider(), location2.getProvider());
 		// Determine location quality using a combination of timeliness and
 		// accuracy
 		if (isMoreAccurate) {
@@ -67,6 +67,15 @@ public class DMLocationUtils {
 			return provider2 == null;
 		}
 		return provider1.equals(provider2);
+	}
+
+	public static float distanceBetween(DMLocation location, DMLocation location2) {
+
+		float[] results = new float[1];
+		Location.distanceBetween(location.getLatitude(), location.getLongitude(),
+				location2.getLatitude(), location2.getLongitude(), results);
+		return results[0];
+
 	}
 
 }

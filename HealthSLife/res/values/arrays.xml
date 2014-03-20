@@ -13,11 +13,17 @@
         <item>@drawable/navi_invite_selector</item>
         <item>@drawable/navi_setting_selector</item>
     </array>
-    
+
     <string-array name="run_tab_title">
-        <item >@string/run_normal</item>
-        <item >@string/run_distance</item>
-        <item >@string/run_destination</item>
+        <item>@string/run_normal</item>
+        <item>@string/run_distance</item>
+        <item>@string/run_destination</item>
+    </string-array>
+    <string-array name="run_data_title">
+        <item>已跑距离</item>
+        <item>跑步时长</item>
+        <item>平均速度</item>
+        <item>消耗卡路里</item>
     </string-array>
 
 </resources>

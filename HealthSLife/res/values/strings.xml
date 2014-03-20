@@ -27,4 +27,9 @@
     <string name="run_target_distance">您本次想跑</string>
     <!-- RunFragment END -->
 
+
+    <!-- RunResultActivity START -->
+    <string name="run_result_title">成就</string>
+    <!-- RunResultActivity END -->
+
 </resources>

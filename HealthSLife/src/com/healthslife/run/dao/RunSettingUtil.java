@@ -12,7 +12,7 @@ public class RunSettingUtil {
 		switch (kind) {
 		case RunSetting.NORMAL:
 			intent = new Intent(context, NormalRunActivity.class);
-			intent.putExtra(NormalRunActivity.RUN_SETTING, setting);
+			intent.putExtra(NormalRunActivity.EXTRA_RUN_SETTING, setting);
 			context.startActivity(intent);
 			break;
 		default:

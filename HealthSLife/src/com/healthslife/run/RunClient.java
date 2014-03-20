@@ -8,6 +8,7 @@ import com.dm.location.DMLocation;
 import com.dm.location.DMLocationClient;
 import com.dm.location.DMLocationClient.OnLocationChangeListener;
 import com.dm.location.DMLocationClientOption;
+import com.dm.location.DMLocationUtils;
 import com.healthslife.run.dao.RunSetting;
 
 public class RunClient {
@@ -17,10 +18,12 @@ public class RunClient {
 	private RunSetting mSetting;
 	private long startTime;
 	private long endTime;
-	private boolean isStop=false;
+	private boolean isStop = false;
 	private OnLocationChangeListener outListener;
 	private DMLocation startLocation;
 	private DMLocation currentLocation;
+
+	private float distance;
 
 	public RunClient(Context context) {
 		mClient = new DMLocationClient(context);
@@ -43,12 +46,13 @@ public class RunClient {
 		if (startLocation == null || currentLocation == null) {
 			return 0;
 		}
-		float[] results = new float[1];
-		Location.distanceBetween(startLocation.getLatitude(), startLocation.getLongitude(),
-				currentLocation.getLatitude(), currentLocation.getLongitude(), results);
-		return results[0];
+		return distance;
 	}
 
+	/**
+	 * 
+	 * @return 毫秒
+	 */
 	public long getDuration() {
 		long duration = 0;
 		if (isStop) {
@@ -59,11 +63,11 @@ public class RunClient {
 		return duration;
 	}
 
-	private void onLocationChanged(DMLocation loation) {
+	protected void onLocationChanged(DMLocation loation) {
 		long millis = this.getDuration();
 		float meter = this.getDistance();
-	
-		System.out.println("dur  " + millis+"dis "+meter);
+
+		System.out.println("dur  " + millis + "dis " + meter);
 	}
 
 	public void stop() {
@@ -83,7 +87,12 @@ public class RunClient {
 			if (startLocation == null) {
 				startLocation = location;
 			}
+			float meters = DMLocationUtils.distanceBetween(location, currentLocation);
+			if (meters > 3.0f) {
+				distance += meters;
+			}
 			currentLocation = location;
+
 			RunClient.this.onLocationChanged(location);
 			if (outListener != null) {
 				outListener.onLocationChanged(location);
