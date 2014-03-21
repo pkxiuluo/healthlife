@@ -2,10 +2,21 @@ package com.healthslife.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.healthslife.R;
 
-public class MyAlertDailog extends Dialog {
+public class MyAlertDailog extends Dialog implements android.view.View.OnClickListener {
+
+	private TextView titleTxt;
+	private TextView contentTxt;
+	private Button positiveBtn;
+	private Button negativeBtn;
+	private OnClickListener positiveListener;
+	private OnClickListener negativeListener;
 
 	public MyAlertDailog(Context context) {
 		this(context, R.style.fullScreenDialog);
@@ -17,15 +28,51 @@ public class MyAlertDailog extends Dialog {
 	}
 
 	private void init() {
-		setContentView(R.layout.dialog_count_down);
-		setCancelable(false);
+		setContentView(R.layout.dialog_alert);
+		titleTxt = (TextView) findViewById(R.id.alert_title);
+		contentTxt = (TextView) findViewById(R.id.alert_content);
+		positiveBtn = (Button) findViewById(R.id.alert_positive_btn);
+		negativeBtn = (Button) findViewById(R.id.alert_negative_btn);
+		positiveBtn.setOnClickListener(this);
+		negativeBtn.setOnClickListener(this);
+		 setCancelable(false);
 	}
-	
+
 	@Override
 	public void setTitle(CharSequence title) {
-//		super.setTitle(title);
+		// super.setTitle(title);
+		titleTxt.setText(title);
 	}
-	
-	
-	
+
+	public void setContent(CharSequence content) {
+		contentTxt.setText(content);
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.alert_positive_btn:
+			if (this.positiveListener != null) {
+				positiveListener.onClick(this, DialogInterface.BUTTON_POSITIVE);
+			}
+			break;
+		case R.id.alert_negative_btn:
+			if (this.negativeListener != null) {
+				negativeListener.onClick(this, DialogInterface.BUTTON_NEGATIVE);
+			}
+			break;
+		default:
+			break;
+		}
+		this.dismiss();
+	}
+
+	public void setPositiveClickListener(OnClickListener listener) {
+		this.positiveListener = listener;
+	}
+
+	public void setNegativeClickListener(OnClickListener listener) {
+		this.negativeListener = listener;
+	}
+
 }

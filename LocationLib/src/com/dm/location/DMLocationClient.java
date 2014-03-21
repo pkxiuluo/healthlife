@@ -45,7 +45,6 @@ public class DMLocationClient {
 
 	public void start() {
 		if (!hasBindService) {
-			System.out.println("start");
 			Intent intent = new Intent(mContext, DMLocationService.class);
 			mContext.bindService(intent, mConn, Context.BIND_AUTO_CREATE);
 		}else{
@@ -123,7 +122,6 @@ public class DMLocationClient {
 
 		@Override
 		public void onServiceConnected(ComponentName name, IBinder service) {
-			System.out.println("bind");
 			if (service != null) {
 				DMLocationService.LocationBinder binder = (DMLocationService.LocationBinder) service;
 				mLocationManager = binder.getLocationManager();
@@ -138,7 +136,6 @@ public class DMLocationClient {
 
 		@Override
 		public void onServiceDisconnected(ComponentName name) {
-			System.out.println("unBind");
 			executor.shutdown();
 			if (mLocationManager != null) {
 				for (DMLocationObserver observer : observerList) {

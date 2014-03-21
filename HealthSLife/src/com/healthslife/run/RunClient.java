@@ -87,7 +87,10 @@ public class RunClient {
 			if (startLocation == null) {
 				startLocation = location;
 			}
-			float meters = DMLocationUtils.distanceBetween(location, currentLocation);
+			float meters = 0;
+			if (currentLocation != null && location != null) {
+				meters = DMLocationUtils.distanceBetween(location, currentLocation);
+			}
 			if (meters > 3.0f) {
 				distance += meters;
 			}

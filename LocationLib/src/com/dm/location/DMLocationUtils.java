@@ -9,13 +9,13 @@ public class DMLocationUtils {
 	private static final int ONE_MINUTES = 1000 * 60;
 
 	// Gps是否可用
-	private boolean isGpsProviderEnable(Context context) {
+	public static boolean isGpsProviderEnable(Context context) {
 		LocationManager locationManager = ((LocationManager) context
 				.getSystemService(Context.LOCATION_SERVICE));
 		return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
 	}
 
-	private boolean isNetWorkProviderEnable(Context context) {
+	public static boolean isNetWorkProviderEnable(Context context) {
 		LocationManager locationManager = ((LocationManager) context
 				.getSystemService(Context.LOCATION_SERVICE));
 		return locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);

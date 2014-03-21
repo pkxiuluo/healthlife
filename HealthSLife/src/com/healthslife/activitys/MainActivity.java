@@ -3,13 +3,16 @@ package com.healthslife.activitys;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.Dialog;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -19,11 +22,13 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.healthslife.BaseFragmentActivity;
 import com.healthslife.R;
 import com.healthslife.adapters.NavigationAdapter;
 import com.healthslife.adapters.NavigationAdapter.DataHolder;
+import com.healthslife.dialog.MyAlertDailog;
 import com.healthslife.fragments.HealthTestFragment;
 import com.healthslife.fragments.InviteFragment;
 import com.healthslife.fragments.SettingFragment;
@@ -139,6 +144,10 @@ public class MainActivity extends BaseFragmentActivity {
 		if (mDrawerToggle.onOptionsItemSelected(item)) {
 			return true;
 		}
+		if (item.getItemId() == R.id.action_music) {
+			Dialog dialog = new MyAlertDailog(this);
+			dialog.show();
+		}
 		return super.onOptionsItemSelected(item);
 	}
 
@@ -183,6 +192,23 @@ public class MainActivity extends BaseFragmentActivity {
 
 		}
 
+	}
+
+	private long lastBackKeyTime;
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			long current = SystemClock.elapsedRealtime();
+			if (current - lastBackKeyTime <= 350) {
+				this.finish();
+			} else {
+				Toast.makeText(this, getText(R.string.logout_tip), Toast.LENGTH_SHORT).show();
+			}
+			lastBackKeyTime = current;
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="300dp"
     android:layout_height="wrap_content"
     android:background="@drawable/alert_dialog_bg_shape"
     android:orientation="vertical" >
@@ -11,22 +11,30 @@
         android:orientation="vertical" >
 
         <TextView
+            android:id="@+id/alert_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/medal"
-            android:drawablePadding="3dp"
-            android:text="@string/run_result_data_header_title"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="12dp"
+            android:drawableLeft="@drawable/ic_alert"
+            android:drawablePadding="4dp"
+            android:gravity="center_vertical"
+            android:text="@string/alert_default_title"
             android:textColor="@android:color/white"
             android:textSize="@dimen/text_size_normal" />
 
         <ImageView
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="2dp"
+            android:layout_margin="2dp"
             android:src="@color/red" />
     </LinearLayout>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/alert_content"
+        android:layout_margin="12dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@android:color/white"
         android:textSize="@dimen/text_size_normal" />
@@ -37,17 +45,27 @@
         android:orientation="horizontal" >
 
         <Button
+            android:id="@+id/alert_positive_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@drawable/alert_dialog_btn_bg_selector"
+            android:gravity="center"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
             android:text="是"
             android:textColor="@android:color/white"
             android:textSize="@dimen/text_size_normal" />
 
         <Button
+            android:id="@+id/alert_negative_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@drawable/alert_dialog_btn_bg_selector"
+            android:gravity="center"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
             android:text="否"
             android:textColor="@android:color/white"
             android:textSize="@dimen/text_size_normal" />
