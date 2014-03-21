@@ -39,7 +39,6 @@ public class RunFragment extends Fragment {
 		View root = inflater.inflate(R.layout.fragment_run, container, false);
 		tabs = (PagerSlidingTabStrip) root.findViewById(R.id.tabs);
 		pager = (ViewPager) root.findViewById(R.id.pager);
-		pager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.page_horizontal_margin));
 		beginBtn = root.findViewById(R.id.run_begin_btn);
 		mAdapter = new MyPagerAdapter(getActivity().getSupportFragmentManager());
 		pager.setAdapter(mAdapter);

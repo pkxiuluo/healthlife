@@ -43,6 +43,7 @@
         </service>
         <activity android:name=".activitys.NormalRunActivity"></activity>
         <activity android:name=".activitys.RunResultActivity"></activity>
+        <activity android:name=".activitys.TargetRunActivity"></activity>
     </application>
 
 </manifest>
