@@ -21,6 +21,7 @@ public class TargetRunActivity extends BaseFragmentActivity {
 			return;
 		}
 		setActionBar();
+		setContentView(R.layout.activity_run_target);
 	}
 
 	private void setActionBar() {
