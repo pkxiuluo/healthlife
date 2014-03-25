@@ -83,7 +83,6 @@ public class UrlFileCache {
 
 		@Override
 		public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-			// System.out.println("onFailure  "+arg0);
 			if (taskVector.contains(mTask)) {
 				for (LoadListener listener : mTask.listeners) {
 					if (listener != null) {
@@ -95,7 +94,6 @@ public class UrlFileCache {
 
 		@Override
 		public void onSuccess(int arg0, Header[] arg1, byte[] arg2) {
-			// System.out.println("onSuccess   "+arg0);
 			File file = new File(mTask.getAbsolutePath());
 			File parentFile = file.getParentFile();
 			if (!parentFile.isDirectory()) {

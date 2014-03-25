@@ -39,7 +39,6 @@ public class MainActivity extends Activity implements OnClickListener {
 		
 		client = new DMLocationClient(this);
 		DMLocation last =client.getLastKnownLocation();
-		System.out.println("last:"+last);
 		DMLocationClientOption option = new DMLocationClientOption();
 		option.setInterval(2000);
 		option.setPriority(DMLocationClientOption.GPS_FIRST);
@@ -49,7 +48,7 @@ public class MainActivity extends Activity implements OnClickListener {
 			@Override
 			public void onLocationChanged(DMLocation loation) {
 				// TODO Auto-generated method stub
-				System.out.println(loation);	
+//				System.out.println(loation);	
 			}
 		});
 		

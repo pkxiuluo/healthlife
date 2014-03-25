@@ -90,7 +90,6 @@ public class DMLocationManager {
 			if (isContainProvider(provider)) {
 				netWorkInterval = getMinInterval(provider);
 				// netWorkInterval = 0;
-				// System.out.println(netWorkInterval);
 				mLocationManager
 						.requestLocationUpdates(provider, netWorkInterval, 0, mNetWorkListener);
 				isNetWorkListened = true;
