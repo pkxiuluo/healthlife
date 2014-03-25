@@ -13,7 +13,7 @@ import com.healthslife.R;
 public class CircleProgressBar extends View {
 
 	private int mMaxProgress = 100;
-	private int mProgress = 30;
+	private int mProgress = 0;
 	private RectF mCircleRectF = new RectF();
 	private SingleCircleDrawer mDrawer = new SingleCircleDrawer(mCircleRectF);
 	private boolean isTouchable = false;

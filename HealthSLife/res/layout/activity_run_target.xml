@@ -12,10 +12,12 @@
         android:layout_marginRight="10dp"
         android:src="@drawable/background" />
 
-    <include layout="@layout/run_target_layout" />
+    <include
+        android:id="@+id/run_target_panel_layout"
+        layout="@layout/run_target_layout" />
 
     <include
-        android:id="@+id/run_normal_btn_layout"
+        android:id="@+id/run_target_btn_layout"
         layout="@layout/run_stop_layout" />
 
 </RelativeLayout>

@@ -21,15 +21,14 @@ public class DistanceRunFragment extends Fragment implements RunSettingGetable {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View root = inflater.inflate(R.layout.fragment_run_distance, container, false);
 		targeEdt = (EditText) root.findViewById(R.id.run_distance_target_edt);
+		System.out.println("targeEdt" + targeEdt);
 		targeEdt.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-				System.out.println("before_" + s + "  " + start + "  " + count + "  " + after);
 			}
 
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
-				System.out.println("on  " + s + "  " + start + "  " + before + "  " + count);
 			}
 
 			@Override
@@ -48,9 +47,6 @@ public class DistanceRunFragment extends Fragment implements RunSettingGetable {
 					}
 					s.delete(0, deleteLength);
 				}
-
-				System.out.println("after");
-
 			}
 		});
 		return root;
@@ -58,8 +54,9 @@ public class DistanceRunFragment extends Fragment implements RunSettingGetable {
 
 	@Override
 	public RunSetting getRunSetting() {
-
-		return new RunSetting(RunSetting.DISTANCE);
+		RunSetting settting = new RunSetting(RunSetting.DISTANCE);
+		int distance = Integer.parseInt(targeEdt.getText().toString());
+		settting.setDistance(distance);
+		return settting;
 	}
-
 }

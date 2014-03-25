@@ -70,7 +70,6 @@ public class DMLocationUtils {
 	}
 
 	public static float distanceBetween(DMLocation location, DMLocation location2) {
-
 		float[] results = new float[1];
 		Location.distanceBetween(location.getLatitude(), location.getLongitude(),
 				location2.getLatitude(), location2.getLongitude(), results);

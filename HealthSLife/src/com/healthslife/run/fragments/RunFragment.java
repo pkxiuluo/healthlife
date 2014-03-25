@@ -32,7 +32,7 @@ public class RunFragment extends Fragment {
 	private MyPagerAdapter mAdapter;
 	private View beginBtn;
 	private MyAlertDailog dialog;
-	private static int SETTING_REQUEST_CODE =1;
+	private static int SETTING_REQUEST_CODE = 1;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -70,7 +70,7 @@ public class RunFragment extends Fragment {
 			}
 		});
 		dialog.setNegativeClickListener(new DialogInterface.OnClickListener() {
-			
+
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				startRunActivity();
@@ -78,19 +78,22 @@ public class RunFragment extends Fragment {
 		});
 		return root;
 	}
+
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		if(requestCode==SETTING_REQUEST_CODE){
+		if (requestCode == SETTING_REQUEST_CODE) {
 			startRunActivity();
 		}
 	}
-
 
 	private class BeginClick implements OnClickListener {
 
 		@Override
 		public void onClick(View v) {
+			if (!isLegal()) {
+				return;
+			}
 			if (DMLocationUtils.isGpsProviderEnable(getActivity()) == false) {
 				dialog.show();
 			} else {
@@ -99,12 +102,32 @@ public class RunFragment extends Fragment {
 		}
 	}
 
+	private boolean isLegal() {
+		RunSettingGetable getable = (RunSettingGetable) mAdapter.getFragment(pager.getCurrentItem());
+		RunSetting setting = getable.getRunSetting();
+		if (setting == null) {
+			return false;
+		}
+		if (setting.getKind() == RunSetting.DISTANCE && setting.getDistance() < 100) {
+			Toast.makeText(getActivity(), getText(R.string.run_tips_distance_too_short),
+					Toast.LENGTH_SHORT).show();
+			return false;
+		} else if (setting.getKind() == RunSetting.DESTINATION && setting.getDest() == null) {
+			Toast.makeText(getActivity(), getText(R.string.run_tips_dest_empty), Toast.LENGTH_SHORT)
+					.show();
+			return false;
+		}
+		return true;
+	}
+
 	private class MyPagerAdapter extends FragmentStatePagerAdapter {
 		String[] titleStrings;
+		Fragment[] fragments;
 
 		public MyPagerAdapter(FragmentManager fm) {
 			super(fm);
 			titleStrings = getResources().getStringArray(R.array.run_tab_title);
+			fragments = new Fragment[titleStrings.length];
 		}
 
 		@Override
@@ -116,6 +139,10 @@ public class RunFragment extends Fragment {
 		@Override
 		public int getCount() {
 			return titleStrings.length;
+		}
+
+		public Fragment getFragment(int position) {
+			return fragments[position];
 		}
 
 		@Override
@@ -130,19 +157,20 @@ public class RunFragment extends Fragment {
 				break;
 			case 2:
 				fragment = new DestinationRunFragment();
+
 				break;
 			default:
 				break;
 			}
+			fragments[arg0] = fragment;
 			return fragment;
 		}
 	}
 
-	private void startRunActivity(){
+	private void startRunActivity() {
 		if (DMLocationUtils.isGpsProviderEnable(getActivity())
 				|| DMLocationUtils.isNetWorkProviderEnable(getActivity())) {
-			RunSettingGetable getable = (RunSettingGetable) mAdapter.getItem(pager
-					.getCurrentItem());
+			RunSettingGetable getable = (RunSettingGetable) mAdapter.getFragment(pager.getCurrentItem());
 			RunSetting setting = getable.getRunSetting();
 			RunSettingUtil.startActivity(getActivity(), setting);
 		} else {
