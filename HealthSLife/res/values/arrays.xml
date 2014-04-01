@@ -20,10 +20,10 @@
         <item>@string/run_destination</item>
     </string-array>
     <string-array name="run_data_title">
-        <item>已跑距离</item>
-        <item>跑步时长</item>
-        <item>平均速度</item>
-        <item>消耗卡路里</item>
+        <item>@string/run_running_distance</item>
+        <item>@string/run_duration</item>
+        <item>@string/run_result_average_speed</item>
+        <item>@string/run_calorie_used</item>
     </string-array>
 
 </resources>

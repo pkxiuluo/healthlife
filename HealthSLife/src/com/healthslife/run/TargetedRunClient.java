@@ -39,7 +39,6 @@ public class TargetedRunClient extends RunClient {
 			}
 		}
 		if (listener != null) {
-			RunResult result = new RunResult();
 			listener.onCompletenessChanged(completeness);
 		}
 		if (completeness >= 1) {
@@ -48,6 +47,7 @@ public class TargetedRunClient extends RunClient {
 				result.setRunSetting(mRunSetting);
 				result.setDistance(getDistance());
 				result.setDuration(getDuration());
+				result.setCompleteness(completeness);
 				listener.onTargetFinish(result);
 			}
 		}

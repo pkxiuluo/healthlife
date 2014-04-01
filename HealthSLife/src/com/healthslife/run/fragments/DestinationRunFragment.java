@@ -1,10 +1,6 @@
 package com.healthslife.run.fragments;
 
-import com.healthslife.R;
-import com.healthslife.activitys.GetLocationActivity;
-import com.healthslife.run.dao.RunSetting;
-import com.healthslife.run.dao.RunSettingGetable;
-
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,9 +10,16 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import com.amap.api.maps.model.LatLng;
+import com.healthslife.R;
+import com.healthslife.activitys.GetLocationActivity;
+import com.healthslife.run.dao.RunSetting;
+import com.healthslife.run.dao.RunSettingGetable;
+
 public class DestinationRunFragment extends Fragment implements RunSettingGetable, OnClickListener {
 	private EditText destInputEdt;
 	private View earthBtn;
+	private static final int DEST_REQUEST_CODE = 1;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -35,6 +38,15 @@ public class DestinationRunFragment extends Fragment implements RunSettingGetabl
 	@Override
 	public void onClick(View v) {
 		Intent intent = new Intent(getActivity(), GetLocationActivity.class);
-		startActivity(intent);
+		startActivityForResult(intent, DEST_REQUEST_CODE);
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (resultCode == Activity.RESULT_OK && requestCode == DEST_REQUEST_CODE) {
+			LatLng latLng = data.getParcelableExtra(GetLocationActivity.EXTRA_LATLNG);
+			System.out.println("latitude" + latLng.latitude + "longitude" + latLng.longitude);
+		}
+		super.onActivityResult(requestCode, resultCode, data);
 	}
 }

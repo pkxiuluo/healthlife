@@ -61,7 +61,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dp"
-                android:layout_toRightOf="@+id/run_data_icon"
+                android:layout_toRightOf="@+id/run_result_target_icon"
                 android:textSize="@dimen/text_size_normal" />
 
             <TextView
@@ -84,5 +84,43 @@
         android:layout_marginTop="10dp"
         android:background="@drawable/listview_bg_shadow" >
     </ListView>
+
+    <LinearLayout
+        android:id="@+id/run_result_target_bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical" >
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="剽悍" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="剽悍" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="分享战况" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="测心律" />
+        </LinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>

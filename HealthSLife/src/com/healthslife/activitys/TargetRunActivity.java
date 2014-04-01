@@ -13,6 +13,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.format.DateUtils;
+import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -77,6 +79,10 @@ public class TargetRunActivity extends BaseFragmentActivity implements OnClickLi
 
 			@Override
 			public void onTargetFinish(RunResult result) {
+				mClient.stop();
+				Intent intent = new Intent(TargetRunActivity.this, RunResultActivity.class);
+				intent.putExtra(RunResultActivity.EXTRA_RUN_RESULT, result);
+				startActivity(intent);
 			}
 		});
 	}
@@ -152,6 +158,41 @@ public class TargetRunActivity extends BaseFragmentActivity implements OnClickLi
 			startActivity(intent);
 			this.finish();
 		}
-
 	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			mClient.stop();
+			this.finish();
+			break;
+		default:
+			break;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			mClient.stop();
+			this.finish();
+		}
+		return super.onKeyDown(keyCode, event);
+	}
+
+	@Override
+	protected void onStop() {
+		mClient.stop();
+		super.onStop();
+	}
+
+	@Override
+	public void finish() {
+		super.finish();
+		if (future != null && future.isCancelled() == false) {
+			future.cancel(true);
+		}
+	};
 }

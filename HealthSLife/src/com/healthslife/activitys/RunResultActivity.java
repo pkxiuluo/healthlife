@@ -62,10 +62,12 @@ public class RunResultActivity extends BaseFragmentActivity {
 		}
 		switch (setting.getKind()) {
 		case RunSetting.DISTANCE:
-			// targetTitleTxt.setText(text)
+			 targetTitleTxt.setText(R.string.run_result_target_distance);
+			 targetContentTxt.setText(setting.getDistance()+"m");
 			break;
 		case RunSetting.DESTINATION:
-			// targetTitleTxt.setText(text)
+			 targetTitleTxt.setText(R.string.run_result_target_destination);
+			 targetContentTxt.setText("");
 			break;
 		default:
 			break;

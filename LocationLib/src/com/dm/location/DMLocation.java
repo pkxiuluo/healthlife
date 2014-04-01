@@ -44,7 +44,7 @@ public class DMLocation {
 
 	float speed;
 
-	public DMLocation() {
+	private DMLocation() {
 	}
 
 	public DMLocation(Location location) {
@@ -55,6 +55,17 @@ public class DMLocation {
 		provider = location.getProvider();
 		accuracy = location.getAccuracy();
 		speed = location.getSpeed();
+	}
+
+	public Location getLocation() {
+		Location location = new Location(getProvider());
+		location.setAccuracy(getAccuracy());
+		location.setAltitude(getAltitude());
+		location.setLongitude(getLongitude());
+		location.setLatitude(getLatitude());
+		location.setSpeed(getSpeed());
+		location.setTime(getTime());
+		return location;
 	}
 
 	@Override

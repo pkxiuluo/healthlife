@@ -15,6 +15,7 @@ import android.os.Handler;
 import android.text.format.DateUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -144,6 +145,12 @@ public class NormalRunActivity extends BaseFragmentActivity implements OnClickLi
 			this.finish();
 		}
 		return super.onKeyDown(keyCode, event);
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.run, menu);
+		return super.onCreateOptionsMenu(menu);
 	}
 
 	@Override

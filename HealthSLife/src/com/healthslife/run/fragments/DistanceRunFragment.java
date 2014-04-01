@@ -21,7 +21,6 @@ public class DistanceRunFragment extends Fragment implements RunSettingGetable {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View root = inflater.inflate(R.layout.fragment_run_distance, container, false);
 		targeEdt = (EditText) root.findViewById(R.id.run_distance_target_edt);
-		System.out.println("targeEdt" + targeEdt);
 		targeEdt.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
