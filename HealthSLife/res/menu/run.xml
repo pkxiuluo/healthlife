@@ -8,6 +8,7 @@
         android:title="@string/music"/>
     <item
         android:id="@+id/action_music"
+        android:icon="@drawable/menu_map"
         android:showAsAction="ifRoom"
         android:title="地图"/>
 

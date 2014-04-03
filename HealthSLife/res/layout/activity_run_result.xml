@@ -92,35 +92,49 @@
         android:layout_alignParentBottom="true"
         android:orientation="vertical" >
 
-        <Button
+        <ImageView
+            android:id="@+id/run_result_info_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="剽悍" />
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/run_result_success" />
 
         <TextView
+            android:id="@+id/run_result_info_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="剽悍" />
+            android:layout_marginBottom="10dp"
+            android:text="@string/run_result_success" />
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp" >
 
-            <Button
-                android:layout_width="0dp"
+            <ImageView
+                android:id="@+id/run_result_share_btn"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="分享战况" />
+                android:layout_toLeftOf="@+id/run_result_heart_btn"
+                android:src="@drawable/to_share_btn_bg" />
 
-            <Button
-                android:layout_width="0dp"
+            <ImageView
+                android:id="@+id/run_result_heart_btn"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="测心律" />
-        </LinearLayout>
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/to_heart_btn_bg" />
+
+            <ImageView
+                android:id="@+id/run_result_main_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/run_result_heart_btn"
+                android:src="@drawable/to_main_btn_bg" />
+        </RelativeLayout>
     </LinearLayout>
 
 </RelativeLayout>

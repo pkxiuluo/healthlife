@@ -15,6 +15,7 @@
     <!-- menu START -->
     <string name="music">音乐</string>
     <string name="history">历史记录</string>
+    <string name="map">地图</string>
     <!-- menu END -->
     <!-- RunFragment START -->
     <string name="run_normal">自由跑</string>
@@ -40,9 +41,10 @@
     <string name="run_result_target_header_title">本次跑步目标</string>
     <string name="run_result_data_header_title">本次跑步战况</string>
     <string name="run_result_average_speed">平均速度</string>
-    
     <string name="run_result_target_distance">目标路程</string>
     <string name="run_result_target_destination">目标地点</string>
+    <string name="run_result_success">剽悍的人生不需要解释!</string>
+    <string name="run_result_fail">很遗憾您没有完成本次跑步目标……</string>
     <!-- RunResultActivity END -->
 
     <string name="get_loc_title">选区目的地</string>
