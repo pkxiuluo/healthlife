@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -33,6 +34,7 @@ import com.healthslife.fragments.HealthTestFragment;
 import com.healthslife.fragments.InviteFragment;
 import com.healthslife.fragments.SettingFragment;
 import com.healthslife.run.fragments.RunFragment;
+import com.test.TestActivity;
 
 public class MainActivity extends BaseFragmentActivity {
 	private DrawerLayout drawerLayout;
@@ -145,8 +147,7 @@ public class MainActivity extends BaseFragmentActivity {
 			return true;
 		}
 		if (item.getItemId() == R.id.action_music) {
-			Dialog dialog = new MyAlertDailog(this);
-			dialog.show();
+			startActivity(new Intent(MainActivity.this, TestActivity.class));
 		}
 		return super.onOptionsItemSelected(item);
 	}

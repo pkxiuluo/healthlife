@@ -150,6 +150,7 @@ public class DMLocationManager {
 
 		@Override
 		public void onLocationChanged(Location location) {
+//			System.out.println("gpslisten"+location.getAccuracy());
 			for (DMLocationObserver observer : observerList) {
 				if (observer.getProvider().equals(LocationManager.GPS_PROVIDER)) {
 					observer.observe(new DMLocation(location));
@@ -175,6 +176,7 @@ public class DMLocationManager {
 
 		@Override
 		public void onLocationChanged(Location location) {
+//			System.out.println("netlisten"+location.getAccuracy());
 			for (DMLocationObserver observer : observerList) {
 				if (observer.getProvider().equals(LocationManager.NETWORK_PROVIDER)) {
 					observer.observe(new DMLocation(location));
