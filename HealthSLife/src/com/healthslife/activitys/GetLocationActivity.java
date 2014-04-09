@@ -34,6 +34,7 @@ public class GetLocationActivity extends BaseFragmentActivity implements OnCamer
 	private LatLng resultLatLng;
 	public static final String EXTRA_LATLNG = "LatLng";
 	private ActionBar actionBar;
+	private Source mLocSource;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +94,8 @@ public class GetLocationActivity extends BaseFragmentActivity implements OnCamer
 			myLocationStyle.radiusFillColor(Color.argb(100, 0, 0, 180));// 设置圆形的填充颜色
 			myLocationStyle.strokeWidth(1.0f);
 			aMap.setMyLocationStyle(myLocationStyle);
-			aMap.setLocationSource(new Source());
+			mLocSource = new Source();
+			aMap.setLocationSource(mLocSource);
 			aMap.getUiSettings().setMyLocationButtonEnabled(true);
 			aMap.getUiSettings().setRotateGesturesEnabled(false);
 			aMap.setMyLocationEnabled(true);
@@ -151,6 +153,7 @@ public class GetLocationActivity extends BaseFragmentActivity implements OnCamer
 	protected void onPause() {
 		super.onPause();
 		mapView.onPause();
+		mLocSource.deactivate();
 	}
 
 	@Override

@@ -1,11 +1,18 @@
 package com.dm.location;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import android.location.Location;
+import android.os.Parcelable;
 
-public class DMLocation {
+public class DMLocation implements Serializable {
 
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2777841249349166026L;
 	double latitude;
 	double longitude;
 

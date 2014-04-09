@@ -32,10 +32,14 @@ public class TargetedRunClient extends RunClient {
 				totalDistance = DMLocationUtils.distanceBetween(loation, mRunSetting.getDest());
 				completeness = 0;
 			} else {
-				float currentDistance = DMLocationUtils.distanceBetween(loation,
-						mRunSetting.getDest());
-				completeness = (totalDistance - currentDistance) / totalDistance;
-				completeness = completeness > 0 ? completeness : 0.0f;
+				float currentDistance = DMLocationUtils.distanceBetween(loation, mRunSetting.getDest());
+				if (currentDistance < 20) {
+					completeness = 1;
+				} else {
+					completeness = (totalDistance - currentDistance) / totalDistance;
+					completeness = completeness > 0 ? completeness : 0.0f;
+				}
+
 			}
 		}
 		if (listener != null) {

@@ -8,54 +8,60 @@
         android:layout_height="300dp"
         android:background="@color/gray_bg" >
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_margin="15dp"
             android:background="@drawable/white_corner_shape"
-            android:orientation="horizontal"
             android:paddingBottom="3dp"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:paddingTop="3dp" >
 
             <TextView
+                android:id="@+id/run_target_dest_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
                 android:drawableLeft="@drawable/ic_red_circle"
                 android:gravity="center"
+                android:minEms="4"
                 android:text="@string/run_destination_destination"
-                android:textSize="@dimen/text_size_small" />
-
-            <View
-                android:layout_width="1px"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
-                android:layout_marginBottom="3dp"
-                android:layout_marginTop="3dp"
-                android:background="@android:color/black" />
-
-            <EditText
-                android:id="@+id/run_target_dest_input_edt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="5"
-                android:hint="@string/run_destination_input_hint"
                 android:textSize="@dimen/text_size_small" />
 
             <ImageView
                 android:id="@+id/run_target_dest_earth_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:src="@drawable/ic_earth" />
-        </LinearLayout>
+
+            <EditText
+                android:id="@+id/run_target_dest_input_edt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/run_target_dest_earth_btn"
+                android:layout_toRightOf="@+id/run_target_dest_title"
+                android:hint="@string/run_destination_input_hint"
+                android:textSize="@dimen/text_size_small" />
+
+            <View
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:layout_alignBottom="@+id/run_target_dest_input_edt"
+                android:layout_alignTop="@+id/run_target_dest_input_edt"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="3dp"
+                android:layout_marginTop="3dp"
+                android:layout_toRightOf="@+id/run_target_dest_title"
+                android:background="@android:color/black" />
+        </RelativeLayout>
     </RelativeLayout>
 
 </RelativeLayout>
