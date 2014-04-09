@@ -90,11 +90,13 @@ public class RunClient {
 			float meters = 0;
 			if (currentLocation != null && location != null) {
 				meters = DMLocationUtils.distanceBetween(location, currentLocation);
+			}else{
+				currentLocation =location;
 			}
-			if (meters > 3.0f) {
+			if (meters > currentLocation.getAccuracy()) {
 				distance += meters;
+				currentLocation = location;
 			}
-			currentLocation = location;
 
 			RunClient.this.onLocationChanged(location);
 			if (outListener != null) {

@@ -45,7 +45,7 @@ public class DestinationRunFragment extends Fragment implements RunSettingGetabl
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == Activity.RESULT_OK && requestCode == DEST_REQUEST_CODE) {
 			LatLng latLng = data.getParcelableExtra(GetLocationActivity.EXTRA_LATLNG);
-			System.out.println("latitude" + latLng.latitude + "longitude" + latLng.longitude);
+			System.out.println("result"+"latitude" + latLng.latitude + "longitude" + latLng.longitude);
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
