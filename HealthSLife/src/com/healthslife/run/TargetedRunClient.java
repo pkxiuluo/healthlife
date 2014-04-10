@@ -51,6 +51,7 @@ public class TargetedRunClient extends RunClient {
 				result.setRunSetting(mRunSetting);
 				result.setDistance(getDistance());
 				result.setDuration(getDuration());
+				result.setCalorie(getCalorie());
 				result.setCompleteness(completeness);
 				listener.onTargetFinish(result);
 			}

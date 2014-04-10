@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -14,6 +13,8 @@ import android.widget.TextView;
 import com.healthslife.BaseFragmentActivity;
 import com.healthslife.R;
 import com.healthslife.adapters.RunDataAdapter;
+import com.healthslife.run.dao.RunRecord;
+import com.healthslife.run.dao.RunRecordDB;
 import com.healthslife.run.dao.RunResult;
 import com.healthslife.run.dao.RunSetting;
 
@@ -54,6 +55,7 @@ public class RunResultActivity extends BaseFragmentActivity implements OnClickLi
 		toShareBtn.setOnClickListener(this);
 		toHeartBtn.setOnClickListener(this);
 		toMainBtn.setOnClickListener(this);
+		writeToDB();
 	}
 
 	private void initTargetView() {
@@ -121,6 +123,11 @@ public class RunResultActivity extends BaseFragmentActivity implements OnClickLi
 			this.finish();
 		}
 
+	}
+
+	private void writeToDB() {
+		RunRecordDB rrDb = new RunRecordDB(this);
+		rrDb.add(RunRecord.newRunRecord(mRunResult));
 	}
 
 }

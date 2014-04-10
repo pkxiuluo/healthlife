@@ -24,6 +24,7 @@ public class RunClient {
 	private DMLocation currentLocation;
 
 	private float distance;
+	private long calorie;
 
 	public RunClient(Context context) {
 		mClient = new DMLocationClient(context);
@@ -67,7 +68,7 @@ public class RunClient {
 		long millis = this.getDuration();
 		float meter = this.getDistance();
 
-		System.out.println("dur  " + millis + "dis " + meter);
+		// System.out.println("dur  " + millis + "dis " + meter);
 	}
 
 	public void stop() {
@@ -90,11 +91,13 @@ public class RunClient {
 			float meters = 0;
 			if (currentLocation != null && location != null) {
 				meters = DMLocationUtils.distanceBetween(location, currentLocation);
-			}else{
-				currentLocation =location;
-			}
-			if (meters > currentLocation.getAccuracy()) {
-				distance += meters;
+				if (meters > currentLocation.getAccuracy()) {
+					distance += meters;
+					long interval = currentLocation.getTime() - location.getTime();
+					calorie += calcCalorie(meters, interval);
+					currentLocation = location;
+				}
+			} else {
 				currentLocation = location;
 			}
 
@@ -104,4 +107,17 @@ public class RunClient {
 			}
 		}
 	};
+	private static float calorieCon1 = 1;
+	private static float calorieCon2 = 1;
+
+	private static long calcCalorie(float distance, long time) {
+		float speed = distance / (time / 1000f);
+		int calorie = (int) (distance * calorieCon1 + distance * speed * calorieCon2);
+		return calorie;
+	}
+
+	public long getCalorie() {
+		return calorie;
+	}
+
 }

@@ -44,6 +44,7 @@ public class NormalRunActivity extends BaseFragmentActivity implements OnClickLi
 	private TextView speedTxt;
 	private TextView durationTxt;
 	private TextView distanceTxt;
+	private TextView calorieTxt;
 
 	private RunClient mClient;
 
@@ -69,6 +70,7 @@ public class NormalRunActivity extends BaseFragmentActivity implements OnClickLi
 				// DateUtils.formatElapsedTime(mClient.getDuration() / 1000);
 				// durationTxt.setText(text);
 				speedTxt.setText(speedFormat.format(loation.getSpeed()) + "m/s");
+				calorieTxt.setText(mClient.getCalorie() + "cal");
 			}
 		});
 		super.onCreate(arg0);
@@ -82,6 +84,7 @@ public class NormalRunActivity extends BaseFragmentActivity implements OnClickLi
 		speedTxt = (TextView) root.findViewById(R.id.run_speed_txt);
 		durationTxt = (TextView) root.findViewById(R.id.run_duration_txt);
 		distanceTxt = (TextView) root.findViewById(R.id.run_distance_txt);
+		calorieTxt = (TextView) root.findViewById(R.id.run_cal_txt);
 		stopBtn.setOnClickListener(this);
 
 		setViewVisibility(View.INVISIBLE);
@@ -98,6 +101,7 @@ public class NormalRunActivity extends BaseFragmentActivity implements OnClickLi
 			result.setRunSetting(new RunSetting());
 			result.setDistance(mClient.getDistance());
 			result.setDuration(mClient.getDuration());
+			result.setCalorie(mClient.getCalorie());
 			Intent intent = new Intent(this, RunResultActivity.class);
 			intent.putExtra(RunResultActivity.EXTRA_RUN_RESULT, result);
 			startActivity(intent);
