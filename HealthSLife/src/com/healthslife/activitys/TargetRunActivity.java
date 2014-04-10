@@ -69,6 +69,7 @@ public class TargetRunActivity extends BaseFragmentActivity implements OnClickLi
 			public void onLocationChanged(DMLocation loation) {
 				speedTxt.setText(speedFormat.format(loation.getSpeed()) + "m/s");
 				progressBar.setProgress((int) (mClient.getCompleteness() * 100));
+				
 			}
 		});
 		mClient.setOnStatusChangedListener(new OnStatusChangedListener() {
@@ -153,6 +154,7 @@ public class TargetRunActivity extends BaseFragmentActivity implements OnClickLi
 			result.setRunSetting(mRunSetting);
 			result.setDistance(mClient.getDistance());
 			result.setDuration(mClient.getDuration());
+			result.setCalorie(mClient.getCalorie());
 			Intent intent = new Intent(this, RunResultActivity.class);
 			intent.putExtra(RunResultActivity.EXTRA_RUN_RESULT, result);
 			startActivity(intent);
