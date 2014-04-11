@@ -54,6 +54,21 @@
     <!-- AcitivityTargetRun END -->
 
 
+    <!-- RunHistoryAcitivity START -->
+    <string name="run_history_action_bar_title">跑步历史记录</string>
+    <string name="run_history_date_all">所有</string>
+    <string name="run_history_date_month">最近一月</string>
+    <string name="run_history_date_week">最近一周</string>
+    <string name="run_history_completeness_all">全部战况</string>
+    <string name="run_history_completed">成功战况</string>
+    <string name="run_history_completed_not">失败战况</string>
+    <string name="run_history_pattern_all">全部方式</string>
+    <string name="run_history_pattern_free">自由跑</string>
+    <string name="run_history_pattern_distance">距离跑</string>
+    <string name="run_history_pattern_dest">地点跑</string>
+    <!-- RunHistoryAcitivity END -->
+
+
     <!-- MyAlertDialog START -->
     <string name="alert_default_title">提示</string>
     <!-- MyAlertDialog END -->

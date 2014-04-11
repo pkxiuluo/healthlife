@@ -7,7 +7,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="90dp"
-        android:background="@color/gray_bg" >
+        android:background="@color/gray" >
 
         <TextView
             android:layout_width="wrap_content"
@@ -18,7 +18,7 @@
             android:textSize="@dimen/text_size_small_l" />
 
         <TextView
-           android:id="@+id/run_target_duration_txt"
+            android:id="@+id/run_target_duration_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -32,7 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="170dp"
         android:layout_marginTop="2dp"
-        android:background="@color/gray_bg" >
+        android:background="@color/gray" >
 
         <com.healthslife.run.widget.CircleProgressBar
             android:id="@+id/run_target_progress_bar"
@@ -58,7 +58,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/gray_bg" >
+            android:background="@color/gray" >
 
             <TextView
                 android:layout_width="wrap_content"
@@ -74,7 +74,7 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="2dp"
             android:layout_weight="1"
-            android:background="@color/gray_bg" >
+            android:background="@color/gray" >
 
             <TextView
                 android:layout_width="wrap_content"
