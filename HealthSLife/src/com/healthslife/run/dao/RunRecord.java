@@ -68,7 +68,7 @@ public class RunRecord {
 		record.setRunDuration(runResult.getDuration());
 		record.setAverageSpeed(runResult.getDistance() / (runResult.getDuration() / 1000));
 		if (kind == RunSetting.NORMAL) {
-
+			record.setCompleteness(1);
 		} else {
 			record.setCompleteness(runResult.getCompleteness());
 

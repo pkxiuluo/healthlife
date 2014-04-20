@@ -5,6 +5,7 @@
     android:orientation="vertical" >
 
     <LinearLayout
+        android:id="@+id/run_history_drop_btn_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
@@ -68,5 +69,12 @@
             android:textColor="@android:color/white"
             android:textSize="@dimen/text_size_small_l" />
     </LinearLayout>
+
+    <ListView
+        android:id="@+id/run_history_content_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/run_history_drop_btn_layout" >
+    </ListView>
 
 </RelativeLayout>

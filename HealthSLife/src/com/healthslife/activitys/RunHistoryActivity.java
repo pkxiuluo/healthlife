@@ -3,9 +3,11 @@ package com.healthslife.activitys;
 import android.app.ActionBar;
 import android.os.Bundle;
 import android.util.TypedValue;
+import android.view.ContextMenu;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
@@ -14,10 +16,12 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListPopupWindow;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.healthslife.BaseFragmentActivity;
 import com.healthslife.R;
+import com.healthslife.adapters.RunHistoryAdapter;
 
 public class RunHistoryActivity extends BaseFragmentActivity implements OnClickListener {
 	private ActionBar actionBar;
@@ -39,15 +43,25 @@ public class RunHistoryActivity extends BaseFragmentActivity implements OnClickL
 	private int current_pattern = 0;
 	private int current_complete = 0;
 
+	private ListView historyList;
+	private RunHistoryAdapter historyAdapter;
+
 	@Override
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
 		setActionBar();
 		initView();
+		
 	}
 
 	private void initView() {
 		setContentView(R.layout.activity_run_history);
+		historyList = (ListView) findViewById(R.id.run_history_content_list);
+		historyAdapter =new RunHistoryAdapter(this);
+		historyList.setAdapter(historyAdapter);
+		historyAdapter.changeData(current_date, current_pattern, current_complete);
+		registerForContextMenu(historyList);
+		
 		dateDropBtn = (Button) findViewById(R.id.run_history_date_drop_btn);
 		patternDropBtn = (Button) findViewById(R.id.run_history_pattern_drop_btn);
 		completeDropBtn = (Button) findViewById(R.id.run_history_complete_drop_btn);
@@ -67,6 +81,10 @@ public class RunHistoryActivity extends BaseFragmentActivity implements OnClickL
 		dateLPW.setAdapter(dateAdapter);
 		patternLPW.setAdapter(patternAdapter);
 		completeLPW.setAdapter(completeAdapter);
+	}
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
 	}
 
 	private void setActionBar() {
@@ -171,18 +189,33 @@ public class RunHistoryActivity extends BaseFragmentActivity implements OnClickL
 
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			boolean isChanged = false;
 			if (dropBtn == dateDropBtn) {
-				dateDropBtn.setText(dateStrings[position]);
 				dateLPW.dismiss();
-				current_date = position;
+				if (current_date != position) {
+					dateDropBtn.setText(dateStrings[position]);
+					current_date = position;
+					isChanged = true;
+				}
+
 			} else if (dropBtn == patternDropBtn) {
-				current_pattern = position;
 				patternLPW.dismiss();
-				patternDropBtn.setText(patternStrings[position]);
+				if (current_pattern != position) {
+					current_pattern = position;
+					patternDropBtn.setText(patternStrings[position]);
+					isChanged = true;
+				}
 			} else if (dropBtn == completeDropBtn) {
-				current_complete = position;
 				completeLPW.dismiss();
-				completeDropBtn.setText(completeStrings[position]);
+				if (current_complete != position) {
+					current_complete = position;
+					completeDropBtn.setText(completeStrings[position]);
+					isChanged = true;
+				}
+			}
+			
+			if(isChanged){
+				historyAdapter.changeData(current_date, current_pattern, current_complete);
 			}
 		}
 
