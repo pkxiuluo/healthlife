@@ -1,27 +1,33 @@
 package com.healthslife.activitys;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Gravity;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListPopupWindow;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.healthslife.BaseFragmentActivity;
 import com.healthslife.R;
 import com.healthslife.adapters.RunHistoryAdapter;
+import com.healthslife.run.dao.RunRecord;
+import com.healthslife.run.dao.RunResult;
 
 public class RunHistoryActivity extends BaseFragmentActivity implements OnClickListener {
 	private ActionBar actionBar;
@@ -51,17 +57,18 @@ public class RunHistoryActivity extends BaseFragmentActivity implements OnClickL
 		super.onCreate(arg0);
 		setActionBar();
 		initView();
-		
+
 	}
 
 	private void initView() {
 		setContentView(R.layout.activity_run_history);
 		historyList = (ListView) findViewById(R.id.run_history_content_list);
-		historyAdapter =new RunHistoryAdapter(this);
+		historyAdapter = new RunHistoryAdapter(this);
 		historyList.setAdapter(historyAdapter);
 		historyAdapter.changeData(current_date, current_pattern, current_complete);
+		historyList.setOnItemClickListener(new OnHistoryItemClick());
 		registerForContextMenu(historyList);
-		
+
 		dateDropBtn = (Button) findViewById(R.id.run_history_date_drop_btn);
 		patternDropBtn = (Button) findViewById(R.id.run_history_pattern_drop_btn);
 		completeDropBtn = (Button) findViewById(R.id.run_history_complete_drop_btn);
@@ -82,9 +89,22 @@ public class RunHistoryActivity extends BaseFragmentActivity implements OnClickL
 		patternLPW.setAdapter(patternAdapter);
 		completeLPW.setAdapter(completeAdapter);
 	}
+
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.history_list, menu);
+	}
+
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		if (item.getItemId() == R.id.action_history_delete) {
+			AdapterContextMenuInfo itemInfo = (AdapterContextMenuInfo) item.getMenuInfo();
+			historyAdapter.deleteRecord(itemInfo.position);
+			return true;
+		}
+		return super.onContextItemSelected(item);
 	}
 
 	private void setActionBar() {
@@ -213,12 +233,25 @@ public class RunHistoryActivity extends BaseFragmentActivity implements OnClickL
 					isChanged = true;
 				}
 			}
-			
-			if(isChanged){
+
+			if (isChanged) {
 				historyAdapter.changeData(current_date, current_pattern, current_complete);
 			}
 		}
 
+	}
+	
+	private class OnHistoryItemClick implements OnItemClickListener{
+
+		@Override
+		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			RunRecord record=	(RunRecord) ((RunHistoryAdapter)parent.getAdapter()).getItem(position);
+			RunResult result = 	RunRecord.createRunResult(record);
+			Intent  intent = new Intent(RunHistoryActivity.this,RunResultActivity.class);
+			intent.putExtra(RunResultActivity.EXTRA_RUN_RESULT, result);
+			intent.putExtra(RunResultActivity.EXTRA_HISTORY_VIEW,true);
+			RunHistoryActivity.this.startActivity(intent);
+		}
 	}
 
 }

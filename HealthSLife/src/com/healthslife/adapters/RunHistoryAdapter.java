@@ -26,25 +26,38 @@ public class RunHistoryAdapter extends BaseAdapter {
 	private List<RunRecord> recordList = new ArrayList<RunRecord>();
 	private RunRecordDB rrDb;
 	private DecimalFormat distanceFormat = new DecimalFormat("##0");
-	private SimpleDateFormat dateFormat =new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
+	private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
+	private int date = 0;
+	private int pattern = 0;
+	private int complete= 0;
 
 	public RunHistoryAdapter(Context context) {
 		mContext = context;
 		rrDb = new RunRecordDB(context);
-		try {
-			recordList.addAll(rrDb.query(0, 0, 0));
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		notifyDataSetChanged();
+	}
+
+	public void deleteRecord(int position) {
+		rrDb.delete(recordList.get(position).getId());
+		notifyDataSetChanged();
 	}
 	
-	public void changeData(int date,int kind ,int complete){
+	@Override
+	public void notifyDataSetChanged() {
 		recordList.clear();
 		try {
-			recordList.addAll(rrDb.query(date, kind, complete));
+			recordList.addAll(rrDb.query(date, pattern, complete));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		super.notifyDataSetChanged();
+	}
+	
+
+	public void changeData(int date, int kind, int complete) {
+		this.date =date;
+		this.pattern = kind;
+		this.complete = complete;
 		this.notifyDataSetChanged();
 	}
 
@@ -98,7 +111,7 @@ public class RunHistoryAdapter extends BaseAdapter {
 		default:
 			break;
 		}
-		String duration = DateUtils.formatElapsedTime(record.getRunDuration()/1000);
+		String duration = DateUtils.formatElapsedTime(record.getRunDuration() / 1000);
 		holder.durationTxt.setText(duration);
 		holder.distanceTxt.setText(distanceFormat.format(record.getRunDistance()));
 		holder.dateTxt.setText(dateFormat.format(record.getCreateTime()));

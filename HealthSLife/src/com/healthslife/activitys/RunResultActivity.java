@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 
 import com.healthslife.BaseFragmentActivity;
@@ -20,6 +22,7 @@ import com.healthslife.run.dao.RunSetting;
 
 public class RunResultActivity extends BaseFragmentActivity implements OnClickListener {
 	public static final String EXTRA_RUN_RESULT = "runResult";
+	public static final String EXTRA_HISTORY_VIEW = "historyView";
 	private RunResult mRunResult;
 	private ListView dataListView;
 	private ActionBar actionBar;
@@ -38,6 +41,7 @@ public class RunResultActivity extends BaseFragmentActivity implements OnClickLi
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
 		mRunResult = (RunResult) getIntent().getSerializableExtra(EXTRA_RUN_RESULT);
+		boolean isHistory = getIntent().getBooleanExtra(EXTRA_HISTORY_VIEW, false);
 		if (mRunResult == null) {
 			this.finish();
 			return;
@@ -52,10 +56,22 @@ public class RunResultActivity extends BaseFragmentActivity implements OnClickLi
 		toShareBtn = findViewById(R.id.run_result_share_btn);
 		toHeartBtn = findViewById(R.id.run_result_heart_btn);
 		toMainBtn = findViewById(R.id.run_result_main_btn);
-		toShareBtn.setOnClickListener(this);
-		toHeartBtn.setOnClickListener(this);
-		toMainBtn.setOnClickListener(this);
-		writeToDB();
+
+		if (isHistory) {
+			toHeartBtn.setVisibility(View.GONE);
+			toMainBtn.setVisibility(View.GONE);
+			RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
+					LayoutParams.WRAP_CONTENT);
+			layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
+			toShareBtn.setLayoutParams(layoutParams);
+			toShareBtn.setOnClickListener(this);
+		} else {
+			toShareBtn.setOnClickListener(this);
+			toHeartBtn.setOnClickListener(this);
+			toMainBtn.setOnClickListener(this);
+			writeToDB();
+		}
+
 	}
 
 	private void initTargetView() {

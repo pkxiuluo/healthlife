@@ -28,6 +28,10 @@ public class RunRecordDB {
 			dao.create(record);
 		}
 	}
+	public void delete(int id){
+		RuntimeExceptionDao<RunRecord, Integer> dao = helper.getRuntimeExceptionDao(RunRecord.class);
+		dao.deleteById(id);
+	}
 
 	public List<RunRecord> queryByKind(int kind) {
 		RuntimeExceptionDao<RunRecord, Integer> dao = helper.getRuntimeExceptionDao(RunRecord.class);

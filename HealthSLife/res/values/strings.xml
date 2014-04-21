@@ -66,6 +66,9 @@
     <string name="run_history_pattern_free">自由跑</string>
     <string name="run_history_pattern_distance">距离跑</string>
     <string name="run_history_pattern_dest">地点跑</string>
+    <!--ContextMenu START  -->
+    <string name="run_history_delete">删除</string>
+    <!-- ContextMenuEND-->
     <!-- RunHistoryAcitivity END -->
 
 
