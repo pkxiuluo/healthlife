@@ -46,6 +46,7 @@
         <activity android:name=".activitys.TargetRunActivity"></activity>
         <activity android:name=".activitys.GetLocationActivity"></activity>
         <activity android:name="com.test.TestActivity"></activity>
+        <activity android:name=".activitys.RunHistoryActivity"></activity>
         
         
     </application>

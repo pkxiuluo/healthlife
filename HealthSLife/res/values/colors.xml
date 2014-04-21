@@ -4,10 +4,12 @@
     <color name="divider">#1b1b1b</color>
     <color name="red">#f03129</color>
     <color name="navi_title_white">#ffffff</color>
-    <color name="tab_bg">#313131</color>
+    <color name="dark_gray">#313131</color>
+    
+    <color name="background_tab_pressed">#6633B5E5</color>
 
     <item name="navi_title_red" format="color" type="color">@color/red</item>
 
-    <color name="gray_bg">#7f000000</color>
+    <color name="gray">#7f000000</color>
 
 </resources>

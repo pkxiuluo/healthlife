@@ -3,6 +3,8 @@ package com.framework.base;
 import android.app.Application;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.healthslife.db.DataBaseHelper;
+import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
@@ -19,8 +21,8 @@ public class BaseApplication extends Application {
 		ImageLoader.getInstance().init(config);
 		super.onCreate();
 	}
-
 	public BaseApplication getInstnce() {
 		return mInstance;
 	}
+	
 }

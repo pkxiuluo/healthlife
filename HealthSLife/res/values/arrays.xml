@@ -26,4 +26,23 @@
         <item>@string/run_calorie_used</item>
     </string-array>
 
+    <!-- Run History START -->
+    <string-array name="run_history_date_drop_list">
+        <item>@string/run_history_date_all</item>
+        <item>@string/run_history_date_month</item>
+        <item>@string/run_history_date_week</item>
+    </string-array>
+    <string-array name="run_history_pattern_drop_list">
+        <item>@string/run_history_pattern_all</item>
+        <item>@string/run_history_pattern_free</item>
+        <item>@string/run_history_pattern_distance</item>
+        <item>@string/run_history_pattern_dest</item>
+    </string-array>
+    <string-array name="run_history_complete_drop_list">
+        <item>@string/run_history_completeness_all</item>
+        <item>@string/run_history_completed</item>
+        <item>@string/run_history_completed_not</item>
+    </string-array>
+    <!-- Run History END -->
+
 </resources>

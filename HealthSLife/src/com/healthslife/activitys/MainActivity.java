@@ -133,7 +133,7 @@ public class MainActivity extends BaseFragmentActivity {
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		int selectedPosition = navi.getCheckedItemPosition();
-		boolean isVisible = (selectedPosition == 0 || selectedPosition == 1) ? true : false;
+		boolean isVisible = (selectedPosition == 0 ) ? true : false;
 		// menu.findItem(R.id.action_music).setVisible(isVisible);
 		menu.findItem(R.id.action_history).setVisible(isVisible);
 		return super.onPrepareOptionsMenu(menu);
@@ -148,6 +148,8 @@ public class MainActivity extends BaseFragmentActivity {
 		}
 		if (item.getItemId() == R.id.action_music) {
 			startActivity(new Intent(MainActivity.this, TestActivity.class));
+		}else if(item.getItemId() == R.id.action_history){
+			startActivity(new Intent(MainActivity.this, RunHistoryActivity.class));
 		}
 		return super.onOptionsItemSelected(item);
 	}

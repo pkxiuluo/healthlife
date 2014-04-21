@@ -60,4 +60,20 @@ public class RunResult implements Serializable {
 		this.completeness = completeness;
 	}
 
+	public DMLocation getStartLocation() {
+		return startLocation;
+	}
+
+	public void setStartLocation(DMLocation startLocation) {
+		this.startLocation = startLocation;
+	}
+
+	public DMLocation getEndLocation() {
+		return endLocation;
+	}
+
+	public void setEndLocation(DMLocation endLocation) {
+		this.endLocation = endLocation;
+	}
+
 }

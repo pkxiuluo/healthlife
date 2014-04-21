@@ -81,6 +81,7 @@ public class TargetRunActivity extends BaseFragmentActivity implements OnClickLi
 			@Override
 			public void onTargetFinish(RunResult result) {
 				mClient.stop();
+				TargetRunActivity.this.finish();
 				Intent intent = new Intent(TargetRunActivity.this, RunResultActivity.class);
 				intent.putExtra(RunResultActivity.EXTRA_RUN_RESULT, result);
 				startActivity(intent);

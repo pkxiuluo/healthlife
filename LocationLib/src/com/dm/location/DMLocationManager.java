@@ -30,9 +30,9 @@ public class DMLocationManager {
 		mGpsListener = new GPSListener();
 		mNetWorkListener = new NetWorkListener();
 	}
-	
-	public DMLocation getLastKonwnLocation(String provider){
-		Location location =mLocationManager.getLastKnownLocation(provider);
+
+	public DMLocation getLastKonwnLocation(String provider) {
+		Location location = mLocationManager.getLastKnownLocation(provider);
 		return new DMLocation(location);
 	}
 
@@ -78,7 +78,7 @@ public class DMLocationManager {
 	private void reset(String provider) {
 		if (provider.equals(LocationManager.GPS_PROVIDER)) {
 			mLocationManager.removeUpdates(mGpsListener);
-			if (isContainProvider(provider)) {
+			if (isContainProvider(provider) && DMLocationUtils.isGpsProviderEnable(mContext)) {
 				gpsInterval = getMinInterval(LocationManager.GPS_PROVIDER);
 				mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, gpsInterval, 0, mGpsListener);
 				isGPSListened = true;
@@ -87,11 +87,9 @@ public class DMLocationManager {
 			}
 		} else if (provider.equals(LocationManager.NETWORK_PROVIDER)) {
 			mLocationManager.removeUpdates(mNetWorkListener);
-			if (isContainProvider(provider)) {
+			if (isContainProvider(provider) && DMLocationUtils.isNetWorkProviderEnable(mContext)) {
 				netWorkInterval = getMinInterval(provider);
-				// netWorkInterval = 0;
-				mLocationManager
-						.requestLocationUpdates(provider, netWorkInterval, 0, mNetWorkListener);
+				mLocationManager.requestLocationUpdates(provider, netWorkInterval, 0, mNetWorkListener);
 				isNetWorkListened = true;
 			} else {
 				isNetWorkListened = false;
@@ -150,7 +148,7 @@ public class DMLocationManager {
 
 		@Override
 		public void onLocationChanged(Location location) {
-//			System.out.println("gpslisten"+location.getAccuracy());
+			// System.out.println("gpslisten"+location.getAccuracy());
 			for (DMLocationObserver observer : observerList) {
 				if (observer.getProvider().equals(LocationManager.GPS_PROVIDER)) {
 					observer.observe(new DMLocation(location));
@@ -176,7 +174,7 @@ public class DMLocationManager {
 
 		@Override
 		public void onLocationChanged(Location location) {
-//			System.out.println("netlisten"+location.getAccuracy());
+			// System.out.println("netlisten"+location.getAccuracy());
 			for (DMLocationObserver observer : observerList) {
 				if (observer.getProvider().equals(LocationManager.NETWORK_PROVIDER)) {
 					observer.observe(new DMLocation(location));
