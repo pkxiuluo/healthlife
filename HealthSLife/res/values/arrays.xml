@@ -45,4 +45,9 @@
     </string-array>
     <!-- Run History END -->
 
+    <string-array name="health_test_tab_title">
+        <item>@string/healt_test_tab_heart_rate</item>
+        <item>@string/healt_test_tab_ecg</item>
+    </string-array>
+
 </resources>

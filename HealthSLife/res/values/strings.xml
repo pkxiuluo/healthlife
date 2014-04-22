@@ -75,5 +75,8 @@
     <!-- MyAlertDialog START -->
     <string name="alert_default_title">提示</string>
     <!-- MyAlertDialog END -->
-
+<!-- HEALTH　test tab title START -->
+    <string name="healt_test_tab_heart_rate">心率识别</string>
+    <string name="healt_test_tab_ecg">心电图分析</string>
+    <!-- MyAlertDialog END -->
 </resources>
