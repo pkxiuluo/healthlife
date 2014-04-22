@@ -41,14 +41,27 @@
 
         <service android:name="com.dm.location.DMLocationService" >
         </service>
-        <activity android:name=".activitys.NormalRunActivity"></activity>
-        <activity android:name=".activitys.RunResultActivity"></activity>
-        <activity android:name=".activitys.TargetRunActivity"></activity>
-        <activity android:name=".activitys.GetLocationActivity"></activity>
-        <activity android:name="com.test.TestActivity"></activity>
-        <activity android:name=".activitys.RunHistoryActivity"></activity>
-        
-        
+
+        <activity android:name="com.healthslife.activitys.NormalRunActivity" >
+        </activity>
+        <activity android:name="com.healthslife.activitys.RunResultActivity" >
+        </activity>
+        <activity android:name="com.healthslife.activitys.TargetRunActivity" >
+        </activity>
+        <activity android:name="com.healthslife.activitys.GetLocationActivity" >
+        </activity>
+        <activity android:name="com.test.TestActivity" >
+        </activity>
+        <activity android:name="com.healthslife.activitys.RunHistoryActivity" >
+        </activity>
+        <activity
+            android:name="com.healthslife.healthtest.HeartRateHisActivity"
+            android:label="@string/title_activity_heart_rate_his"
+            android:parentActivityName="com.healthslife.BaseFragmentActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.healthslife.BaseFragmentActivity" />
+        </activity>
     </application>
 
 </manifest>

@@ -66,17 +66,20 @@
     <string name="run_history_pattern_free">自由跑</string>
     <string name="run_history_pattern_distance">距离跑</string>
     <string name="run_history_pattern_dest">地点跑</string>
-    <!--ContextMenu START  -->
+    <!-- ContextMenu START -->
     <string name="run_history_delete">删除</string>
-    <!-- ContextMenuEND-->
+    <!-- ContextMenuEND -->
     <!-- RunHistoryAcitivity END -->
 
 
     <!-- MyAlertDialog START -->
     <string name="alert_default_title">提示</string>
     <!-- MyAlertDialog END -->
-<!-- HEALTH　test tab title START -->
+    <!-- HEALTH　test tab title START -->
     <string name="healt_test_tab_heart_rate">心率识别</string>
     <string name="healt_test_tab_ecg">心电图分析</string>
     <!-- MyAlertDialog END -->
+    <string name="title_activity_heart_rate_his">HeartRateHisActivity</string>
+    <string name="hello_world">Hello world!</string>
+
 </resources>
