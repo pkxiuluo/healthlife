@@ -28,3 +28,4 @@ public class HeartRateHisActivity extends Activity {
 		return true;
 	}
 }
+ 

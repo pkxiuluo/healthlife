@@ -16,55 +16,26 @@ import android.util.Log;
 import android.view.View;
 
 public class CircleProgress extends View {
-	/**
-	 * 画笔对象的引用
-	 */
+	/** * 画笔对象的引用 */
 	private Paint paint;
-
-	/**
-	 * 圆环的颜色
-	 */
+	/** * 圆环的颜	 */
 	private int roundColor;
-
-	/**
-	 * 圆环进度的颜色
-	 */
+	/**	 * 圆环进度的颜色 */
 	private int roundProgressColor;
-
-	/**
-	 * 中间进度百分比的字符串的颜色
-	 */
+	/** * 中间进度百分比的字符串的颜色 */
 	private int textColor;
-
-	/**
-	 * 中间进度百分比的字符串的字体
-	 */
+	/** * 中间进度百分比的字符串的字体 */
 	private float textSize;
-
-	/**
-	 * 圆环的宽度
-	 */
+	/** * 圆环的宽度 */
 	private float roundWidth;
-
-	/**
-	 * 最大进度
-	 */
+	/**	 * 最大进度 */
 	private int max;
-
-	/**
-	 * 当前进度
-	 */
+	/** * 当前进度 */
 	private int progress;
-	/**
-	 * 是否显示中间的进度
-	 */
+	/**	 * 是否显示中间的进度	 */
 	private boolean textIsDisplayable;
-
-	/**
-	 * 进度的风格，实心或者空心
-	 */
+	/** * 进度的风格，实心或者空心 */
 	private int style;
-
 	public static final int STROKE = 0;
 	public static final int FILL = 1;
 
