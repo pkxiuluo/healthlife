@@ -23,16 +23,23 @@ public class ImgAnalysis implements Callback {
 	public ImgAnalysis(Context mContext) {
 		this.mContext = mContext;
 		mSurfaceView = new SurfaceView(mContext);
-	}
-
-	@SuppressWarnings("deprecation")
-	public void startCaptureImg() {
 		((Activity) this.mContext).addContentView(mSurfaceView,
 				new LayoutParams(1, 1));
 		mSurfaceHolder = mSurfaceView.getHolder();
 		mSurfaceHolder.addCallback(this);
 		mSurfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+	}
 
+	@SuppressWarnings("deprecation")
+	public void startCaptureImg() {
+		if (mCamera != null) {
+			try {
+				mCamera.startPreview();// 开始预览，这步操作很重要
+				openLight();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public void stopCaptureImg() {
@@ -40,6 +47,7 @@ public class ImgAnalysis implements Callback {
 			try {
 				/* 停止预览 */
 				mCamera.stopPreview();
+				closeLight();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -82,8 +90,8 @@ public class ImgAnalysis implements Callback {
 			priviewCallBack pre = new priviewCallBack();// 建立预览回调对象
 			mCamera.setPreviewCallback(pre); // 设置预览回调对象
 			// mCamera.getParameters().setPreviewFormat(ImageFormat.JPEG);
-			mCamera.startPreview();// 开始预览，这步操作很重要
-			openLight();
+			// mCamera.startPreview();// 开始预览，这步操作很重要
+
 		} catch (IOException exception) {
 			mCamera.release();
 			mCamera = null;
@@ -117,7 +125,7 @@ public class ImgAnalysis implements Callback {
 				mCamera.startPreview();
 			} catch (Exception e) {
 				e.printStackTrace();
-				Log.v("CameraError", "CameraError:"+e.getMessage());
+				Log.v("CameraError", "CameraError:" + e.getMessage());
 			}
 		}
 	}
@@ -131,12 +139,11 @@ public class ImgAnalysis implements Callback {
 				closeLight();
 			} catch (Exception e) {
 				e.printStackTrace();
-			} 
+			}
 		}
 	}
 
 	class priviewCallBack implements Camera.PreviewCallback {
-
 		@Override
 		public void onPreviewFrame(byte[] data, Camera camera) {
 			Size size = mCamera.getParameters().getPreviewSize();
@@ -147,7 +154,8 @@ public class ImgAnalysis implements Callback {
 		}
 	}
 
-	//从data中取得灰度值  nv21格式解析见 http://blog.csdn.net/vblittleboy/article/details/10945255
+	// 从data中取得灰度值 nv21格式解析见
+	// http://blog.csdn.net/vblittleboy/article/details/10945255
 	public int[] decodeToGray(byte[] data, Camera _camera) {
 		Size size = mCamera.getParameters().getPreviewSize();
 		int height = size.height;
@@ -158,8 +166,8 @@ public class ImgAnalysis implements Callback {
 				rgb[yp] = (0xff & ((int) data[yp])) - 16;
 				if (rgb[yp] < 0)
 					rgb[yp] = 0;
-				//将灰度值转化成argb
-//				rgb[yp] = Color.argb(100, rgb[yp], rgb[yp], rgb[yp]);
+				// 将灰度值转化成argb
+				// rgb[yp] = Color.argb(100, rgb[yp], rgb[yp], rgb[yp]);
 			}
 		}
 		return rgb;
