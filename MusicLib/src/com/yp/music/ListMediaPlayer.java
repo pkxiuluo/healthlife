@@ -10,12 +10,18 @@ import com.yp.music.MultiMediaPlayer.StatusChangedListener;
 import android.R.integer;
 import android.content.ContentUris;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.widget.Toast;
 
 public class ListMediaPlayer {
+
+	public final String ACTION_PLAYSTATE_CHANGED = "PLAYSTATE_CHANGED";
+	public final String ACTION_META_CHANGED = "META_CHANGED";
+	public final String STATE_IS_PLAYING = "isPlaying";
+
 	private Context mContext;
 	private MultiMediaPlayer mPlayer;
 	private long[] mPlayList;
@@ -77,10 +83,15 @@ public class ListMediaPlayer {
 	}
 
 	public void start() {
-		prepareCurrentAndNext();
 		if (mPlayer.isInitialized()) {
 			mPlayer.start();
-			isPlaying = true;
+			setPlaying(true);
+		} else {
+			prepareCurrentAndNext();
+			if (mPlayer.isInitialized()) {
+				mPlayer.start();
+				setPlaying(true);
+			}
 		}
 	}
 
@@ -92,7 +103,7 @@ public class ListMediaPlayer {
 
 	public void goLast() {
 		stop();
-		LinkedList<Integer> list =mPlayHistoryPosList;
+		LinkedList<Integer> list = mPlayHistoryPosList;
 		if (list.size() >= 2) {
 			list.removeLast();
 			mCurrentPosition = list.removeLast();
@@ -112,21 +123,14 @@ public class ListMediaPlayer {
 	public void stop() {
 		if (mPlayer.isInitialized()) {
 			mPlayer.stop();
-			isPlaying = false;
-		}
-	}
-
-	public void resume() {
-		if (mPlayer.isInitialized()) {
-			mPlayer.start();
-			isPlaying = true;
+			setPlaying(false);
 		}
 	}
 
 	public void pause() {
 		if (isPlaying) {
 			mPlayer.pause();
-			isPlaying = false;
+			setPlaying(false);
 		}
 	}
 
@@ -221,13 +225,18 @@ public class ListMediaPlayer {
 		return isPlaying;
 	}
 
+	private void setPlaying(boolean isPlaying) {
+		this.isPlaying = isPlaying;
+		notifyChanged(ACTION_PLAYSTATE_CHANGED);
+	}
+
 	private StatusChangedListener statusChangedListener = new StatusChangedListener() {
 		@Override
 		public void onPlayEnd() {
 			if (isExpectToBeContinue()) {
 				start();
 			} else {
-				isPlaying = false;
+				setPlaying(false);
 			}
 		}
 
@@ -243,11 +252,38 @@ public class ListMediaPlayer {
 
 		@Override
 		public void onError() {
-			isPlaying = false;
+			setPlaying(false);
 		}
 	};
 
-	protected void notifyChanged(String action) {
+	public long getPlayTime() {
+		if (mPlayer.isInitialized()) {
+			return mPlayer.position();
+		}
+		return -1;
+	}
 
+	public long cacheAudioId = -1;
+	public String cacheTitle = "";
+	public String cacheArtist = "";
+
+	public long getAudioId() {
+		return mPlayList[mCurrentPosition];
+	}
+
+	public String getArtistName() {
+		// mContext.getContentResolver().query(uri, projection, selection,
+		// selectionArgs, sortOrder)
+		return "";
+	}
+
+	protected Intent onCreateNotifyInfo(String action) {
+		Intent intent = new Intent(action);
+		intent.putExtra(STATE_IS_PLAYING, isPlaying);
+		return intent;
+	}
+
+	protected void notifyChanged(String action) {
+		mContext.sendStickyBroadcast(onCreateNotifyInfo(action));
 	}
 }

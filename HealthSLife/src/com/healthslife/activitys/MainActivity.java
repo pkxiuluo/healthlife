@@ -147,7 +147,7 @@ public class MainActivity extends BaseFragmentActivity {
 			return true;
 		}
 		if (item.getItemId() == R.id.action_music) {
-			startActivity(new Intent(MainActivity.this, TestActivity.class));
+			startActivity(new Intent(MainActivity.this, MusicActivity.class));
 		}else if(item.getItemId() == R.id.action_history){
 			startActivity(new Intent(MainActivity.this, RunHistoryActivity.class));
 		}

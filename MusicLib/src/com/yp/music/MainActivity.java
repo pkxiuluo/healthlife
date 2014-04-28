@@ -22,7 +22,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class MainActivity extends FragmentActivity implements OnClickListener {
-	ListMediaPlayer player;
+	SmartMediaPlayer player;
 	ListView lv;
 	long[] playList;
 	Button btn;
@@ -80,8 +80,10 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 				player.pause();
 			}else{
 				isPause = false;
-				player.resume();
+				player.start();
 			}
+		}else if(v==shuffle){
+			player.setPlayMode(SmartMediaPlayer.CONTROL_REPEAT_CURRENT, SmartMediaPlayer.CONTROL_SHUFFLE_NONE);
 		}
 	}
 

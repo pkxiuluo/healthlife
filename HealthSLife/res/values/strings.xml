@@ -75,10 +75,15 @@
     <!-- MyAlertDialog START -->
     <string name="alert_default_title">提示</string>
     <!-- MyAlertDialog END -->
+    
+    <!--MusicActivity START  -->
+   <string name="music_action_bar_title">音乐列表</string>
+    <!--MusicActivity END  -->
+    
+    
     <!-- HEALTH　test tab title START -->
     <string name="healt_test_tab_heart_rate">心率识别</string>
     <string name="healt_test_tab_ecg">心电图分析</string>
-    <!-- MyAlertDialog END -->
     <string name="title_activity_heart_rate_his">HeartRateHisActivity</string>
     <string name="hello_world">Hello world!</string>
 

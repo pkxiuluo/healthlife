@@ -1,4 +1,5 @@
 package com.yp.music;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -6,9 +7,15 @@ import java.util.List;
 import java.util.Random;
 
 import android.content.Context;
-
+import android.content.Intent;
 
 public class SmartMediaPlayer extends ListMediaPlayer {
+
+	public static final String ACTION_REPEAT_MODE_CHANGED = "ACTION_REPEAT_MODE_CHANGED";
+	public static final String ACTION_SHUFFLE_MODE_CHANGED = "ACTION_SHUFFLE_MODE_CHANGED";
+
+	public static final String STATE_REPEAT_MODE = "STATE_REPEAT_MODE";
+	public static final String STATE_SHUFFLE_MODE = "STATE_SHUFFLE_MODE";
 
 	public static final String CONTROL_REPEAT_NOCE = "repeat_noce";// 单曲一次
 	public static final String CONTROL_REPEAT_CURRENT = "repeat_current ";// 单曲循环
@@ -26,8 +33,7 @@ public class SmartMediaPlayer extends ListMediaPlayer {
 	}
 
 	public void start(String repeat, String shuffle) {
-		setRepeatMode(repeat);
-		setShuffleMode(shuffle);
+		setPlayMode(repeat, shuffle);
 		super.start();
 	}
 
@@ -45,6 +51,7 @@ public class SmartMediaPlayer extends ListMediaPlayer {
 		if (mRepeatMode.equals(repeat)) {
 			return false;
 		} else {
+			notifyChanged(ACTION_REPEAT_MODE_CHANGED);
 			mRepeatMode = repeat;
 			return true;
 		}
@@ -65,8 +72,9 @@ public class SmartMediaPlayer extends ListMediaPlayer {
 			int i = 0;
 			for (Integer pos : shuffleList) {
 				mShufflePosition[i] = pos.intValue();
-				 i ++;
+				i++;
 			}
+			notifyChanged(ACTION_REPEAT_MODE_CHANGED);
 			return true;
 		}
 	}
@@ -113,6 +121,14 @@ public class SmartMediaPlayer extends ListMediaPlayer {
 			}
 		}
 		return super.isExpectToBeContinue();
+	}
+
+	@Override
+	protected Intent onCreateNotifyInfo(String action) {
+		Intent intent = super.onCreateNotifyInfo(action);
+		intent.putExtra(STATE_REPEAT_MODE, mRepeatMode);
+		intent.putExtra(STATE_SHUFFLE_MODE, mShuffleMode);
+		return intent;
 	}
 
 }
