@@ -60,16 +60,16 @@
                 android:id="@+id/heart_rate_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="100"
+                android:text="00"
                 android:textColor="@color/dark_gray"
                 android:textSize="50sp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:layout_toRightOf="@+id/heart_rate_txt"
-                android:layout_alignTop="@+id/heart_rate_txt"
                 android:layout_alignBottom="@+id/heart_rate_txt"
+                android:layout_alignTop="@+id/heart_rate_txt"
+                android:layout_toRightOf="@+id/heart_rate_txt"
                 android:gravity="center_vertical"
                 android:orientation="vertical" >
 
@@ -106,18 +106,18 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/layout_bottom"
         android:layout_alignLeft="@+id/layout_bottom"
-        android:textColor="@color/gray"
-        android:text="  最近一次测量" />
+        android:text="  最近一次测量"
+        android:textColor="@color/gray" />
 
     <LinearLayout
         android:id="@+id/layout_bottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/heart_rate_bottom_bg"
+        android:layout_marginBottom="5dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginBottom="5dp"
+        android:background="@drawable/heart_rate_bottom_bg"
         android:gravity="center_vertical"
         android:orientation="horizontal" >
 
@@ -145,8 +145,8 @@
                 android:id="@+id/heart_rate_last_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/gray"
-                android:text="2014-4-22 10:10" />
+                android:text="2014-4-22 10:10"
+                android:textColor="@color/gray" />
         </LinearLayout>
 
         <LinearLayout
@@ -186,5 +186,11 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/blank"
+        android:layout_width="1px"
+        android:layout_height="1px">
+    </RelativeLayout>
 
 </RelativeLayout>
