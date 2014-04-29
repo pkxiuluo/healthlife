@@ -40,6 +40,7 @@ import com.healthslife.music.MusicUtil;
 import com.healthslife.run.fragments.RunFragment;
 import com.test.TestActivity;
 import com.yp.music.ListMediaPlayer;
+import com.yp.music.SmartMediaPlayer;
 
 public class MainActivity extends BaseFragmentActivity {
 	private DrawerLayout drawerLayout;

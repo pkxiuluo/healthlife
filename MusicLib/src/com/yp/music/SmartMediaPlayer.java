@@ -20,6 +20,7 @@ public class SmartMediaPlayer extends ListMediaPlayer {
 	public static final String CONTROL_REPEAT_NOCE = "repeat_noce";// 单曲一次
 	public static final String CONTROL_REPEAT_CURRENT = "repeat_current ";// 单曲循环
 	public static final String CONTROL_REPEAT_ALL_ONCE = "repeat_all_once";// 列表一次
+	public static final String CONTROL_REPEAT_ALL ="repeat_all";//列表循环
 	public static final String CONTROL_SHUFFLE_NONE = "shuffle_none";// 不随机
 	public static final String CONTROL_SHUFFLE_NORMAL = "shuffle_normal";// 随机
 
@@ -51,8 +52,8 @@ public class SmartMediaPlayer extends ListMediaPlayer {
 		if (mRepeatMode.equals(repeat)) {
 			return false;
 		} else {
-			notifyChanged(ACTION_REPEAT_MODE_CHANGED);
 			mRepeatMode = repeat;
+			notifyChanged(ACTION_REPEAT_MODE_CHANGED);
 			return true;
 		}
 	}
@@ -85,7 +86,7 @@ public class SmartMediaPlayer extends ListMediaPlayer {
 			return getCurrentPosition();
 		} else if (mRepeatMode.equals(CONTROL_REPEAT_CURRENT)) {
 			return getCurrentPosition();
-		} else if (mRepeatMode.equals(CONTROL_REPEAT_ALL_ONCE)) {
+		} else if (mRepeatMode.equals(CONTROL_REPEAT_ALL_ONCE)||mRepeatMode.equals(CONTROL_REPEAT_ALL)) {
 			if (mShuffleMode.equals(CONTROL_SHUFFLE_NONE)) {
 				return super.getNextPosition();
 			} else if (mShuffleMode.equals(CONTROL_SHUFFLE_NORMAL)) {
@@ -119,6 +120,8 @@ public class SmartMediaPlayer extends ListMediaPlayer {
 			} else {
 				return true;
 			}
+		}else if(mRepeatMode.equals(CONTROL_REPEAT_ALL)){
+			return true;
 		}
 		return super.isExpectToBeContinue();
 	}
