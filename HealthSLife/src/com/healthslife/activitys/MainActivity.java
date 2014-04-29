@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -33,8 +36,11 @@ import com.healthslife.dialog.MyAlertDailog;
 import com.healthslife.fragments.HealthTestFragment;
 import com.healthslife.fragments.InviteFragment;
 import com.healthslife.fragments.SettingFragment;
+import com.healthslife.music.MusicUtil;
 import com.healthslife.run.fragments.RunFragment;
 import com.test.TestActivity;
+import com.yp.music.ListMediaPlayer;
+import com.yp.music.SmartMediaPlayer;
 
 public class MainActivity extends BaseFragmentActivity {
 	private DrawerLayout drawerLayout;
@@ -133,9 +139,15 @@ public class MainActivity extends BaseFragmentActivity {
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		int selectedPosition = navi.getCheckedItemPosition();
-		boolean isVisible = (selectedPosition == 0 ) ? true : false;
+		boolean isVisible = (selectedPosition == 0) ? true : false;
 		// menu.findItem(R.id.action_music).setVisible(isVisible);
 		menu.findItem(R.id.action_history).setVisible(isVisible);
+		// menu.findItem(R.id.action_history).setIcon();
+		if (isPlaying) {
+			menu.findItem(R.id.action_music_control).setIcon(R.drawable.menu_music_stop);
+		} else {
+			menu.findItem(R.id.action_music_control).setIcon(R.drawable.menu_music_start);
+		}
 		return super.onPrepareOptionsMenu(menu);
 	}
 
@@ -147,9 +159,15 @@ public class MainActivity extends BaseFragmentActivity {
 			return true;
 		}
 		if (item.getItemId() == R.id.action_music) {
-			startActivity(new Intent(MainActivity.this, TestActivity.class));
-		}else if(item.getItemId() == R.id.action_history){
+			startActivity(new Intent(MainActivity.this, MusicActivity.class));
+		} else if (item.getItemId() == R.id.action_history) {
 			startActivity(new Intent(MainActivity.this, RunHistoryActivity.class));
+		}else if(item.getItemId() == R.id.action_music_control){
+			if (isPlaying) {
+				MusicUtil.pause();
+			} else {
+				MusicUtil.start();
+			}
 		}
 		return super.onOptionsItemSelected(item);
 	}
@@ -164,6 +182,21 @@ public class MainActivity extends BaseFragmentActivity {
 		super.onPostCreate(savedInstanceState);
 		// Sync the toggle state after onRestoreInstanceState has occurred.
 		mDrawerToggle.syncState();
+	}
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		IntentFilter filter = new IntentFilter();
+		filter.addAction(ListMediaPlayer.ACTION_PLAYSTATE_CHANGED);
+		registerReceiver(mBroadCastReceiver, filter);
+		super.onResume();
+	}
+
+	@Override
+	protected void onPause() {
+		unregisterReceiver(mBroadCastReceiver);
+		super.onPause();
 	}
 
 	@Override
@@ -213,5 +246,18 @@ public class MainActivity extends BaseFragmentActivity {
 		}
 		return super.onKeyDown(keyCode, event);
 	}
+
+	private boolean isPlaying = false;
+	private BroadcastReceiver mBroadCastReceiver = new BroadcastReceiver() {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			String action = intent.getAction();
+			if (action.equals(ListMediaPlayer.ACTION_PLAYSTATE_CHANGED)) {
+				isPlaying = intent.getBooleanExtra(ListMediaPlayer.STATE_IS_PLAYING, false);
+				invalidateOptionsMenu();
+			}
+		}
+	};
 
 }

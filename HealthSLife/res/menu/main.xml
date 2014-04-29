@@ -5,6 +5,11 @@
         android:icon="@drawable/menu_music"
         android:showAsAction="ifRoom"
         android:title="@string/music"/>
+     <item
+        android:id="@+id/action_music_control"
+        android:icon="@drawable/menu_music_start"
+        android:showAsAction="ifRoom"
+        android:title="@string/music_control"/>
     <item
         android:id="@+id/action_history"
         android:icon="@drawable/menu_history"

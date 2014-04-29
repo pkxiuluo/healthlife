@@ -18,9 +18,9 @@ import android.view.View;
 public class CircleProgress extends View {
 	/** * 画笔对象的引用 */
 	private Paint paint;
-	/** * 圆环的颜 */
+	/** * 圆环的颜	 */
 	private int roundColor;
-	/** * 圆环进度的颜色 */
+	/**	 * 圆环进度的颜色 */
 	private int roundProgressColor;
 	/** * 中间进度百分比的字符串的颜色 */
 	private int textColor;
@@ -28,11 +28,11 @@ public class CircleProgress extends View {
 	private float textSize;
 	/** * 圆环的宽度 */
 	private float roundWidth;
-	/** * 最大进度 */
+	/**	 * 最大进度 */
 	private int max;
 	/** * 当前进度 */
 	private int progress;
-	/** * 是否显示中间的进度 */
+	/**	 * 是否显示中间的进度	 */
 	private boolean textIsDisplayable;
 	/** * 进度的风格，实心或者空心 */
 	private int style;
@@ -40,7 +40,7 @@ public class CircleProgress extends View {
 	public static final int FILL = 1;
 
 	private MyThread myThread;
-	private CompleteListener mCompleteListener;
+
 	private Handler handler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
@@ -179,14 +179,13 @@ public class CircleProgress extends View {
 			throw new IllegalArgumentException("progress not less than 0");
 		}
 		if (progress > max) {
-			this.progress = max;
-		} else {
+			progress = max;
+		}
+		if (progress <= max) {
 			this.progress = progress;
+			postInvalidate();
 		}
-		postInvalidate();
-		if (this.progress == max && mCompleteListener != null) {
-			mCompleteListener.complete();
-		}
+
 	}
 
 	public void slideToProgress(int percent) {
@@ -280,13 +279,5 @@ public class CircleProgress extends View {
 
 	public void setRoundWidth(float roundWidth) {
 		this.roundWidth = roundWidth;
-	}
-
-	public void setCompleteListener(CompleteListener mCompleteListener) {
-		this.mCompleteListener = mCompleteListener;
-	}
-
-	public interface CompleteListener {
-		public void complete();
 	}
 }

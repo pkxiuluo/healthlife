@@ -12,7 +12,6 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.RelativeLayout;
 
 public class ImgAnalysis implements Callback {
 	private Camera mCamera;// Camera对象
@@ -21,29 +20,25 @@ public class ImgAnalysis implements Callback {
 	private SurfaceHolder mSurfaceHolder;
 	private ImgCaptureListener mImgCaptureListener;
 
-	public ImgAnalysis(Context mContext,RelativeLayout mRelativeLayout) {
+	public ImgAnalysis(Context mContext) {
 		this.mContext = mContext;
 		mSurfaceView = new SurfaceView(mContext);
-		mRelativeLayout.addView(mSurfaceView);
+		((Activity) this.mContext).addContentView(mSurfaceView,
+				new LayoutParams(1, 1));
 		mSurfaceHolder = mSurfaceView.getHolder();
 		mSurfaceHolder.addCallback(this);
 		mSurfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 	}
 
-	public boolean startCaptureImg() {
-		if (mCamera == null) {
-			Log.v("imganalysis", "mCamera == null");
-			// surfaceCreated(mSurfaceHolder);
-			return false;
-		} else {
+	@SuppressWarnings("deprecation")
+	public void startCaptureImg() {
+		if (mCamera != null) {
 			try {
 				mCamera.startPreview();// 开始预览，这步操作很重要
-				Log.v("imganalysis", "start");
 				openLight();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			return true;
 		}
 	}
 
@@ -61,7 +56,6 @@ public class ImgAnalysis implements Callback {
 
 	// 打开闪光灯，用作手电筒
 	public void openLight() {
-		Log.v("imganalysis", "openLight");
 		Parameters parameter = mCamera.getParameters();
 		parameter.setFlashMode(Parameters.FLASH_MODE_TORCH);
 		mCamera.setParameters(parameter);
@@ -124,11 +118,11 @@ public class ImgAnalysis implements Callback {
 				 * 设定相片大小为1024*768， 格式为JPG
 				 */
 				// parameters.setPictureFormat(PixelFormat.JPEG);
-				// parameters.setPreviewFpsRange(5000, 5000);
+				parameters.setPreviewFpsRange(5000, 5000);
 				parameters.setPictureSize(1024, 768);
 				mCamera.setParameters(parameters);
 				/* 打开预览画面 */
-				// mCamera.startPreview();
+				mCamera.startPreview();
 			} catch (Exception e) {
 				e.printStackTrace();
 				Log.v("CameraError", "CameraError:" + e.getMessage());

@@ -4,24 +4,18 @@ import java.util.ArrayList;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.InputFilter.LengthFilter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.Animation.AnimationListener;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.healthslife.R;
-import com.healthslife.healthtest.ImgAnalysis;
 import com.healthslife.healthtest.ImgAnalysis.ImgCaptureListener;
 import com.healthslife.widget.CircleProgress;
-import com.healthslife.widget.CircleProgress.CompleteListener;
 
 public class HeartRateFragment extends Fragment implements View.OnClickListener {
 	private static final int BEFORTEST = 0;
@@ -52,7 +46,6 @@ public class HeartRateFragment extends Fragment implements View.OnClickListener 
 	// private long timeMill = 0;//计时器 毫秒
 	private int lastPeakIndex = 0;
 	private int averageHeartRate = 0;
-	private LinearLayout bottomLaytout;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,9 +65,7 @@ public class HeartRateFragment extends Fragment implements View.OnClickListener 
 				.findViewById(R.id.heart_rate_last_state);
 		lastTestTime = (TextView) root.findViewById(R.id.heart_rate_last_time);
 		lastTestRate = (TextView) root.findViewById(R.id.heart_rate_last_rate);
-		bottomLaytout = (LinearLayout) root.findViewById(R.id.layout_bottom);
-		mImgAnalysis = new ImgAnalysis(inflater.getContext(),
-				(RelativeLayout) root.findViewById(R.id.blank));
+		mImgAnalysis = new ImgAnalysis(this.getActivity());
 		mImgAnalysis.setImgCaptureListener(mImgCaptureListener);
 		mTimer = new Timer();
 		return root;
@@ -96,12 +87,8 @@ public class HeartRateFragment extends Fragment implements View.OnClickListener 
 				return;
 			}
 			wrongDataNum = 0;
-			long tempMills = mTimer.getMillis();
-			if (dataList.size() == 0
-					|| (tempMills - dataList.get(dataList.size() - 1).time) > 100) {
-				dataList.add(new dataAndTime(total, mTimer.getMillis()));
-				analysisData();
-			}
+			dataList.add(new dataAndTime(total, mTimer.getMillis()));
+			analysisData();
 		}
 	};
 
@@ -119,10 +106,6 @@ public class HeartRateFragment extends Fragment implements View.OnClickListener 
 			return;
 		}
 		lastPeakIndex = pairSecondPeak;
-		long temp = dataList.get(pairSecondPeak).time
-				- dataList.get(pairFirstPeak).time;
-		if (temp < 500 || temp > 1500)
-			return;
 		peakPairs[peakPairsIndex][0] = pairFirstPeak;
 		peakPairs[peakPairsIndex][1] = pairSecondPeak;
 		peakPairsIndex++;
@@ -130,67 +113,17 @@ public class HeartRateFragment extends Fragment implements View.OnClickListener 
 		mCircleProgress.slideToProgress(peakPairsIndex * 100);
 		if (peakPairsIndex >= 10) {
 			mImgAnalysis.stopCaptureImg();
-			Toast.makeText(getActivity(), "test complete", Toast.LENGTH_SHORT)
-					.show();
-			mCircleProgress.setCompleteListener(new CompleteListener() {
-				@Override
-				public void complete() {
-					// 测量完成（进度条100%）触发完成事件
-					reSet();
-					refreshData();
-				}
-
-			});
+			Toast.makeText(getActivity(), "test complete", Toast.LENGTH_SHORT).show();
 		}
 		Log.v("heart rate", peakPairsIndex + "");
 	}
-
-	protected void refreshData() {
-		AlphaAnimation mAlphaAnimation = new AlphaAnimation(1, 0);
-		mAlphaAnimation.setDuration(500);
-		//
-		bottomLaytout.startAnimation(mAlphaAnimation);
-		mAlphaAnimation.setAnimationListener(new AnimationListener() {
-
-			@Override
-			public void onAnimationStart(Animation animation) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void onAnimationRepeat(Animation animation) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void onAnimationEnd(Animation animation) {
-				lastTestRate.setText(averageHeartRate + "");
-			}
-		});
-
-	}
-
-	private void reSet() {
-		testState = BEFORTEST;
-		mCircleProgress.setProgress(0);
-		tipsTxt.setText("轻触屏幕开始测试");
-		dataList.clear();
-		peakPairsIndex = 0;
-		mTimer.resetAndStop();
-		wrongDataNum = 0;
-		lastPeakIndex = 0;
-	}
-
 	private void computeHeartRate() {
 		long totalTime = 0;
 		for (int i = 0; i < peakPairsIndex; i++) {
 			totalTime += dataList.get(peakPairs[i][1]).time
 					- dataList.get(peakPairs[i][0]).time;
 		}
-		float temp = (60000f / (float)totalTime)*(float)peakPairsIndex;
-		averageHeartRate =(int) temp;
+		averageHeartRate = (int) ((60000 / totalTime) * peakPairsIndex);
 		heartRateTxt.setText(averageHeartRate + "");
 	}
 
@@ -213,7 +146,7 @@ public class HeartRateFragment extends Fragment implements View.OnClickListener 
 
 	@Override
 	public void onClick(View v) {
-		// Log.v("heart rate", "click");
+		Log.v("heart rate", "click");
 		switch (v.getId()) {
 		case R.id.normal_state_btn:
 			normalStateBtnClick();
@@ -231,20 +164,17 @@ public class HeartRateFragment extends Fragment implements View.OnClickListener 
 	}
 
 	private void startTest() {
-		if (testState != BEFORTEST || mImgAnalysis.startCaptureImg() == false)
+		if (testState != BEFORTEST)
 			return;
 		// 开始测量心率
 		testState = TESTING;
+		mImgAnalysis.startCaptureImg();
 		mTimer.startTimer();
-		heartRateTxt.setText("00");
-		tipsTxt.setText("心率识别中………");
 	}
 
 	private void afterSportBtnClick() {
 		if (testState != BEFORTEST) {
-			Toast.makeText(getActivity(), "请在心率识别前选择状态", Toast.LENGTH_SHORT)
-					.show();
-			;
+			Toast.makeText(getActivity(), "请在心率识别前选择状态", Toast.LENGTH_SHORT);
 			return;
 		}
 		state = AFTERSPORT;
@@ -256,9 +186,7 @@ public class HeartRateFragment extends Fragment implements View.OnClickListener 
 
 	private void normalStateBtnClick() {
 		if (testState != BEFORTEST) {
-			Toast.makeText(getActivity(), "请在心率识别前选择状态", Toast.LENGTH_SHORT)
-					.show();
-			;
+			Toast.makeText(getActivity(), "请在心率识别前选择状态", Toast.LENGTH_SHORT);
 			return;
 		}
 		state = NORMAL;
