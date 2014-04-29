@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android" >
-        <item android:drawable="@drawable/music_play_mode_list_repeat" android:state_pressed="false"></item>
-    <item android:drawable="@drawable/music_play_mode_list_repeat_" android:state_pressed="true"></item>
-
-</selector>

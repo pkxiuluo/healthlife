@@ -1,12 +1,5 @@
 package com.healthslife.fragments;
 
-import com.healthslife.R;
-import com.healthslife.healthtest.EcgFragment;
-import com.healthslife.healthtest.HeartRateFragment;
-import com.healthslife.run.fragments.DestinationRunFragment;
-import com.healthslife.run.fragments.DistanceRunFragment;
-import com.healthslife.run.fragments.NormalRunFragment;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -17,6 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.astuetz.PagerSlidingTabStrip;
+import com.healthslife.R;
+import com.healthslife.healthtest.EcgFragment;
+import com.healthslife.healthtest.HeartRateFragment;
 
 public class HealthTestFragment extends Fragment {
 	private PagerSlidingTabStrip tabs;
