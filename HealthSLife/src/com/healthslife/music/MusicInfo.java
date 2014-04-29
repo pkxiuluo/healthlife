@@ -105,7 +105,6 @@ public class MusicInfo {
 			setDuration(cursor.getLong(index));
 		}
 	}
-
 	public static List<MusicInfo> getMusicInfoList(Context context) {
 		List<MusicInfo> infoList = new ArrayList<MusicInfo>();
 		ContentResolver cr = context.getContentResolver();
@@ -117,5 +116,6 @@ public class MusicInfo {
 		}
 		return infoList;
 	}
+
 
 }

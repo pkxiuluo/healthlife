@@ -3,7 +3,40 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
+    <RelativeLayout
+        android:id="@+id/music_top_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp" >
+
+        <ImageView
+            android:id="@+id/music_start_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/music_start_btn_bg_selector" />
+
+        <ImageView
+            android:id="@+id/music_last_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/music_start_img"
+            android:src="@drawable/music_last_btn_bg_selector" />
+
+        <ImageView
+            android:id="@+id/music_next_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/music_start_img"
+            android:src="@drawable/music_next_btn_bg_selector" />
+    </RelativeLayout>
+
     <ListView
+        android:layout_below="@+id/music_top_layout"
         android:id="@+id/music_lv"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >

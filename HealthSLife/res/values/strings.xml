@@ -14,6 +14,7 @@
     <!-- MainActivity END -->
     <!-- menu START -->
     <string name="music">音乐</string>
+    <string name="music_control">音乐开关</string>
     <string name="history">历史记录</string>
     <string name="map">地图</string>
     <!-- menu END -->

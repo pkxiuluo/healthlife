@@ -18,9 +18,9 @@ import android.widget.Toast;
 
 public class ListMediaPlayer {
 
-	public final String ACTION_PLAYSTATE_CHANGED = "PLAYSTATE_CHANGED";
-	public final String ACTION_META_CHANGED = "META_CHANGED";
-	public final String STATE_IS_PLAYING = "isPlaying";
+	public static final String ACTION_PLAYSTATE_CHANGED = "PLAYSTATE_CHANGED";
+	public static final String ACTION_META_CHANGED = "META_CHANGED";
+	public static final String STATE_IS_PLAYING = "isPlaying";
 
 	private Context mContext;
 	private MultiMediaPlayer mPlayer;
@@ -66,6 +66,8 @@ public class ListMediaPlayer {
 			mPlayHistoryPosList = new LinkedList<Integer>();
 			mFailPosList = new ArrayList<Integer>(playList.length);
 			mCurrentPosition = 0;
+			notifyChanged(ACTION_META_CHANGED);
+			notifyChanged(ACTION_PLAYSTATE_CHANGED);
 		}
 	}
 
@@ -83,6 +85,8 @@ public class ListMediaPlayer {
 	}
 
 	public void start() {
+		if(mPlayList==null||mPlayList.length==0)
+			return;
 		if (mPlayer.isInitialized()) {
 			mPlayer.start();
 			setPlaying(true);
@@ -285,5 +289,11 @@ public class ListMediaPlayer {
 
 	protected void notifyChanged(String action) {
 		mContext.sendStickyBroadcast(onCreateNotifyInfo(action));
+	}
+	
+	@Override
+	protected void finalize() throws Throwable {
+//		mContext.removeStickyBroadcast(intent)
+		super.finalize();
 	}
 }

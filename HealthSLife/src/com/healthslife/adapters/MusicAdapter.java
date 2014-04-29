@@ -15,11 +15,12 @@ import com.healthslife.music.MusicInfo;
 
 public class MusicAdapter extends BaseAdapter implements SectionIndexer {
 	private Context mContext;
-	private ArrayList<MusicInfo> musicInfos = new ArrayList<MusicInfo>();
+	private ArrayList<MusicInfo> musicInfos ;
 
-	public MusicAdapter(Context context) {
+	public MusicAdapter(Context context  ,ArrayList<MusicInfo> musicInfos) {
 		mContext = context;
-		musicInfos.addAll(MusicInfo.getMusicInfoList(context));
+		this.musicInfos = musicInfos;
+
 		/*
 		 * for(MusicInfo info :musicInfos){
 		 * System.out.println(info.getTitle()+"  "
