@@ -3,7 +3,6 @@ package com.healthslife.activitys;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -32,15 +31,12 @@ import com.healthslife.BaseFragmentActivity;
 import com.healthslife.R;
 import com.healthslife.adapters.NavigationAdapter;
 import com.healthslife.adapters.NavigationAdapter.DataHolder;
-import com.healthslife.dialog.MyAlertDailog;
 import com.healthslife.fragments.HealthTestFragment;
 import com.healthslife.fragments.InviteFragment;
 import com.healthslife.fragments.SettingFragment;
 import com.healthslife.music.MusicUtil;
 import com.healthslife.run.fragments.RunFragment;
-import com.test.TestActivity;
 import com.yp.music.ListMediaPlayer;
-import com.yp.music.SmartMediaPlayer;
 
 public class MainActivity extends BaseFragmentActivity {
 	private DrawerLayout drawerLayout;
@@ -51,6 +47,11 @@ public class MainActivity extends BaseFragmentActivity {
 	private CharSequence mDrawerTitle;
 	private CharSequence mNoDrawertitle;
 	private MyDrawerToggle mDrawerToggle;
+	
+	private RunFragment runFragment;
+	private HealthTestFragment  healthTestFragment;
+	private InviteFragment inviteFragment;
+	private SettingFragment settingFragment;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -99,14 +100,13 @@ public class MainActivity extends BaseFragmentActivity {
 		DataHolder data = (DataHolder) naviAdapter.getItem(position);
 		navi.setItemChecked(position, true);
 		setTitle(data.title);
-
 		Fragment fragment = null;
 		switch (position) {
 		case 0:
-			fragment = new RunFragment();
+			fragment =new RunFragment(); 
 			break;
 		case 1:
-			fragment = new HealthTestFragment();
+			fragment =new HealthTestFragment(); 
 			break;
 		case 2:
 			fragment = new InviteFragment();
@@ -139,10 +139,28 @@ public class MainActivity extends BaseFragmentActivity {
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		int selectedPosition = navi.getCheckedItemPosition();
-		boolean isVisible = (selectedPosition == 0) ? true : false;
 		// menu.findItem(R.id.action_music).setVisible(isVisible);
-		menu.findItem(R.id.action_history).setVisible(isVisible);
-		// menu.findItem(R.id.action_history).setIcon();
+		menu.findItem(R.id.action_history).setVisible(false);
+		if (selectedPosition == 1 || selectedPosition == 0) {
+			menu.findItem(R.id.action_history).setVisible(true);
+		}
+		switch (selectedPosition) {
+		case 0:
+			menu.findItem(R.id.action_history).setVisible(true);
+			menu.findItem(R.id.action_music).setVisible(true);
+			menu.findItem(R.id.action_music_control).setVisible(true);
+			break;
+		case 1:
+			menu.findItem(R.id.action_music).setVisible(false);
+			menu.findItem(R.id.action_music_control).setVisible(false);
+			menu.findItem(R.id.action_history).setVisible(true);
+			break;
+		default:
+			menu.findItem(R.id.action_history).setVisible(false);
+			menu.findItem(R.id.action_music).setVisible(false);
+			menu.findItem(R.id.action_music_control).setVisible(false);
+			break;
+		}
 		if (isPlaying) {
 			menu.findItem(R.id.action_music_control).setIcon(R.drawable.menu_music_stop);
 		} else {
@@ -161,8 +179,13 @@ public class MainActivity extends BaseFragmentActivity {
 		if (item.getItemId() == R.id.action_music) {
 			startActivity(new Intent(MainActivity.this, MusicActivity.class));
 		} else if (item.getItemId() == R.id.action_history) {
-			startActivity(new Intent(MainActivity.this, RunHistoryActivity.class));
-		}else if(item.getItemId() == R.id.action_music_control){
+			int selectedPosition = navi.getCheckedItemPosition();
+			if(selectedPosition==0){
+				startActivity(new Intent(MainActivity.this, RunHistoryActivity.class));
+			}else if(selectedPosition==1){
+				//健康测试
+			}
+		} else if (item.getItemId() == R.id.action_music_control) {
 			if (isPlaying) {
 				MusicUtil.pause();
 			} else {
