@@ -15,8 +15,8 @@
 
         <Button
             android:id="@+id/normal_state_btn"
-            android:layout_width="90dp"
-            android:layout_height="30dp"
+            android:layout_width="75dp"
+            android:layout_height="25dp"
             android:background="@drawable/heart_rate_top_left_btn"
             android:text="平常态"
             android:textColor="@color/white"
@@ -24,8 +24,8 @@
 
         <Button
             android:id="@+id/after_sports_state"
-            android:layout_width="90dp"
-            android:layout_height="30dp"
+            android:layout_width="75dp"
+            android:layout_height="25dp"
             android:background="@drawable/heart_rate_top_right_btn_hover"
             android:text="运动后"
             android:textColor="@color/white"
@@ -62,7 +62,7 @@
                 android:layout_height="wrap_content"
                 android:text="00"
                 android:textColor="@color/dark_gray"
-                android:textSize="50sp" />
+                android:textSize="60sp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -75,8 +75,8 @@
 
                 <ImageView
                     android:id="@+id/imageView1"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_gravity="center_horizontal"
                     android:src="@drawable/heart_rate_heart" />
 
@@ -112,7 +112,7 @@
     <LinearLayout
         android:id="@+id/layout_bottom"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="75dp"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="15dp"
         android:layout_marginLeft="10dp"
@@ -172,8 +172,8 @@
 
                 <ImageView
                     android:id="@+id/imageView3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
                     android:layout_gravity="center_horizontal"
                     android:src="@drawable/heart_rate_heart" />
 
