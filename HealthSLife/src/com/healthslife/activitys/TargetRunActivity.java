@@ -7,13 +7,17 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import android.app.ActionBar;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.IntentFilter;
 import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.format.DateUtils;
 import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -25,11 +29,13 @@ import com.dm.location.DMLocationClient.OnLocationChangeListener;
 import com.healthslife.BaseFragmentActivity;
 import com.healthslife.R;
 import com.healthslife.dialog.CountDownDialog;
+import com.healthslife.music.MusicUtil;
 import com.healthslife.run.TargetedRunClient;
 import com.healthslife.run.TargetedRunClient.OnStatusChangedListener;
 import com.healthslife.run.dao.RunResult;
 import com.healthslife.run.dao.RunSetting;
 import com.healthslife.run.widget.CircleProgressBar;
+import com.yp.music.ListMediaPlayer;
 
 public class TargetRunActivity extends BaseFragmentActivity implements OnClickListener {
 	private ActionBar actionBar;
@@ -69,7 +75,7 @@ public class TargetRunActivity extends BaseFragmentActivity implements OnClickLi
 			public void onLocationChanged(DMLocation loation) {
 				speedTxt.setText(speedFormat.format(loation.getSpeed()) + "m/s");
 				progressBar.setProgress((int) (mClient.getCompleteness() * 100));
-				
+
 			}
 		});
 		mClient.setOnStatusChangedListener(new OnStatusChangedListener() {
@@ -87,6 +93,14 @@ public class TargetRunActivity extends BaseFragmentActivity implements OnClickLi
 				startActivity(intent);
 			}
 		});
+	}
+
+	@Override
+	protected void onResume() {
+		IntentFilter filter = new IntentFilter();
+		filter.addAction(ListMediaPlayer.ACTION_PLAYSTATE_CHANGED);
+		registerReceiver(mBroadCastReceiver, filter);
+		super.onResume();
 	}
 
 	private void initView() {
@@ -164,11 +178,37 @@ public class TargetRunActivity extends BaseFragmentActivity implements OnClickLi
 	}
 
 	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.run, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+	
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		if (isPlaying) {
+			menu.findItem(R.id.action_music_control).setIcon(R.drawable.menu_music_stop);
+		} else {
+			menu.findItem(R.id.action_music_control).setIcon(R.drawable.menu_music_start);
+		}
+		return super.onPrepareOptionsMenu(menu);
+	}
+
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
 			mClient.stop();
 			this.finish();
+			break;
+		case R.id.action_music:
+			startActivity(new Intent(TargetRunActivity.this, MusicActivity.class));
+			break;
+		case R.id.action_music_control:
+			if (isPlaying) {
+				MusicUtil.pause();
+			} else {
+				MusicUtil.start();
+			}
 			break;
 		default:
 			break;
@@ -186,10 +226,29 @@ public class TargetRunActivity extends BaseFragmentActivity implements OnClickLi
 	}
 
 	@Override
+	protected void onPause() {
+		unregisterReceiver(mBroadCastReceiver);
+		super.onPause();
+	}
+
+	@Override
 	protected void onStop() {
 		mClient.stop();
 		super.onStop();
 	}
+
+	private boolean isPlaying = false;
+	private BroadcastReceiver mBroadCastReceiver = new BroadcastReceiver() {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			String action = intent.getAction();
+			if (action.equals(ListMediaPlayer.ACTION_PLAYSTATE_CHANGED)) {
+				isPlaying = intent.getBooleanExtra(ListMediaPlayer.STATE_IS_PLAYING, false);
+				invalidateOptionsMenu();
+			}
+		}
+	};
 
 	@Override
 	public void finish() {
