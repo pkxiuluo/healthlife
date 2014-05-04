@@ -36,17 +36,20 @@ public class RunRecordDB {
 		dao.deleteById(id);
 	}
 
-	public int getTotalDistance() {
+	public float getTotalDistance() {
 		RuntimeExceptionDao<RunRecord, Integer> dao = helper.getRuntimeExceptionDao(RunRecord.class);
 		GenericRawResults<String[]> rawResults = dao.queryRaw("select sum(runDistance) from RunRecord ");
-		int value=0;
+		float value=0;
 		try {
-			value = Integer.valueOf(rawResults.getFirstResult()[0]);
+			List<String[]>resultList = rawResults.getResults();
+			if(resultList!=null){
+				value = Float.valueOf(resultList.get(0)[0]);
+			}
 		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
+			System.out.println(e.getMessage());
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
 		return value;

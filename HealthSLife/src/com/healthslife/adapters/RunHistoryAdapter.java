@@ -52,7 +52,6 @@ public class RunHistoryAdapter extends BaseAdapter {
 		}
 		super.notifyDataSetChanged();
 	}
-	
 
 	public void changeData(int date, int kind, int complete) {
 		this.date =date;
@@ -78,7 +77,6 @@ public class RunHistoryAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-
 		ViewHolder holder;
 		if (convertView == null) {
 			convertView = LayoutInflater.from(mContext).inflate(R.layout.item_run_history, null);

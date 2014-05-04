@@ -1,5 +1,7 @@
 package com.healthslife.activitys;
 
+import java.text.DecimalFormat;
+
 import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,6 +26,8 @@ import android.widget.ListPopupWindow;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import cn.sharesdk.evernote.f;
 
 import com.healthslife.BaseFragmentActivity;
 import com.healthslife.R;
@@ -54,10 +58,11 @@ public class RunHistoryActivity extends BaseFragmentActivity implements OnClickL
 
 	private ListView historyList;
 	private RunHistoryAdapter historyAdapter;
+	private DecimalFormat distanceFormat = new DecimalFormat("##0");
 	
 	private RunRecordDB runRecordDB ;
 
-	private int totalDiatance=0;
+	private float totalDiatance=0;
 	@Override
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
@@ -73,7 +78,7 @@ public class RunHistoryActivity extends BaseFragmentActivity implements OnClickL
 
 		View header = LayoutInflater.from(this).inflate(R.layout.list_header_run_history, null);
 		TextView totalDistanceTextView = (TextView) header.findViewById(R.id.run_history_total_data);
-		totalDistanceTextView.setText(String.valueOf(totalDiatance)+"m");
+		totalDistanceTextView.setText(distanceFormat.format(totalDiatance)+"m");
 		historyList = (ListView) findViewById(R.id.run_history_content_list);
 		historyList.addHeaderView(header, null, false);
 		historyAdapter = new RunHistoryAdapter(this);
@@ -258,6 +263,7 @@ public class RunHistoryActivity extends BaseFragmentActivity implements OnClickL
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 			RunHistoryAdapter adapter = (RunHistoryAdapter) (((HeaderViewListAdapter) parent.getAdapter())
 					.getWrappedAdapter());
+			position = position-1;//去掉header 的位置
 			RunRecord record = (RunRecord) adapter.getItem(position);
 			RunResult result = RunRecord.createRunResult(record);
 			Intent intent = new Intent(RunHistoryActivity.this, RunResultActivity.class);

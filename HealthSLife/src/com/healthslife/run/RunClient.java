@@ -93,7 +93,7 @@ public class RunClient {
 				meters = DMLocationUtils.distanceBetween(location, currentLocation);
 				if (meters > currentLocation.getAccuracy()) {
 					distance += meters;
-					long interval = currentLocation.getTime() - location.getTime();
+					long interval =Math.abs( location.getTime() -currentLocation.getTime())  ;
 					calorie += calcCalorie(meters, interval);
 					currentLocation = location;
 				}
