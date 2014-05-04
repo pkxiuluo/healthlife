@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.services.core.LatLonPoint;
@@ -28,7 +29,7 @@ import com.healthslife.run.dao.RunSettingGetable;
 
 public class DestinationRunFragment extends Fragment implements RunSettingGetable, OnClickListener,
 		OnGeocodeSearchListener {
-	private EditText destInputEdt;
+	private TextView destInputEdt;
 	private View earthBtn;
 	private static final int DEST_REQUEST_CODE = 1;
 	private GeocodeSearch geocode;
@@ -38,8 +39,9 @@ public class DestinationRunFragment extends Fragment implements RunSettingGetabl
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View root = inflater.inflate(R.layout.fragment_run_destiation, container, false);
-		destInputEdt = (EditText) root.findViewById(R.id.run_target_dest_input_edt);
-		destInputEdt.setEnabled(false);
+		destInputEdt = (TextView) root.findViewById(R.id.run_target_dest_input_edt);
+//		destInputEdt.setEnabled(false);
+		destInputEdt.setOnClickListener(this);
 		earthBtn = root.findViewById(R.id.run_target_dest_earth_btn);
 		earthBtn.setOnClickListener(this);
 		geocode = new GeocodeSearch(getActivity());
@@ -60,8 +62,10 @@ public class DestinationRunFragment extends Fragment implements RunSettingGetabl
 
 	@Override
 	public void onClick(View v) {
-		Intent intent = new Intent(getActivity(), GetLocationActivity.class);
-		startActivityForResult(intent, DEST_REQUEST_CODE);
+		if(v==earthBtn||v==destInputEdt){
+			Intent intent = new Intent(getActivity(), GetLocationActivity.class);
+			startActivityForResult(intent, DEST_REQUEST_CODE);
+		}
 	}
 
 	@Override

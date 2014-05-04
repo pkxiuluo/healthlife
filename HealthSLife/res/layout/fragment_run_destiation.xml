@@ -41,7 +41,7 @@
                 android:layout_marginRight="5dp"
                 android:src="@drawable/ic_earth" />
 
-            <EditText
+            <TextView
                 android:id="@+id/run_target_dest_input_edt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -49,6 +49,9 @@
                 android:layout_toLeftOf="@+id/run_target_dest_earth_btn"
                 android:layout_toRightOf="@+id/run_target_dest_title"
                 android:hint="@string/run_destination_input_hint"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="3dp"
+                android:layout_marginBottom="5dp"
                 android:textSize="@dimen/text_size_small" />
 
             <View

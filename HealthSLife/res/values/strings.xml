@@ -31,7 +31,7 @@
     <string name="run_gps_tips">请打开GPS,否则定位不准确</string>
     <string name="run_noprovider_available_tips">无法获取位置，不能开启跑步</string>
     <string name="run_destination_destination">跑步到</string>
-    <string name="run_destination_input_hint">请输入目的地名称</string>
+    <string name="run_destination_input_hint">点击添加目的地名称</string>
     <string name="run_tips_distance_too_short">目标距离不超过100m，过近</string>
     <string name="run_tips_dest_empty">请设定目标地点</string>
     <!-- RunFragment END -->
