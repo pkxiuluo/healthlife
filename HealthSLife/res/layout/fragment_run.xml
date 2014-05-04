@@ -12,6 +12,7 @@
         android:layout_height="48dip"
         android:background="@color/dark_gray"
         app:pstsDividerColor="@android:color/transparent"
+        app:pstsIndicatorHeight="4dp"
         app:pstsIndicatorColor="@color/red"
         app:pstsShouldExpand="true"
         app:pstsTextAllCaps="false" />

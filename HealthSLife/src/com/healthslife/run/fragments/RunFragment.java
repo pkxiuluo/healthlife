@@ -43,6 +43,7 @@ public class RunFragment extends Fragment {
 		mAdapter = new MyPagerAdapter(getActivity().getSupportFragmentManager());
 		pager.setAdapter(mAdapter);
 		tabs.setViewPager(pager);
+//		tabs.setIndicatorHeight(indicatorLineHeightPx)
 		beginBtn.setOnClickListener(new BeginClick());
 
 		dialog = new MyAlertDailog(getActivity());
