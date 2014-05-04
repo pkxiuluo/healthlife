@@ -6,10 +6,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import android.R.integer;
 import android.content.Context;
 
 import com.healthslife.db.DataBaseHelper;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
+import com.j256.ormlite.dao.GenericRawResults;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.Where;
@@ -28,9 +30,26 @@ public class RunRecordDB {
 			dao.create(record);
 		}
 	}
-	public void delete(int id){
+
+	public void delete(int id) {
 		RuntimeExceptionDao<RunRecord, Integer> dao = helper.getRuntimeExceptionDao(RunRecord.class);
 		dao.deleteById(id);
+	}
+
+	public int getTotalDistance() {
+		RuntimeExceptionDao<RunRecord, Integer> dao = helper.getRuntimeExceptionDao(RunRecord.class);
+		GenericRawResults<String[]> rawResults = dao.queryRaw("select sum(runDistance) from RunRecord ");
+		int value=0;
+		try {
+			value = Integer.valueOf(rawResults.getFirstResult()[0]);
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return value;
 	}
 
 	public List<RunRecord> queryByKind(int kind) {
@@ -96,7 +115,7 @@ public class RunRecordDB {
 
 	public List<RunRecord> query(int date, int pattern, int completeness) throws SQLException {
 		RuntimeExceptionDao<RunRecord, Integer> dao = helper.getRuntimeExceptionDao(RunRecord.class);
-	
+
 		QueryBuilder<RunRecord, Integer> qb = dao.queryBuilder();
 		Where<RunRecord, Integer> where = qb.where();
 		if (date != 0) {
@@ -117,9 +136,9 @@ public class RunRecordDB {
 		if (date != 0 || pattern != 0 || completeness != 0) {
 			return where.query();
 		} else {
-			return 	dao.queryForAll();
+			return dao.queryForAll();
 		}
-		
+
 	}
 
 	/**

@@ -7,6 +7,7 @@ import android.util.TypedValue;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +19,7 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.HeaderViewListAdapter;
 import android.widget.ListPopupWindow;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -27,6 +29,7 @@ import com.healthslife.BaseFragmentActivity;
 import com.healthslife.R;
 import com.healthslife.adapters.RunHistoryAdapter;
 import com.healthslife.run.dao.RunRecord;
+import com.healthslife.run.dao.RunRecordDB;
 import com.healthslife.run.dao.RunResult;
 
 public class RunHistoryActivity extends BaseFragmentActivity implements OnClickListener {
@@ -51,18 +54,28 @@ public class RunHistoryActivity extends BaseFragmentActivity implements OnClickL
 
 	private ListView historyList;
 	private RunHistoryAdapter historyAdapter;
+	
+	private RunRecordDB runRecordDB ;
 
+	private int totalDiatance=0;
 	@Override
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
 		setActionBar();
+		runRecordDB = new RunRecordDB(this);
+		totalDiatance = runRecordDB.getTotalDistance();
 		initView();
 
 	}
 
 	private void initView() {
 		setContentView(R.layout.activity_run_history);
+
+		View header = LayoutInflater.from(this).inflate(R.layout.list_header_run_history, null);
+		TextView totalDistanceTextView = (TextView) header.findViewById(R.id.run_history_total_data);
+		totalDistanceTextView.setText(String.valueOf(totalDiatance)+"m");
 		historyList = (ListView) findViewById(R.id.run_history_content_list);
+		historyList.addHeaderView(header, null, false);
 		historyAdapter = new RunHistoryAdapter(this);
 		historyList.setAdapter(historyAdapter);
 		historyAdapter.changeData(current_date, current_pattern, current_complete);
@@ -238,18 +251,18 @@ public class RunHistoryActivity extends BaseFragmentActivity implements OnClickL
 				historyAdapter.changeData(current_date, current_pattern, current_complete);
 			}
 		}
-
 	}
-	
-	private class OnHistoryItemClick implements OnItemClickListener{
 
+	private class OnHistoryItemClick implements OnItemClickListener {
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-			RunRecord record=	(RunRecord) ((RunHistoryAdapter)parent.getAdapter()).getItem(position);
-			RunResult result = 	RunRecord.createRunResult(record);
-			Intent  intent = new Intent(RunHistoryActivity.this,RunResultActivity.class);
+			RunHistoryAdapter adapter = (RunHistoryAdapter) (((HeaderViewListAdapter) parent.getAdapter())
+					.getWrappedAdapter());
+			RunRecord record = (RunRecord) adapter.getItem(position);
+			RunResult result = RunRecord.createRunResult(record);
+			Intent intent = new Intent(RunHistoryActivity.this, RunResultActivity.class);
 			intent.putExtra(RunResultActivity.EXTRA_RUN_RESULT, result);
-			intent.putExtra(RunResultActivity.EXTRA_HISTORY_VIEW,true);
+			intent.putExtra(RunResultActivity.EXTRA_HISTORY_VIEW, true);
 			RunHistoryActivity.this.startActivity(intent);
 		}
 	}
