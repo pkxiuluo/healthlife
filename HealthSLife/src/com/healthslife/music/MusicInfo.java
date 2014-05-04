@@ -109,10 +109,12 @@ public class MusicInfo {
 		List<MusicInfo> infoList = new ArrayList<MusicInfo>();
 		ContentResolver cr = context.getContentResolver();
 		Cursor cursor = cr.query(Media.EXTERNAL_CONTENT_URI, columnNames,Media.ARTIST +" <> "+UNKNOWN , null, Media.DEFAULT_SORT_ORDER);
-		while (cursor.moveToNext()) {
-			MusicInfo info = new MusicInfo();
-			info.initialize(cursor);
-			infoList.add(info);
+		if(cursor!=null){
+			while (cursor.moveToNext()) {
+				MusicInfo info = new MusicInfo();
+				info.initialize(cursor);
+				infoList.add(info);
+			}
 		}
 		return infoList;
 	}

@@ -39,6 +39,10 @@ public class ListMediaPlayer {
 		mPlayer.setStatusChangedListener(statusChangedListener);
 		Cursor cursor = context.getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
 				new String[] { MediaStore.Audio.Media._ID, MediaStore.Audio.Media.TITLE }, null, null, null);
+		if(cursor==null){
+			mPlayList= new long[0];
+			return;
+		}
 		int count = cursor.getCount();
 		if (count != 0) {
 			mPlayList = new long[count];
@@ -47,6 +51,8 @@ public class ListMediaPlayer {
 				mPlayList[i] = cursor.getLong(0);
 				i++;
 			}
+		}else{
+			mPlayList= new long[0];
 		}
 	}
 
@@ -218,11 +224,15 @@ public class ListMediaPlayer {
 	}
 
 	public void addCurrentToHistoryList() {
-		mPlayHistoryPosList.add(mCurrentPosition);
+		if(mPlayHistoryPosList!=null){
+			mPlayHistoryPosList.add(mCurrentPosition);
+		}
 	}
 
 	public void clearHistoryPosList() {
-		mPlayHistoryPosList.clear();
+		if(mPlayHistoryPosList!=null){
+			mPlayHistoryPosList.clear();
+		}
 	}
 
 	public boolean isPlaying() {
