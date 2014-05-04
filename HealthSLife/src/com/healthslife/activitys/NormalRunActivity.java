@@ -34,6 +34,7 @@ import com.healthslife.music.MusicUtil;
 import com.healthslife.run.RunClient;
 import com.healthslife.run.dao.RunResult;
 import com.healthslife.run.dao.RunSetting;
+import com.healthslife.setting.AppSetting;
 import com.yp.music.ListMediaPlayer;
 
 public class NormalRunActivity extends BaseFragmentActivity implements OnClickListener {
@@ -136,7 +137,8 @@ public class NormalRunActivity extends BaseFragmentActivity implements OnClickLi
 
 	private void initDialog() {
 		dialog = new CountDownDialog(this);
-		dialog.setDuratoin(1);
+		AppSetting appSetting =new AppSetting(this);
+		dialog.setDuratoin(appSetting.getCountDown());
 		dialog.show();
 		dialog.setOnDismissListener(new OnDismissListener() {
 			@Override
