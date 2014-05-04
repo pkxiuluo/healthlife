@@ -12,8 +12,10 @@ import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.AdapterView.OnItemClickListener;
 
 import com.healthslife.BaseFragmentActivity;
 import com.healthslife.R;
@@ -55,6 +57,7 @@ public class MusicActivity extends BaseFragmentActivity implements OnClickListen
 		mListView = (ListView) findViewById(R.id.music_lv);
 		mAdapter = new MusicAdapter(this, musicInfos);
 		mListView.setAdapter(mAdapter);
+		mListView.setOnItemClickListener(mItemClickListener);
 		mStartBtn = (ImageView) findViewById(R.id.music_start_img);
 		mLastBtn = findViewById(R.id.music_last_img);
 		mNextBtn = findViewById(R.id.music_next_img);
@@ -164,5 +167,13 @@ public class MusicActivity extends BaseFragmentActivity implements OnClickListen
 			mPlayModeBtn.setImageResource(R.drawable.music_play_mode_shuffle_selector);
 		}
 	}
+	
+	private OnItemClickListener mItemClickListener = new OnItemClickListener() {
+
+		@Override
+		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			MusicUtil.goPosition(position);
+		}
+	};
 
 }

@@ -57,6 +57,10 @@ public class MusicUtil {
 	public static void goLast() {
 		mediaPlayer.goLast();
 	}
+	
+	public static void goPosition(int position){
+		mediaPlayer.goPosition(position);
+	}
 
 	public static void setPlayMode(String mode) {
 		if (mode == null) {
