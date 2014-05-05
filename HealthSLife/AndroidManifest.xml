@@ -102,6 +102,9 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name="com.healthslife.healthtest.EcgTakePicActivity">
+        </activity>
     </application>
 
 </manifest>

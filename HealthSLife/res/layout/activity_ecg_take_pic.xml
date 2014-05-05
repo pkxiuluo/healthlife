@@ -1,0 +1,69 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    android:gravity="center_vertical"
+    tools:context="com.healthslife.healthtest.EcgTakePicActivity" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical" >
+
+        <FrameLayout
+            android:layout_width="500dp"
+            android:layout_height="250dp" >
+
+            <SurfaceView
+                android:id="@+id/mSurfaceView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ecg_take_pic_tip" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="visible" >
+
+            <ImageButton
+                android:id="@+id/ecg_take_pic"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:scaleType="fitXY"
+                android:background="#00000000"
+                android:src="@drawable/ecg_take_pic_selector" />
+
+            <ImageButton
+                android:id="@+id/ecg_save_analysis"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ecg_save_btn_selector"
+                android:background="#00000000"
+                android:scaleType="fitXY"
+                android:visibility="gone" />
+
+            <ImageButton
+                android:id="@+id/ecg_retake_pic"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ecg_retake_selector"
+                android:layout_marginLeft="30dp"
+                android:background="#00000000"
+                android:scaleType="fitXY"
+                android:visibility="gone" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

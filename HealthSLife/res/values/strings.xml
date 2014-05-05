@@ -67,7 +67,6 @@
     <string name="run_history_pattern_free">自由跑</string>
     <string name="run_history_pattern_distance">距离跑</string>
     <string name="run_history_pattern_dest">地点跑</string>
-    
     <string name="run_history_total_distance">跑步总里程</string>
     <!-- ContextMenu START -->
     <string name="run_history_delete">删除</string>
@@ -78,6 +77,7 @@
     <!-- MyAlertDialog START -->
     <string name="alert_default_title">提示</string>
     <!-- MyAlertDialog END -->
+    
     
     <!--MusicActivity START  -->
    <string name="music_action_bar_title">音乐列表</string>
