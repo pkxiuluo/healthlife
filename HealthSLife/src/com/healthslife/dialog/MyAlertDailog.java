@@ -3,6 +3,7 @@ package com.healthslife.dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -35,7 +36,7 @@ public class MyAlertDailog extends Dialog implements android.view.View.OnClickLi
 		negativeBtn = (Button) findViewById(R.id.alert_negative_btn);
 		positiveBtn.setOnClickListener(this);
 		negativeBtn.setOnClickListener(this);
-		 setCancelable(false);
+		setCancelable(false);
 	}
 
 	@Override
@@ -46,6 +47,23 @@ public class MyAlertDailog extends Dialog implements android.view.View.OnClickLi
 
 	public void setContent(CharSequence content) {
 		contentTxt.setText(content);
+	}
+
+	public void setPositiveButtonVisibility(int visibility) {
+		positiveBtn.setVisibility(visibility);
+	}
+
+	public void setNegativeButtonVisibility(int visibility) {
+		negativeBtn.setVisibility(visibility);
+	}
+
+	public void setIcon(Drawable drawable) {
+		titleTxt.setCompoundDrawables(drawable, null, null, null);
+	}
+
+	public void setIcon(int resId) {
+		Drawable drawable = getContext().getResources().getDrawable(resId);
+		titleTxt.setCompoundDrawables(drawable, null, null, null);
 	}
 
 	@Override
