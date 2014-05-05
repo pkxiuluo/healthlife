@@ -278,4 +278,5 @@ public class HeartRateFragment extends Fragment implements View.OnClickListener 
 		}
 
 	}
+
 }
