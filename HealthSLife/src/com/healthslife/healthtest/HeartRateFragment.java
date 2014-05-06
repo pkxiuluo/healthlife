@@ -278,5 +278,12 @@ public class HeartRateFragment extends Fragment implements View.OnClickListener 
 		}
 
 	}
+	
+	@Override
+	public void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		mImgAnalysis.releaseCamera();
+	}
 
 }

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="320dp"
+        android:layout_height="160dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/ecg_result_top_bg"
+        android:padding="10dp" >
+
+        <ImageView
+            android:id="@+id/result_pic"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:scaleType="fitXY" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/relativeLayout1"
+        android:layout_alignRight="@+id/relativeLayout1"
+        android:layout_below="@+id/relativeLayout1"
+        android:background="@drawable/ecg_result_content_bg"
+        android:padding="20dp" >
+
+        <LinearLayout
+            android:id="@+id/tips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ecg_result_lab" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="  心电图分析结果"
+                android:textColor="#f03129" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/line"
+            android:layout_marginTop="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/tips"
+            android:background="#f03129" />
+
+        <TextView
+            android:id="@+id/result_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/line"
+            android:textSize="20sp"
+            android:text="对不起，没有分析出结果！" />
+    </RelativeLayout>
+
+</RelativeLayout>

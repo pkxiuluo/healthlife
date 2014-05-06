@@ -15,6 +15,7 @@ import android.graphics.PixelFormat;
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
 import android.hardware.Camera.ShutterCallback;
+import android.hardware.Camera.Size;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -40,7 +41,7 @@ public class EcgTakePicActivity extends Activity implements
 	private AutoFocusCallback mAutoFocusCallback = new AutoFocusCallback();
 
 	// 存储在手机中的文件夹名称
-	private String path = "images";
+	private String path = "/images";
 	private Bitmap bmp = null;
 	private int count;
 
@@ -55,6 +56,7 @@ public class EcgTakePicActivity extends Activity implements
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		setContentView(R.layout.activity_ecg_take_pic);
 		mSurfaceView = (SurfaceView) findViewById(R.id.mSurfaceView);
+		mSurfaceView.setOnClickListener(this);
 		holder = mSurfaceView.getHolder();
 		holder.addCallback(this);
 		holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
@@ -110,6 +112,8 @@ public class EcgTakePicActivity extends Activity implements
 		stopCamera();
 		mCamera.release();
 		mCamera = null;
+		holder = null;
+		mSurfaceView = null;
 	}
 
 	private void takePicture() {
@@ -146,6 +150,23 @@ public class EcgTakePicActivity extends Activity implements
 		}
 	};
 
+	public int[] decodeToGray(byte[] data, Camera _camera) {
+		Size size = mCamera.getParameters().getPreviewSize();
+		int height = size.height;
+		int width = size.width;
+		int rgb[] = new int[height * width];
+		for (int j = 0, yp = 0; j < height; j++) {
+			for (int i = 0; i < width; i++, yp++) {
+				rgb[yp] = (0xff & ((int) data[yp])) - 16;
+				if (rgb[yp] < 0)
+					rgb[yp] = 0;
+				// 将灰度值转化成argb
+				// rgb[yp] = Color.argb(100, rgb[yp], rgb[yp], rgb[yp]);
+			}
+		}
+		return rgb;
+	}
+
 	public final class AutoFocusCallback implements
 			android.hardware.Camera.AutoFocusCallback {
 		public void onAutoFocus(boolean focused, Camera camera) {
@@ -163,8 +184,9 @@ public class EcgTakePicActivity extends Activity implements
 			try {
 				Camera.Parameters parameters = mCamera.getParameters();
 				parameters.setPictureFormat(PixelFormat.JPEG);
-				parameters.setPictureSize(600, 480);
-
+				parameters.setPictureSize(960, 480);
+				parameters.setFocusMode("macro");
+				// parameters
 				mCamera.setParameters(parameters);
 				mCamera.startPreview();
 			} catch (Exception e) {
@@ -197,7 +219,8 @@ public class EcgTakePicActivity extends Activity implements
 		case R.id.ecg_retake_pic:
 			retakePicClickEvent();
 			break;
-
+		case R.id.mSurfaceView:
+			mCamera.autoFocus(null);
 		default:
 			break;
 		}
@@ -218,6 +241,8 @@ public class EcgTakePicActivity extends Activity implements
 	private void saveAnalysisClickEvent() {
 		saveAndAnalysis.setVisibility(View.GONE);
 		retakePic.setVisibility(View.GONE);
+		String analysisResult = null;
+		String filePath = null;
 		/* 保存文件 */
 		if (bmp != null) {
 			/* 检查SDCard是否存在 */
@@ -235,7 +260,7 @@ public class EcgTakePicActivity extends Activity implements
 					if (!f.exists()) {
 						f.mkdir();
 					}
-					/* 保存相片文件 */ 
+					/* 保存相片文件 */
 					String fileName = new SimpleDateFormat("yyyyMMddHHmmss")
 							.format(new Date()) + ".jpg";
 					File n = new File(f, fileName);
@@ -249,13 +274,9 @@ public class EcgTakePicActivity extends Activity implements
 					bos.close();
 
 					// 将拍照文件的路径返回到调用视图View中，在onActivityResult中进行获取文件的路径
-					String result = n.getAbsolutePath();
-					Intent intent = new Intent();
-					Bundle bundle = new Bundle();
-					bundle.putString("path", result);
-					intent.putExtras(bundle);
-					EcgTakePicActivity.this.setResult(RESULT_OK, intent);
-					finish();
+					filePath = n.getAbsolutePath();
+
+					analysisResult = ECGAnalysis.Analysis(filePath);
 
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -266,11 +287,32 @@ public class EcgTakePicActivity extends Activity implements
 		if (!bmp.isRecycled())
 			bmp.recycle();
 
-		takePic.setVisibility(View.VISIBLE);
+		// takePic.setVisibility(View.VISIBLE);
 
 		/* 重新设定Camera */
+		// stopCamera();
+		// initCamera();
+		Intent intent = new Intent(this, EcgResultActivity.class);
+		if (analysisResult == null) {
+			intent.putExtra("analysis_result", "null error");
+		} else {
+			intent.putExtra("analysis_result", analysisResult);
+		}
+		intent.putExtra("pic_path", filePath);
+//		setResult(20, data);
+		// // 关闭掉这个Activity
+		// surfaceDestroyed(holder);
 		stopCamera();
-		initCamera();
+		if (mCamera != null) {
+			try {
+				/* 停止预览 */
+				mCamera.release();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		startActivity(intent);
+		this.finish();
 	}
 
 	private void takePicClickEvent() {
@@ -278,6 +320,19 @@ public class EcgTakePicActivity extends Activity implements
 		takePic.setVisibility(View.GONE);
 		mCamera.autoFocus(mAutoFocusCallback);
 	}
-	
+
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		if (mCamera != null) {
+			try {
+				/* 停止预览 */
+				mCamera.release();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
 }
