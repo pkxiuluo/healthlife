@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class EcgFragment extends Fragment {
 	private Button ecgTestBtn;
@@ -30,7 +31,16 @@ public class EcgFragment extends Fragment {
 		public void onClick(View v) {
 			Intent intent = new Intent(EcgFragment.this.getActivity(),
 					EcgTakePicActivity.class);
-			startActivity(intent);
+			startActivityForResult(intent, 100);
 		}
+	};
+
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		  if(20==resultCode)  
+	        {  
+	            String resultString=data.getExtras().getString("analysis_result");  
+	            Toast.makeText(getActivity(), resultString, Toast.LENGTH_SHORT).show();;
+	        }  
+	        super.onActivityResult(requestCode, resultCode, data);  
 	};
 }

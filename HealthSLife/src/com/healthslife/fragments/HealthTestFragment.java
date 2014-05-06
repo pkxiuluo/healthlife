@@ -22,7 +22,7 @@ public class HealthTestFragment extends Fragment {
 	private PagerSlidingTabStrip tabs;
 	private ViewPager mViewpager;
 	private MyPagerAdapter mAdapter;
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -33,16 +33,22 @@ public class HealthTestFragment extends Fragment {
 		mAdapter = new MyPagerAdapter(getActivity().getSupportFragmentManager());
 		mViewpager.setAdapter(mAdapter);
 		tabs.setViewPager(mViewpager);
+		// mViewpager.getCurrentItem();
 		return root;
 	}
-	
+
+	public int getCurrentPager() {
+		return mViewpager.getCurrentItem();
+	}
+
 	private class MyPagerAdapter extends FragmentStatePagerAdapter {
 		String[] titleStrings;
 		Fragment[] fragments;
 
 		public MyPagerAdapter(FragmentManager fm) {
 			super(fm);
-			titleStrings = getResources().getStringArray(R.array.health_test_tab_title);
+			titleStrings = getResources().getStringArray(
+					R.array.health_test_tab_title);
 			fragments = new Fragment[titleStrings.length];
 		}
 

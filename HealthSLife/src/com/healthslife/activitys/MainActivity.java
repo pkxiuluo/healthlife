@@ -47,15 +47,14 @@ public class MainActivity extends BaseFragmentActivity {
 	private CharSequence mDrawerTitle;
 	private CharSequence mNoDrawertitle;
 	private MyDrawerToggle mDrawerToggle;
-	
+
 	private RunFragment runFragment;
-	private HealthTestFragment  healthTestFragment;
+	private HealthTestFragment healthTestFragment;
 	private InviteFragment inviteFragment;
 	private SettingFragment settingFragment;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
@@ -67,8 +66,10 @@ public class MainActivity extends BaseFragmentActivity {
 	}
 
 	private void initData() {
-		TypedArray titleArray = getResources().obtainTypedArray(R.array.navigation_title);
-		TypedArray iconArray = getResources().obtainTypedArray(R.array.navigation_icon);
+		TypedArray titleArray = getResources().obtainTypedArray(
+				R.array.navigation_title);
+		TypedArray iconArray = getResources().obtainTypedArray(
+				R.array.navigation_icon);
 		int count = titleArray.length();
 		for (int i = 0; i < count; i++) {
 			DataHolder data = new DataHolder();
@@ -90,7 +91,8 @@ public class MainActivity extends BaseFragmentActivity {
 		navi.setAdapter(naviAdapter);
 		navi.setOnItemClickListener(new OnItemClickListener() {
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
 				selectItem(arg2);
 			}
 		});
@@ -105,10 +107,11 @@ public class MainActivity extends BaseFragmentActivity {
 		Fragment fragment = null;
 		switch (position) {
 		case 0:
-			fragment =new RunFragment(); 
+			fragment = new RunFragment();
 			break;
 		case 1:
-			fragment =new HealthTestFragment(); 
+			fragment = new HealthTestFragment();
+			healthTestFragment = (HealthTestFragment) fragment;
 			break;
 		case 2:
 			fragment = new InviteFragment();
@@ -120,7 +123,8 @@ public class MainActivity extends BaseFragmentActivity {
 			break;
 		}
 		FragmentManager manager = getSupportFragmentManager();
-		manager.beginTransaction().replace(R.id.main_content_layout, fragment).commit();
+		manager.beginTransaction().replace(R.id.main_content_layout, fragment)
+				.commit();
 		drawerLayout.closeDrawer(navi);
 	}
 
@@ -164,9 +168,11 @@ public class MainActivity extends BaseFragmentActivity {
 			break;
 		}
 		if (isPlaying) {
-			menu.findItem(R.id.action_music_control).setIcon(R.drawable.menu_music_stop);
+			menu.findItem(R.id.action_music_control).setIcon(
+					R.drawable.menu_music_stop);
 		} else {
-			menu.findItem(R.id.action_music_control).setIcon(R.drawable.menu_music_start);
+			menu.findItem(R.id.action_music_control).setIcon(
+					R.drawable.menu_music_start);
 		}
 		return super.onPrepareOptionsMenu(menu);
 	}
@@ -182,10 +188,26 @@ public class MainActivity extends BaseFragmentActivity {
 			startActivity(new Intent(MainActivity.this, MusicActivity.class));
 		} else if (item.getItemId() == R.id.action_history) {
 			int selectedPosition = navi.getCheckedItemPosition();
-			if(selectedPosition==0){
-				startActivity(new Intent(MainActivity.this, RunHistoryActivity.class));
-			}else if(selectedPosition==1){
-				//健康测试
+			if (selectedPosition == 0) {
+				startActivity(new Intent(MainActivity.this,
+						RunHistoryActivity.class));
+			} else if (selectedPosition == 1) {
+				// 健康测试
+				if (healthTestFragment == null)
+					return false;
+				switch (healthTestFragment.getCurrentPager()) {
+				case 0:
+					//打开心率测量的历史页面
+					Toast.makeText(this, "打开心率测量的历史页面", Toast.LENGTH_SHORT);
+					break;
+				case 1:
+					//打开心电图测试的历史页面
+					Toast.makeText(this, "打开心电图测试的历史页面", Toast.LENGTH_SHORT);
+					break;
+				default:
+					break;
+				}
+
 			}
 		} else if (item.getItemId() == R.id.action_music_control) {
 			if (isPlaying) {
@@ -234,8 +256,8 @@ public class MainActivity extends BaseFragmentActivity {
 	private class MyDrawerToggle extends ActionBarDrawerToggle {
 
 		public MyDrawerToggle() {
-			super(MainActivity.this, drawerLayout, R.drawable.ic_drawer_navi, R.string.drawer_open,
-					R.string.drawer_close);
+			super(MainActivity.this, drawerLayout, R.drawable.ic_drawer_navi,
+					R.string.drawer_open, R.string.drawer_close);
 		}
 
 		@Override
@@ -264,7 +286,8 @@ public class MainActivity extends BaseFragmentActivity {
 			if (current - lastBackKeyTime <= 350) {
 				this.finish();
 			} else {
-				Toast.makeText(this, getText(R.string.logout_tip), Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, getText(R.string.logout_tip),
+						Toast.LENGTH_SHORT).show();
 			}
 			lastBackKeyTime = current;
 			return true;
@@ -279,7 +302,8 @@ public class MainActivity extends BaseFragmentActivity {
 		public void onReceive(Context context, Intent intent) {
 			String action = intent.getAction();
 			if (action.equals(ListMediaPlayer.ACTION_PLAYSTATE_CHANGED)) {
-				isPlaying = intent.getBooleanExtra(ListMediaPlayer.STATE_IS_PLAYING, false);
+				isPlaying = intent.getBooleanExtra(
+						ListMediaPlayer.STATE_IS_PLAYING, false);
 				invalidateOptionsMenu();
 			}
 		}

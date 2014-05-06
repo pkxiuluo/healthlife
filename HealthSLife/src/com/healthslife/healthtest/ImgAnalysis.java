@@ -21,7 +21,7 @@ public class ImgAnalysis implements Callback {
 	private SurfaceHolder mSurfaceHolder;
 	private ImgCaptureListener mImgCaptureListener;
 
-	public ImgAnalysis(Context mContext,RelativeLayout mRelativeLayout) {
+	public ImgAnalysis(Context mContext, RelativeLayout mRelativeLayout) {
 		this.mContext = mContext;
 		mSurfaceView = new SurfaceView(mContext);
 		mRelativeLayout.addView(mSurfaceView);
@@ -86,10 +86,10 @@ public class ImgAnalysis implements Callback {
 				// open方法;
 				// 如果模拟器版本较高的话，无参的open方法将会获得null值!所以尽量使用通用版本的模拟器和API；
 			} catch (Exception e) {
-				Log.e("============", "摄像头被占用");
+				Log.e("============", "heart rate摄像头被占用");
 			}
 			if (mCamera == null) {
-				Log.e("============", "摄像机为空");
+				Log.e("============", "heart rate摄像机为空");
 				System.exit(0);
 			}
 			mCamera.setPreviewDisplay(mSurfaceHolder);// 设置显示面板控制器
@@ -185,5 +185,16 @@ public class ImgAnalysis implements Callback {
 
 	public void setImgCaptureListener(ImgCaptureListener mImgCaptureListener) {
 		this.mImgCaptureListener = mImgCaptureListener;
+	}
+
+	public void releaseCamera() {
+		if (mCamera != null) {
+			try {
+				/* 停止预览 */
+				mCamera.release();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }
