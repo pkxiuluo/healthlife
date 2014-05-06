@@ -9,6 +9,7 @@
         android:background="@color/gray" >
 
         <RelativeLayout
+            android:id="@+id/run_distance_panel_top_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
@@ -33,21 +34,47 @@
                 android:layout_centerHorizontal="true"
                 android:src="@drawable/run_distace_panel_divider" />
 
-            <EditText
-                android:id="@+id/run_distance_target_edt"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/run_distance_panel_top_txt"
-                android:layout_centerInParent="true"
-                android:gravity="center"
-                android:maxLength="4"
-                android:numeric="integer"
-                android:singleLine="true"
-                android:text="0"
-                android:textColor="@color/red"
-                android:textSize="@dimen/text_size_big_ss"
-                android:textStyle="bold" />
+                android:layout_centerInParent="true" >
+
+                <TextView
+                    android:id="@+id/run_distance_target_m"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/run_distance_target_edt"
+                    android:layout_alignParentRight="true"
+                    android:text="m"
+                    android:textColor="@color/red"
+                    android:textSize="30dp"
+                    android:textStyle="bold"
+                    android:translationY="-15dp" />
+
+                <EditText
+                    android:id="@+id/run_distance_target_edt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/run_distance_target_m"
+                    android:gravity="center"
+                    android:maxLength="4"
+                    android:numeric="integer"
+                    android:singleLine="true"
+                    android:text="0"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/text_size_big_ss"
+                    android:textStyle="bold" />
+            </RelativeLayout>
         </RelativeLayout>
+
+        <ImageView
+            android:layout_marginTop="30dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/run_distance_panel_top_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/distance_tip_img" />
     </RelativeLayout>
 
 </RelativeLayout>
