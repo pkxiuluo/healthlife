@@ -61,12 +61,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dp"
+                android:layout_marginRight="10dp"
+                android:maxEms="18"
                 android:layout_toRightOf="@+id/run_result_target_icon"
                 android:textSize="@dimen/text_size_normal" />
 
             <TextView
                 android:id="@+id/run_result_target_content_txt"
                 android:layout_width="wrap_content"
+                android:singleLine="true"
+                android:layout_toRightOf="@+id/run_result_target_title_txt"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:textSize="@dimen/text_size_normal" />

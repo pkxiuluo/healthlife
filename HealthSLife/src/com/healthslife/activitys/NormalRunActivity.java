@@ -10,11 +10,13 @@ import android.app.ActionBar;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.IntentFilter;
 import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.PowerManager;
+import android.os.PowerManager.WakeLock;
 import android.text.format.DateUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -153,6 +155,7 @@ public class NormalRunActivity extends BaseFragmentActivity implements OnClickLi
 					}
 				}, 0, 1000, TimeUnit.MILLISECONDS);
 				mClient.start();
+				acquireWakeLock()  ;
 			}
 		});
 	}
@@ -173,6 +176,7 @@ public class NormalRunActivity extends BaseFragmentActivity implements OnClickLi
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			mClient.stop();
+			releaseWakeLock();
 			this.finish();
 		}
 		return super.onKeyDown(keyCode, event);
@@ -198,6 +202,7 @@ public class NormalRunActivity extends BaseFragmentActivity implements OnClickLi
 		switch (item.getItemId()) {
 		case android.R.id.home:
 			mClient.stop();
+			releaseWakeLock();
 			this.finish();
 			break;
 		case R.id.action_music:
@@ -243,5 +248,28 @@ public class NormalRunActivity extends BaseFragmentActivity implements OnClickLi
 			future.cancel(true);
 		}
 	};
+	WakeLock wakeLock = null;  
+	 private void acquireWakeLock()  
+	    {  
+	        if (null == wakeLock)  
+	        {  
+	            PowerManager pm = (PowerManager)this.getSystemService(Context.POWER_SERVICE);  
+	            wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK|PowerManager.ON_AFTER_RELEASE, "PostLocationService");  
+	            if (null != wakeLock)  
+	            {  
+	                wakeLock.acquire();  
+	            }  
+	        }  
+	    }  
+	      
+	    //释放设备电源锁  
+	    private void releaseWakeLock()  
+	    {  
+	        if (null != wakeLock)  
+	        {  
+	            wakeLock.release();  
+	            wakeLock = null;  
+	        }  
+	    }  
 
 }

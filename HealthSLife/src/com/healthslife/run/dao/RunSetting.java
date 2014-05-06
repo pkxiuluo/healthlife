@@ -15,6 +15,7 @@ public class RunSetting implements Serializable {
 
 	private int kind;
 	private DMLocation dest;
+	private String destName;
 	private int distance;
 
 	public RunSetting() {
@@ -51,5 +52,13 @@ public class RunSetting implements Serializable {
 
 	public void setDistance(int distance) {
 		this.distance = distance;
+	}
+
+	public String getDestName() {
+		return destName;
+	}
+
+	public void setDestName(String destName) {
+		this.destName = destName;
 	}
 }

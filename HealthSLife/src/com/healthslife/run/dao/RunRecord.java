@@ -22,6 +22,17 @@ public class RunRecord {
 	private double targetLng;
 	@DatabaseField
 	private int targetDistance;
+	@DatabaseField
+	private String targetDestName;
+
+
+	public String getTargetDestName() {
+		return targetDestName;
+	}
+
+	public void setTargetDestName(String targetDestName) {
+		this.targetDestName = targetDestName;
+	}
 
 	@DatabaseField
 	private double startLat;
@@ -79,6 +90,7 @@ public class RunRecord {
 				if (location != null) {
 					record.setTargetLat(location.getLatitude());
 					record.setTargetLng(location.getLatitude());
+					record.setTargetDestName(runSetting.getDestName());
 				}
 			}
 		}
@@ -103,6 +115,7 @@ public class RunRecord {
 				setting.setDistance(runRecord.getTargetDistance());
 			} else if (kind == RunSetting.DESTINATION) {
 				setting.setDest(new DMLocation(runRecord.getTargetLat(), runRecord.getTargetLng()));
+				setting.setDestName(runRecord.getTargetDestName());
 			}
 		}
 		result.setRunSetting(setting);

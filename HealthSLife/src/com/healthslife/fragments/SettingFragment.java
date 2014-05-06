@@ -51,6 +51,15 @@ public class SettingFragment extends Fragment {
 				dailog.setPositiveButtonVisibility(View.GONE);
 				dailog.setNegativeButtonVisibility(View.GONE);
 				dailog.show();
+			}else if(countDownTimeView ==v){
+				MyAlertDailog dailog = new MyAlertDailog(SettingFragment.this.getActivity());
+				dailog.setNoTitle(true);
+				dailog.setCancelable(true);
+				View view = LayoutInflater.from(getActivity()).inflate(R.layout.layout_set_count_down, null);
+				dailog.setContentView(view);
+				dailog.setPositiveButtonVisibility(View.GONE);
+				dailog.setNegativeButtonVisibility(View.GONE);
+				dailog.show();
 			}
 			
 		}

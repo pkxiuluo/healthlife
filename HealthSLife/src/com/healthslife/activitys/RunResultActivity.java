@@ -104,7 +104,7 @@ public class RunResultActivity extends BaseFragmentActivity implements OnClickLi
 			break;
 		case RunSetting.DESTINATION:
 			targetTitleTxt.setText(R.string.run_result_target_destination);
-			targetContentTxt.setText("");
+			targetContentTxt.setText(setting.getDestName());
 			break;
 		default:
 			break;

@@ -54,9 +54,11 @@ public class DestinationRunFragment extends Fragment implements RunSettingGetabl
 	public RunSetting getRunSetting() {
 		RunSetting setting = new RunSetting(RunSetting.DESTINATION);
 		Location location = new Location(LocationManager.GPS_PROVIDER);
-		// location.setAltitude(altitude)
-		DMLocation dmLocation = new DMLocation(location);
-		setting.setDest(dmLocation);
+		if(destInfo!=null){
+				DMLocation dmLocation = new DMLocation(destInfo.location);
+				setting.setDest(dmLocation);
+				setting.setDestName(destInfo.addressName);
+		}
 		return setting;
 	}
 
@@ -101,7 +103,7 @@ public class DestinationRunFragment extends Fragment implements RunSettingGetabl
 				destInfo.location.setLongitude(point.getLongitude());
 				String addressName = result.getRegeocodeAddress().getFormatAddress();
 				addressName = addressName + "(" + point.getLongitude() + "," + point.getLatitude() + ")";
-				destInfo.addressName = addressName;
+				destInfo.addressName = result.getRegeocodeAddress().getFormatAddress();
 				destInputEdt.setText(addressName);
 				dialog.dismiss();
 			} else {
