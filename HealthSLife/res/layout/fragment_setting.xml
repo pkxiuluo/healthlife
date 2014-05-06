@@ -2,34 +2,132 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:padding="5dp" >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="4dp"
+        android:text="跑步设置"
+        android:textColor="@color/red"
+        android:textSize="@dimen/text_size_normal" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/transparent_stroke_corner_shape"
         android:orientation="vertical" >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="跑步设置" />
-
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/setting_count_down_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:layout_height="match_parent"
+            android:padding="15dp" >
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal" >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:drawableLeft="@drawable/ic_count_down"
+                android:drawablePadding="4dp"
+                android:text="倒计时时间"
+                android:textSize="@dimen/text_size_small" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="倒计时时间" />
-            </LinearLayout>
-        </LinearLayout>
+            <ImageView
+                android:id="@+id/setting_right_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_right_arrow_big" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@+id/setting_right_arrow"
+                android:text="5秒"
+                android:textColor="@color/gray_border" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="4dp"
+        android:text="其他设置"
+        android:textColor="@color/red"
+        android:textSize="@dimen/text_size_normal" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/transparent_stroke_corner_shape"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:id="@+id/setting_check_update_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="15dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:drawableLeft="@drawable/ic_check_update_version"
+                android:drawablePadding="4dp"
+                android:text="版本检查更新"
+                android:textSize="@dimen/text_size_small" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@+id/setting_right_arrow"
+                android:text="v1.0"
+                android:textColor="@color/gray_border" />
+
+            <ImageView
+                android:id="@+id/setting_right_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_right_arrow_big" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray_border" />
+
+        <RelativeLayout
+            android:id="@+id/setting_about_us_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="15dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:drawableLeft="@drawable/ic_about_us"
+                android:drawablePadding="4dp"
+                android:text="关于我们"
+                android:textSize="@dimen/text_size_small" />
+
+            <ImageView
+                android:id="@+id/setting_right_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_right_arrow_big" />
+        </RelativeLayout>
     </LinearLayout>
 
 </LinearLayout>

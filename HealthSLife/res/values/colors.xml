@@ -7,6 +7,8 @@
     <color name="dark_gray">#313131</color>
     
     <color name="background_tab_pressed">#6633B5E5</color>
+    
+    <color name="gray_border">#959595</color>
 
     <item name="navi_title_red" format="color" type="color">@color/red</item>
 
