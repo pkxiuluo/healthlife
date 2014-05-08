@@ -9,6 +9,7 @@
         android:background="@color/gray" >
 
         <RelativeLayout
+            android:id="@+id/run_target_dest_top"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -65,6 +66,19 @@
                 android:layout_toRightOf="@+id/run_target_dest_title"
                 android:background="@android:color/black" />
         </RelativeLayout>
+        
+        <ListView
+            android:id="@+id/run_target_dest_history_list"
+            android:layout_below="@+id/run_target_dest_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:background="@drawable/white_corner_shape"
+            android:paddingBottom="3dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="3dp" 
+            />
     </RelativeLayout>
 
 </RelativeLayout>

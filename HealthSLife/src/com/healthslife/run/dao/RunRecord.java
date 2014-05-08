@@ -24,15 +24,9 @@ public class RunRecord {
 	private int targetDistance;
 	@DatabaseField
 	private String targetDestName;
-
-
-	public String getTargetDestName() {
-		return targetDestName;
-	}
-
-	public void setTargetDestName(String targetDestName) {
-		this.targetDestName = targetDestName;
-	}
+	
+	@DatabaseField
+	private String targetDestNameLong;
 
 	@DatabaseField
 	private double startLat;
@@ -91,6 +85,7 @@ public class RunRecord {
 					record.setTargetLat(location.getLatitude());
 					record.setTargetLng(location.getLatitude());
 					record.setTargetDestName(runSetting.getDestName());
+					record.setTargetDestNameLong(runSetting.getDestNameLong());
 				}
 			}
 		}
@@ -116,6 +111,7 @@ public class RunRecord {
 			} else if (kind == RunSetting.DESTINATION) {
 				setting.setDest(new DMLocation(runRecord.getTargetLat(), runRecord.getTargetLng()));
 				setting.setDestName(runRecord.getTargetDestName());
+				setting.setDestNameLong(runRecord.getTargetDestNameLong());
 			}
 		}
 		result.setRunSetting(setting);
@@ -224,6 +220,23 @@ public class RunRecord {
 
 	public void setCompleteness(float completeness) {
 		this.completeness = completeness;
+	}
+	
+
+	public String getTargetDestNameLong() {
+		return targetDestNameLong;
+	}
+
+	public void setTargetDestNameLong(String targetDestNameLong) {
+		this.targetDestNameLong = targetDestNameLong;
+	}
+
+	public String getTargetDestName() {
+		return targetDestName;
+	}
+
+	public void setTargetDestName(String targetDestName) {
+		this.targetDestName = targetDestName;
 	}
 
 }

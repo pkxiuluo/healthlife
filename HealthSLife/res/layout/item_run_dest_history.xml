@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <TextView
+        android:id="@+id/item_run_dest_history_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/gray_border"
+        android:textSize="@dimen/text_size_small_l"
+        android:drawablePadding="14dp"
+        android:drawableLeft="@drawable/dest_run_history" />
+
+</LinearLayout>

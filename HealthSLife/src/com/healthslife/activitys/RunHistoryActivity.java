@@ -119,7 +119,7 @@ public class RunHistoryActivity extends BaseFragmentActivity implements OnClickL
 	public boolean onContextItemSelected(MenuItem item) {
 		if (item.getItemId() == R.id.action_history_delete) {
 			AdapterContextMenuInfo itemInfo = (AdapterContextMenuInfo) item.getMenuInfo();
-			historyAdapter.deleteRecord(itemInfo.position);
+			historyAdapter.deleteRecord(itemInfo.position-1);
 			return true;
 		}
 		return super.onContextItemSelected(item);

@@ -43,7 +43,11 @@ public class RunRecordDB {
 		try {
 			List<String[]>resultList = rawResults.getResults();
 			if(resultList!=null){
-				value = Float.valueOf(resultList.get(0)[0]);
+				String tempString = resultList.get(0)[0];
+				if(tempString!=null){
+					value = Float.valueOf(tempString);
+				}
+				
 			}
 		} catch (NumberFormatException e) {
 			System.out.println(e.getMessage());
