@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.healthslife.R;
 
-public class MyAlertDailog extends Dialog implements android.view.View.OnClickListener {
+public class MyAlertDialog extends Dialog implements android.view.View.OnClickListener {
 
 	private View titleLayoutView;
 	private TextView titleTxt;
@@ -23,11 +23,11 @@ public class MyAlertDailog extends Dialog implements android.view.View.OnClickLi
 	private OnClickListener negativeListener;
 	private ViewGroup contentViewGroup;
 
-	public MyAlertDailog(Context context) {
+	public MyAlertDialog(Context context) {
 		this(context, R.style.fullScreenDialog);
 	}
 
-	private MyAlertDailog(Context context, int theme) {
+	private MyAlertDialog(Context context, int theme) {
 		super(context, theme);
 		init();
 	}

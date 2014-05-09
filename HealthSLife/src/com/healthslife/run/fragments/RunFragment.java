@@ -20,7 +20,7 @@ import com.astuetz.PagerSlidingTabStrip;
 import com.dm.location.DMLocation;
 import com.dm.location.DMLocationUtils;
 import com.healthslife.R;
-import com.healthslife.dialog.MyAlertDailog;
+import com.healthslife.dialog.MyAlertDialog;
 import com.healthslife.run.dao.RunSetting;
 import com.healthslife.run.dao.RunSettingGetable;
 import com.healthslife.run.dao.RunSettingUtil;
@@ -31,7 +31,7 @@ public class RunFragment extends Fragment {
 	private ViewPager pager;
 	private MyPagerAdapter mAdapter;
 	private View beginBtn;
-	private MyAlertDailog dialog;
+	private MyAlertDialog dialog;
 	private static int SETTING_REQUEST_CODE = 1;
 
 	@Override
@@ -46,7 +46,7 @@ public class RunFragment extends Fragment {
 //		tabs.setIndicatorHeight(indicatorLineHeightPx)
 		beginBtn.setOnClickListener(new BeginClick());
 
-		dialog = new MyAlertDailog(getActivity());
+		dialog = new MyAlertDialog(getActivity());
 		dialog.setContent(getText(R.string.run_gps_tips));
 		dialog.setPositiveClickListener(new DialogInterface.OnClickListener() {
 
