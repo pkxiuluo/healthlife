@@ -88,11 +88,7 @@
         </activity>
         <activity
             android:name="com.healthslife.healthtest.HeartRateHisActivity"
-            android:label="@string/title_activity_heart_rate_his"
-            android:parentActivityName="com.healthslife.BaseFragmentActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.healthslife.BaseFragmentActivity" />
+            android:label="@string/title_activity_heart_rate_his" >
         </activity>
         <activity android:name="com.healthslife.activitys.MusicActivity" >
         </activity>
@@ -105,6 +101,8 @@
         <activity android:name="com.healthslife.healthtest.EcgTakePicActivity" >
         </activity>
         <activity android:name=".healthtest.EcgResultActivity" >
+        </activity>
+        <activity android:name=".healthtest.ECGHisActivity" >
         </activity>
     </application>
 

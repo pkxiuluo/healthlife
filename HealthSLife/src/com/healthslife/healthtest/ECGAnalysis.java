@@ -211,7 +211,7 @@ public class ECGAnalysis {
 			OutlierRemoval(n, m, gray);
 		}
 		// ��������
-		String res = "异常情况:\n";
+
 		int h[] = new int[n];
 		for (int i = 0; i < n; i++) {
 			int sum = 0;
@@ -226,6 +226,16 @@ public class ECGAnalysis {
 				h[i] /= sum;
 			}
 		}
+		int S = 0;
+		for (int i = 0; i < n; i++) {
+			if (h[i] != 0) {
+				S += (h[i]-m/2)*(h[i]-m/2);
+			}
+		}
+		if (S > 2000000) {
+			return "BUG";
+		}
+		String res = "异常情况:\n";
 		// �ĵ�ͼ����ڵ�
 		int p1 = 0;
 		int min = m;

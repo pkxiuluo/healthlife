@@ -3,15 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <ExpandableListView
-        android:id="@+id/heart_rate_his_expanListView"
+    <ListView
+        android:id="@+id/heart_rate_his_listview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="108dp"
-        android:layout_marginTop="74dp" >
-        
-    </ExpandableListView>
+        android:layout_height="wrap_content" 
+        android:layout_marginTop="20dp"
+        android:divider="#00000000">
+    </ListView>
 
-</RelativeLayout>
+</RelativeLayout>

@@ -18,6 +18,8 @@ public class EcgResultActivity extends Activity {
 	private TextView resultContent;
 	private String resultContentStr;
 	private String picPath;
+	public static final String PIC_PATH = "pic_path";
+	public static final String ANALYSIS_RESULT = "analysis_result";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

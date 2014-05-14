@@ -1,6 +1,8 @@
 package com.healthslife.healthtest;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -20,6 +22,8 @@ import android.widget.Toast;
 import com.healthslife.R;
 import com.healthslife.healthtest.ImgAnalysis;
 import com.healthslife.healthtest.ImgAnalysis.ImgCaptureListener;
+import com.healthslife.healthtest.dao.HeartRateDB;
+import com.healthslife.healthtest.dao.HeartRateHisRecord;
 import com.healthslife.widget.CircleProgress;
 import com.healthslife.widget.CircleProgress.CompleteListener;
 
@@ -53,6 +57,7 @@ public class HeartRateFragment extends Fragment implements View.OnClickListener 
 	private int lastPeakIndex = 0;
 	private int averageHeartRate = 0;
 	private LinearLayout bottomLaytout;
+	private String currentTime;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -77,7 +82,26 @@ public class HeartRateFragment extends Fragment implements View.OnClickListener 
 				(RelativeLayout) root.findViewById(R.id.blank));
 		mImgAnalysis.setImgCaptureListener(mImgCaptureListener);
 		mTimer = new Timer();
+		initLastTestData();
 		return root;
+	}
+
+	private void initLastTestData() {
+		HeartRateDB mDB = new HeartRateDB(getActivity());
+		HeartRateHisRecord mRecord = mDB.queryFirst();
+		if (mRecord == null) {
+			lastTestRate.setText("00");
+			lastTestTime.setText("");
+			lastTestState.setText("");
+			return;
+		}
+		lastTestRate.setText(mRecord.getHeartRate() + "");
+		lastTestTime.setText(mRecord.getDate());
+		if (mRecord.getState() == 1) {
+			lastTestState.setText("平常态");
+		} else if (mRecord.getState() == 2) {
+			lastTestState.setText("运动后");
+		}
 	}
 
 	private ImgCaptureListener mImgCaptureListener = new ImgCaptureListener() {
@@ -136,13 +160,20 @@ public class HeartRateFragment extends Fragment implements View.OnClickListener 
 				@Override
 				public void complete() {
 					// 测量完成（进度条100%）触发完成事件
+					currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm")
+							.format(new Date());
 					reSet();
 					refreshData();
+					saveData();
 				}
-
 			});
 		}
 		Log.v("heart rate", peakPairsIndex + "");
+	}
+
+	private void saveData() {
+		HeartRateDB mDB = new HeartRateDB(getActivity());
+		mDB.add(new HeartRateHisRecord(currentTime, state, averageHeartRate));
 	}
 
 	protected void refreshData() {
@@ -167,6 +198,12 @@ public class HeartRateFragment extends Fragment implements View.OnClickListener 
 			@Override
 			public void onAnimationEnd(Animation animation) {
 				lastTestRate.setText(averageHeartRate + "");
+				lastTestTime.setText(currentTime);
+				if (state == 1) {
+					lastTestState.setText("平常态");
+				} else if (state == 2) {
+					lastTestState.setText("运动后");
+				}
 			}
 		});
 
@@ -189,8 +226,8 @@ public class HeartRateFragment extends Fragment implements View.OnClickListener 
 			totalTime += dataList.get(peakPairs[i][1]).time
 					- dataList.get(peakPairs[i][0]).time;
 		}
-		float temp = (60000f / (float)totalTime)*(float)peakPairsIndex;
-		averageHeartRate =(int) temp;
+		float temp = (60000f / (float) totalTime) * (float) peakPairsIndex;
+		averageHeartRate = (int) temp;
 		heartRateTxt.setText(averageHeartRate + "");
 	}
 
@@ -278,7 +315,7 @@ public class HeartRateFragment extends Fragment implements View.OnClickListener 
 		}
 
 	}
-	
+
 	@Override
 	public void onPause() {
 		// TODO Auto-generated method stub

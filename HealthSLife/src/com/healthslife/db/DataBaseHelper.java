@@ -7,6 +7,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.healthslife.healthtest.dao.HeartRateHisRecord;
+import com.healthslife.healthtest.dao.ECGAnalysisRecord;
 import com.healthslife.run.dao.RunRecord;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
@@ -27,6 +28,7 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
 		try {
 			TableUtils.createTable(connectionSource, RunRecord.class);
 			TableUtils.createTable(connectionSource, HeartRateHisRecord.class);
+			TableUtils.createTable(connectionSource, ECGAnalysisRecord.class);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

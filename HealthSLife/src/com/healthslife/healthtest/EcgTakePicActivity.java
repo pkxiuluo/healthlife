@@ -30,6 +30,10 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.healthslife.R;
+import com.healthslife.healthtest.dao.ECGAnalysisRecord;
+import com.healthslife.healthtest.dao.ECGDB;
+import com.healthslife.healthtest.dao.HeartRateDB;
+import com.healthslife.healthtest.dao.HeartRateHisRecord;
 
 public class EcgTakePicActivity extends Activity implements
 		SurfaceHolder.Callback, OnClickListener {
@@ -41,7 +45,7 @@ public class EcgTakePicActivity extends Activity implements
 	private AutoFocusCallback mAutoFocusCallback = new AutoFocusCallback();
 
 	// 存储在手机中的文件夹名称
-	private String path = "/images";
+	private String path = "/HealthSLife/Image";
 	private Bitmap bmp = null;
 	private int count;
 
@@ -186,6 +190,7 @@ public class EcgTakePicActivity extends Activity implements
 				parameters.setPictureFormat(PixelFormat.JPEG);
 				parameters.setPictureSize(960, 480);
 				parameters.setFocusMode("macro");
+				parameters.setZoom(parameters.getMaxZoom() / 2);
 				// parameters
 				mCamera.setParameters(parameters);
 				mCamera.startPreview();
@@ -231,7 +236,7 @@ public class EcgTakePicActivity extends Activity implements
 		saveAndAnalysis.setVisibility(View.GONE);
 		retakePic.setVisibility(View.GONE);
 		/* 重新设定Camera */
-		// bmp = null;
+//		bmp = null;
 		if (!bmp.isRecycled())
 			bmp.recycle();
 		stopCamera();
@@ -254,16 +259,21 @@ public class EcgTakePicActivity extends Activity implements
 			} else {
 				try {
 					/* 文件不存在就创建 */
-					File f = new File(
-							Environment.getExternalStorageDirectory(), path);
-
-					if (!f.exists()) {
-						f.mkdir();
+					File firstFile = new File(
+							Environment.getExternalStorageDirectory(),
+							"/HealthSLife");
+					if (!firstFile.exists()) {
+						firstFile.mkdir();
+					}
+					
+					File secondFile = new File(firstFile, "/ECGImage");
+					if (!secondFile.exists()) {
+						secondFile.mkdir();
 					}
 					/* 保存相片文件 */
 					String fileName = new SimpleDateFormat("yyyyMMddHHmmss")
-							.format(new Date()) + ".jpg";
-					File n = new File(f, fileName);
+							.format(new Date()) + ".jpgs";
+					File n = new File(secondFile, fileName);
 					FileOutputStream bos = new FileOutputStream(
 							n.getAbsolutePath());
 					/* 文件转换 */
@@ -294,12 +304,21 @@ public class EcgTakePicActivity extends Activity implements
 		// initCamera();
 		Intent intent = new Intent(this, EcgResultActivity.class);
 		if (analysisResult == null) {
-			intent.putExtra("analysis_result", "null error");
+			// intent.putExtra("analysis_result", "图像太模糊，请重新拍摄");
+			Toast.makeText(this, "图像太模糊，请重新拍摄", Toast.LENGTH_SHORT).show();
+			deleteFileByPath(filePath);
+			retakePicClickEvent();
+			return;
+		} else if (analysisResult.equals("BUG")) {
+			Toast.makeText(this, "请正确拍摄心电图图像", Toast.LENGTH_SHORT).show();
+			deleteFileByPath(filePath);
+			retakePicClickEvent();
+			return;
 		} else {
 			intent.putExtra("analysis_result", analysisResult);
 		}
 		intent.putExtra("pic_path", filePath);
-//		setResult(20, data);
+		// setResult(20, data);
 		// // 关闭掉这个Activity
 		// surfaceDestroyed(holder);
 		stopCamera();
@@ -312,7 +331,35 @@ public class EcgTakePicActivity extends Activity implements
 			}
 		}
 		startActivity(intent);
+		saveData(analysisResult, filePath);
 		this.finish();
+	}
+
+	private void saveData(String content, String filePath) {
+		ECGDB mDB = new ECGDB(this);
+		mDB.add(new  ECGAnalysisRecord(new SimpleDateFormat("yyyy-MM-dd HH:mm")
+				.format(new Date()), content, filePath));
+	}
+
+	public void deleteFileByPath(String filePath) {
+		if (filePath == null)
+			return;
+		File file = new File(filePath);
+		if (file.exists()) { // 判断文件是否存在
+			if (file.isFile()) { // 判断是否是文件
+				file.delete(); // delete()方法 你应该知道 是删除的意思;
+			} else if (file.isDirectory()) { // 否则如果它是一个目录
+				File files[] = file.listFiles(); // 声明目录下所有的文件 files[];
+				for (int i = 0; i < files.length; i++) { // 遍历目录下所有的文件
+					this.deleteFileByPath(files[i].getAbsolutePath()); // 把每个文件
+																		// 用这个方法进行迭代
+				}
+			}
+			file.delete();
+		}
+		// else {
+		// // Constants.Logdada("文件不存在！" + "\n");
+		// }
 	}
 
 	private void takePicClickEvent() {

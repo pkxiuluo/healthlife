@@ -34,6 +34,9 @@ import com.healthslife.adapters.NavigationAdapter.DataHolder;
 import com.healthslife.fragments.HealthTestFragment;
 import com.healthslife.fragments.InviteFragment;
 import com.healthslife.fragments.SettingFragment;
+import com.healthslife.healthtest.ECGHisActivity;
+import com.healthslife.healthtest.HeartRateHisActivity;
+import com.healthslife.healthtest.dao.HeartRateHisRecord;
 import com.healthslife.music.MusicUtil;
 import com.healthslife.run.fragments.RunFragment;
 import com.yp.music.ListMediaPlayer;
@@ -198,11 +201,14 @@ public class MainActivity extends BaseFragmentActivity {
 				switch (healthTestFragment.getCurrentPager()) {
 				case 0:
 					//打开心率测量的历史页面
-					Toast.makeText(this, "打开心率测量的历史页面", Toast.LENGTH_SHORT);
+//					Toast.makeText(this, "打开心率测量的历史页面", Toast.LENGTH_SHORT).show();
+					Intent intent = new Intent(this,HeartRateHisActivity.class);
+					startActivity(intent);
 					break;
 				case 1:
 					//打开心电图测试的历史页面
-					Toast.makeText(this, "打开心电图测试的历史页面", Toast.LENGTH_SHORT);
+//					Toast.makeText(this, "打开心电图测试的历史页面", Toast.LENGTH_SHORT).show();
+					startActivity(new Intent(this,ECGHisActivity.class));
 					break;
 				default:
 					break;
