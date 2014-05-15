@@ -117,6 +117,9 @@ public class DMLocationClient {
 			isStartd =false;
 		}
 	}
+	public void unBind(){
+		mContext.unbindService(mConn);
+	}
 
 	private class MyServiceConnection implements ServiceConnection {
 

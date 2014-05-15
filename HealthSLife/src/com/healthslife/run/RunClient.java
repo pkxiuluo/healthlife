@@ -119,5 +119,8 @@ public class RunClient {
 	public long getCalorie() {
 		return calorie;
 	}
+	public void unBind(){
+		mClient.unBind();
+	}
 
 }

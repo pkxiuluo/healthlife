@@ -1,6 +1,7 @@
 package com.healthslife.activitys;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -133,10 +134,22 @@ public class RunResultActivity extends BaseFragmentActivity implements OnClickLi
 	public void onClick(View v) {
 		if (v == toShareBtn) {
 			this.finish();
+			Intent intent = new Intent(RunResultActivity.this,MainActivity.class);
+			intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+			intent.putExtra(MainActivity.EXTRA_SET_PAGE,2);
+			startActivity(intent);
 		} else if (v == toHeartBtn) {
 			this.finish();
+			Intent intent = new Intent(RunResultActivity.this,MainActivity.class);
+			intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+			intent.putExtra(MainActivity.EXTRA_SET_PAGE,1);
+			startActivity(intent);
 		} else if (v == toMainBtn) {
 			this.finish();
+			Intent intent = new Intent(RunResultActivity.this,MainActivity.class);
+			intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+			intent.putExtra(MainActivity.EXTRA_SET_PAGE,0);
+			startActivity(intent);
 		}
 
 	}

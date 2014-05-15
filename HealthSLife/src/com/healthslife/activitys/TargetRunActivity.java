@@ -238,6 +238,11 @@ public class TargetRunActivity extends BaseFragmentActivity implements OnClickLi
 		mClient.stop();
 		super.onStop();
 	}
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		mClient.unBind();
+	}
 
 	private boolean isPlaying = false;
 	private BroadcastReceiver mBroadCastReceiver = new BroadcastReceiver() {

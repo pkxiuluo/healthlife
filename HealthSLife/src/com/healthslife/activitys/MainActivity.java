@@ -42,6 +42,7 @@ import com.healthslife.run.fragments.RunFragment;
 import com.yp.music.ListMediaPlayer;
 
 public class MainActivity extends BaseFragmentActivity {
+	public static final String EXTRA_SET_PAGE = "EXTRA_SET_PAGE";
 	private DrawerLayout drawerLayout;
 	private ListView navi;
 	private List<DataHolder> naviList = new ArrayList<DataHolder>();
@@ -69,10 +70,8 @@ public class MainActivity extends BaseFragmentActivity {
 	}
 
 	private void initData() {
-		TypedArray titleArray = getResources().obtainTypedArray(
-				R.array.navigation_title);
-		TypedArray iconArray = getResources().obtainTypedArray(
-				R.array.navigation_icon);
+		TypedArray titleArray = getResources().obtainTypedArray(R.array.navigation_title);
+		TypedArray iconArray = getResources().obtainTypedArray(R.array.navigation_icon);
 		int count = titleArray.length();
 		for (int i = 0; i < count; i++) {
 			DataHolder data = new DataHolder();
@@ -94,8 +93,7 @@ public class MainActivity extends BaseFragmentActivity {
 		navi.setAdapter(naviAdapter);
 		navi.setOnItemClickListener(new OnItemClickListener() {
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				selectItem(arg2);
 			}
 		});
@@ -126,8 +124,7 @@ public class MainActivity extends BaseFragmentActivity {
 			break;
 		}
 		FragmentManager manager = getSupportFragmentManager();
-		manager.beginTransaction().replace(R.id.main_content_layout, fragment)
-				.commit();
+		manager.beginTransaction().replace(R.id.main_content_layout, fragment).commit();
 		drawerLayout.closeDrawer(navi);
 	}
 
@@ -171,11 +168,9 @@ public class MainActivity extends BaseFragmentActivity {
 			break;
 		}
 		if (isPlaying) {
-			menu.findItem(R.id.action_music_control).setIcon(
-					R.drawable.menu_music_stop);
+			menu.findItem(R.id.action_music_control).setIcon(R.drawable.menu_music_stop);
 		} else {
-			menu.findItem(R.id.action_music_control).setIcon(
-					R.drawable.menu_music_start);
+			menu.findItem(R.id.action_music_control).setIcon(R.drawable.menu_music_start);
 		}
 		return super.onPrepareOptionsMenu(menu);
 	}
@@ -192,23 +187,24 @@ public class MainActivity extends BaseFragmentActivity {
 		} else if (item.getItemId() == R.id.action_history) {
 			int selectedPosition = navi.getCheckedItemPosition();
 			if (selectedPosition == 0) {
-				startActivity(new Intent(MainActivity.this,
-						RunHistoryActivity.class));
+				startActivity(new Intent(MainActivity.this, RunHistoryActivity.class));
 			} else if (selectedPosition == 1) {
 				// 健康测试
 				if (healthTestFragment == null)
 					return false;
 				switch (healthTestFragment.getCurrentPager()) {
 				case 0:
-					//打开心率测量的历史页面
-//					Toast.makeText(this, "打开心率测量的历史页面", Toast.LENGTH_SHORT).show();
-					Intent intent = new Intent(this,HeartRateHisActivity.class);
+					// 打开心率测量的历史页面
+					// Toast.makeText(this, "打开心率测量的历史页面",
+					// Toast.LENGTH_SHORT).show();
+					Intent intent = new Intent(this, HeartRateHisActivity.class);
 					startActivity(intent);
 					break;
 				case 1:
-					//打开心电图测试的历史页面
-//					Toast.makeText(this, "打开心电图测试的历史页面", Toast.LENGTH_SHORT).show();
-					startActivity(new Intent(this,ECGHisActivity.class));
+					// 打开心电图测试的历史页面
+					// Toast.makeText(this, "打开心电图测试的历史页面",
+					// Toast.LENGTH_SHORT).show();
+					startActivity(new Intent(this, ECGHisActivity.class));
 					break;
 				default:
 					break;
@@ -243,6 +239,9 @@ public class MainActivity extends BaseFragmentActivity {
 		IntentFilter filter = new IntentFilter();
 		filter.addAction(ListMediaPlayer.ACTION_PLAYSTATE_CHANGED);
 		registerReceiver(mBroadCastReceiver, filter);
+		int position = getIntent().getIntExtra(EXTRA_SET_PAGE, 0);
+		selectItem(position);
+		System.out.println("onResume    "+position);
 		super.onResume();
 	}
 
@@ -250,6 +249,12 @@ public class MainActivity extends BaseFragmentActivity {
 	protected void onPause() {
 		unregisterReceiver(mBroadCastReceiver);
 		super.onPause();
+	}
+
+	@Override
+	protected void onNewIntent(Intent intent) {
+		setIntent(intent);
+		super.onNewIntent(intent);
 	}
 
 	@Override
@@ -262,8 +267,8 @@ public class MainActivity extends BaseFragmentActivity {
 	private class MyDrawerToggle extends ActionBarDrawerToggle {
 
 		public MyDrawerToggle() {
-			super(MainActivity.this, drawerLayout, R.drawable.ic_drawer_navi,
-					R.string.drawer_open, R.string.drawer_close);
+			super(MainActivity.this, drawerLayout, R.drawable.ic_drawer_navi, R.string.drawer_open,
+					R.string.drawer_close);
 		}
 
 		@Override
@@ -292,8 +297,7 @@ public class MainActivity extends BaseFragmentActivity {
 			if (current - lastBackKeyTime <= 350) {
 				this.finish();
 			} else {
-				Toast.makeText(this, getText(R.string.logout_tip),
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, getText(R.string.logout_tip), Toast.LENGTH_SHORT).show();
 			}
 			lastBackKeyTime = current;
 			return true;
@@ -308,8 +312,7 @@ public class MainActivity extends BaseFragmentActivity {
 		public void onReceive(Context context, Intent intent) {
 			String action = intent.getAction();
 			if (action.equals(ListMediaPlayer.ACTION_PLAYSTATE_CHANGED)) {
-				isPlaying = intent.getBooleanExtra(
-						ListMediaPlayer.STATE_IS_PLAYING, false);
+				isPlaying = intent.getBooleanExtra(ListMediaPlayer.STATE_IS_PLAYING, false);
 				invalidateOptionsMenu();
 			}
 		}

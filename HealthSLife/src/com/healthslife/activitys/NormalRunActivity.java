@@ -103,6 +103,13 @@ public class NormalRunActivity extends BaseFragmentActivity implements OnClickLi
 		mClient.stop();
 		super.onStop();
 	}
+	
+	@Override
+	protected void onDestroy() {
+//		unbindService()
+		mClient.unBind();
+		super.onDestroy();
+	}
 
 	private void initView() {
 		root = LayoutInflater.from(this).inflate(R.layout.activity_run_normal, null);
