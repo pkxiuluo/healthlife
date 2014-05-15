@@ -11,13 +11,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class SettingFragment extends Fragment {
 
+	private ImageView runAlarmImageView;
+	private ImageView runMusicImageView;
 	private View aboutUsView;
 	private View checkUpdateView;
 	private View countDownTimeView;
+
+	private TextView countDownTextView;
 
 	private MyAlertDialog checkUpdatetDialog;
 	private MyAlertDialog aboutUsDialog;
@@ -30,9 +35,12 @@ public class SettingFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_setting, null);
+		runAlarmImageView = (ImageView) view.findViewById(R.id.setting_run_alarm_img);
+		runMusicImageView = (ImageView) view.findViewById(R.id.setting_run_music_img);
 		aboutUsView = view.findViewById(R.id.setting_about_us_layout);
 		checkUpdateView = view.findViewById(R.id.setting_check_update_layout);
 		countDownTimeView = view.findViewById(R.id.setting_count_down_layout);
+		countDownTextView = (TextView) view.findViewById(R.id.setting_count_down_txt);
 		mAppSetting = new AppSetting(getActivity());
 		setView();
 		initDialog();
@@ -40,9 +48,23 @@ public class SettingFragment extends Fragment {
 	}
 
 	private void setView() {
+		runAlarmImageView.setOnClickListener(myOnClickListener);
+		runMusicImageView.setOnClickListener(myOnClickListener);
+		if (mAppSetting.getRunAlarmState()) {
+			runAlarmImageView.setImageResource(R.drawable.ic_red_switch_on);
+		} else {
+			runAlarmImageView.setImageResource(R.drawable.ic_red_switch_off);
+		}
+		if (mAppSetting.getRunMusicState()) {
+			runMusicImageView.setImageResource(R.drawable.ic_red_switch_on);
+		} else {
+			runMusicImageView.setImageResource(R.drawable.ic_red_switch_off);
+		}
+
 		aboutUsView.setOnClickListener(myOnClickListener);
 		checkUpdateView.setOnClickListener(myOnClickListener);
 		countDownTimeView.setOnClickListener(myOnClickListener);
+		countDownTextView.setText(String.valueOf(mAppSetting.getCountDown()));
 	}
 
 	private void initDialog() {
@@ -68,6 +90,7 @@ public class SettingFragment extends Fragment {
 		countDownBtn.setOnClickListener(countDownTimeBtnClick);
 		countUpBtn.setOnClickListener(countDownTimeBtnClick);
 		countDownTxt = (TextView) view.findViewById(R.id.set_count_down_time_txt);
+		countDownTxt.setText(String.valueOf(mAppSetting.getCountDown()));
 	}
 
 	public OnClickListener myOnClickListener = new OnClickListener() {
@@ -81,6 +104,22 @@ public class SettingFragment extends Fragment {
 			} else if (countDownTimeView == v) {
 				countDownTxt.setText(String.valueOf(mAppSetting.getCountDown()));
 				countDownTimeDialog.show();
+			} else if (runAlarmImageView == v) {
+				if (mAppSetting.getRunAlarmState()) {
+					mAppSetting.setRunAlarmState(false);
+					runAlarmImageView.setImageResource(R.drawable.ic_red_switch_off);
+				} else {
+					mAppSetting.setRunAlarmState(true);
+					runAlarmImageView.setImageResource(R.drawable.ic_red_switch_on);
+				}
+			} else if (runMusicImageView == v) {
+				if (mAppSetting.getRunMusicState()) {
+					mAppSetting.setRunMusicState(false);
+					runMusicImageView.setImageResource(R.drawable.ic_red_switch_off);
+				} else {
+					mAppSetting.setRunMusicState(true);
+					runMusicImageView.setImageResource(R.drawable.ic_red_switch_on);
+				}
 			}
 
 		}
@@ -100,12 +139,14 @@ public class SettingFragment extends Fragment {
 				if (value >= 2) {
 					value--;
 					countDownTxt.setText(String.valueOf(value));
+					countDownTextView.setText(String.valueOf(value));
 					mAppSetting.setCountDown(value);
 				}
 			} else if (v == countUpBtn) {
 				if (value <= 4) {
 					value++;
 					countDownTxt.setText(String.valueOf(value));
+					countDownTextView.setText(String.valueOf(value));
 					mAppSetting.setCountDown(value);
 				}
 			}
