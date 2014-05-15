@@ -3,14 +3,17 @@
     android:layout_width="200dp"
     android:layout_height="wrap_content"
     android:background="@drawable/alert_dialog_bg_shape"
-    android:padding="15dp" >
+    android:paddingBottom="15dp"
+    android:paddingLeft="30dp"
+    android:paddingRight="30dp"
+    android:paddingTop="15dp" >
 
     <ImageView
         android:id="@+id/set_count_down_img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="14dp"
+        android:layout_centerVertical="true"
         android:src="@drawable/sub" />
 
     <TextView
@@ -27,7 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="14dp"
+        android:layout_centerVertical="true"
         android:src="@drawable/add" />
 
 </RelativeLayout>
