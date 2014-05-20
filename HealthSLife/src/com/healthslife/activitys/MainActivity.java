@@ -3,6 +3,7 @@ package com.healthslife.activitys;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.R.integer;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -239,9 +240,12 @@ public class MainActivity extends BaseFragmentActivity {
 		IntentFilter filter = new IntentFilter();
 		filter.addAction(ListMediaPlayer.ACTION_PLAYSTATE_CHANGED);
 		registerReceiver(mBroadCastReceiver, filter);
-		int position = getIntent().getIntExtra(EXTRA_SET_PAGE, 0);
-		selectItem(position);
-		System.out.println("onResume    "+position);
+
+		if (isNewIntent) {
+			selectItem(newIntentPosition);
+			isNewIntent = false;
+		}
+
 		super.onResume();
 	}
 
@@ -251,9 +255,16 @@ public class MainActivity extends BaseFragmentActivity {
 		super.onPause();
 	}
 
+	private boolean isNewIntent = false;
+	private int newIntentPosition = 0;
+
 	@Override
 	protected void onNewIntent(Intent intent) {
-		setIntent(intent);
+		int position = intent.getIntExtra(EXTRA_SET_PAGE, 0);
+		newIntentPosition = position;
+		isNewIntent = true;
+		// System.out.println("onResume    "+position);
+		// setIntent(intent);
 		super.onNewIntent(intent);
 	}
 
