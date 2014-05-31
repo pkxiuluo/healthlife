@@ -25,31 +25,27 @@ public class DMLocationUtils {
 		if (location2 == null) {
 			return true;
 		}
-		// Check whether the new location fix is newer or older
+		// 检查哪个位置获取的时间更加靠后
 		long timeDelta = location.getTime() - location2.getTime();
 		boolean isSignificantlyNewer = timeDelta > ONE_MINUTES;
 		boolean isSignificantlyOlder = timeDelta < -ONE_MINUTES;
 		boolean isNewer = timeDelta > 0;
-		// If it's been more than two minutes since the current location, use
-		// the new location
-		// because the user has likely moved
+		// 如果两个位置获取的时间相差超过了1分钟的时间就说明新的位置更加准确
+		//因为用户很可能已经移动了
 		if (isSignificantlyNewer) {
 			return true;
-			// If the new location is more than two minutes older, it must be
-			// worse
 		} else if (isSignificantlyOlder) {
 			return false;
 		}
-		// Check whether the new location fix is more or less accurate
+		//检查哪个位置精度更高
 		int accuracyDelta = (int) (location.getAccuracy() - location2.getAccuracy());
 		boolean isLessAccurate = accuracyDelta > 0;
 		boolean isMoreAccurate = accuracyDelta < 0;
 		boolean isSignificantlyLessAccurate = accuracyDelta > 200;
 
-		// Check if the old and new location are from the same provider
+		// 检查两个位置是否是来自相同的Provider
 		boolean isFromSameProvider = isSameProvider(location.getProvider(), location2.getProvider());
-		// Determine location quality using a combination of timeliness and
-		// accuracy
+		// 依据时间的间隔和精度的差别2个方面来决定到底哪个位置更好
 		if (isMoreAccurate) {
 			return true;
 		} else if (isNewer && !isLessAccurate) {
@@ -58,7 +54,6 @@ public class DMLocationUtils {
 			return true;
 		}
 		return false;
-
 	}
 
 	/** Checks whether two providers are the same */

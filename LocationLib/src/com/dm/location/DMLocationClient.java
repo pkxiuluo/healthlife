@@ -43,17 +43,22 @@ public class DMLocationClient {
 		mListener = listener;
 	}
 
+	/**
+	 * 开启定位
+	 */
 	public void start() {
+		//如果没有绑定Serivce就绑定
 		if (!hasBindService) {
 			Intent intent = new Intent(mContext, DMLocationService.class);
 			mContext.bindService(intent, mConn, Context.BIND_AUTO_CREATE);
-		}else{
-			if (mOption == null) {
-				mOption = DMLocationClientOption.getDefaultOption();
-			}
-			startRequest(mOption);
-			isStartd =true;
 		}
+		//如果请求参数为空，产生一个默认的位置请求参数
+		if (mOption == null) {
+			mOption = DMLocationClientOption.getDefaultOption();
+		}
+		//开始请求定位。
+		startRequest(mOption);
+		isStartd = true;
 	}
 
 	private void startRequest(DMLocationClientOption option) {
@@ -158,6 +163,7 @@ public class DMLocationClient {
 				@Override
 				public void run() {
 					if (oldLocation != null && mListener != null) {
+						//如果位置信息不为空就回传给外部
 						mListener.onLocationChanged(oldLocation);
 					}
 
